@@ -1,12 +1,13 @@
 <link rel="canonical" href="<?php echo url::site('/');?>"/>
 
 <?php
-	echo "ASDF";
+	/*
 	$errors = array(
 		'username' => "ASDF",
 		'email' => "ASDF",
 		'captchaanswer' => "ASDF"
 	);
+	*/
 	if (!empty($pixelgifsrc))
 		echo html::image($pixelgifsrc);
 

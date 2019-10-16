@@ -41,10 +41,10 @@
 	echo html::stylesheet('media/css/structure.css?v=2.9.5', FALSE);
 	echo html::stylesheet('media/css/battlereport.css?v=2.9.5', FALSE);
 	echo html::stylesheet('media/css/map.css?v=2.9.5', FALSE);
-	// Scripts
-	echo html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js', FALSE);		echo html::script('https://code.jquery.com/ui/1.12.0/jquery-ui.min.js', FALSE);
+	// Scripts
+	echo html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js', FALSE);		echo html::script('https://code.jquery.com/ui/1.12.0/jquery-ui.min.js', FALSE);
 	echo html::script("media/js/tooltipster-master/dist/js/tooltipster.bundle.min.js", FALSE);
-	echo html::script('media/js/jquery/plugins/cookie/js.cookie.js', FALSE);	echo html::script('media/js/common.js', FALSE);
+	echo html::script('media/js/jquery/plugins/cookie/js.cookie.js', FALSE);	echo html::script('media/js/common.js', FALSE);
 	?>
 	<!-- Countdown: workaround per visualizzare il countdown nella title bar -->
 	<script type="text/javascript">$.noRequestAnimationFrame = true;</script>
@@ -111,6 +111,8 @@
 				$pic = 'avatar_liutprando.png';
 				$text = 'dailyrewardtext_f';
 			}
+		} else {
+			$pic = 'avatar_ginevra.png';
 		}
 
 		//var_dump($promoenddate);exit;
@@ -646,7 +648,7 @@ function forceCompleteAction() {
 					});
 
 				</script>
-				<?
+				<?php
 				}
 				?>
 			</div>
@@ -673,7 +675,7 @@ function forceCompleteAction() {
 				<div style="clear: both; padding-top: 15px;">
 					<iframe src="https://discordapp.com/widget?id=157995381089632257&theme=dark&username=<?php echo urlencode($character->name); ?>" width="100%" height="500" allowtransparency="true" frameborder="0"></iframe>
 				</div>
-				<? } ?>
+				<?php } ?>
 
 			</div>
 
@@ -695,11 +697,11 @@ function forceCompleteAction() {
 				</div>
 
 				<!-- avatar -->
-				<? if (!is_null($character)) { ?>
+				<?php if (!is_null($character)) { ?>
 				<div id='avatar'>
 					<?php echo Character_Model::display_avatar( $character->id, $size = 'l', $class = 'charpic' ) ?>
 				</div>
-				<? } ?>
+				<?php } ?>
 
 				<div class="social">
 					<span class="google">
