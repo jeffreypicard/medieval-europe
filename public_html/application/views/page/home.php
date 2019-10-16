@@ -1,6 +1,12 @@
 <link rel="canonical" href="<?php echo url::site('/');?>"/>
 
 <?php
+	echo "ASDF";
+	$errors = array(
+		'username' => "ASDF",
+		'email' => "ASDF",
+		'captchaanswer' => "ASDF"
+	);
 	if (!empty($pixelgifsrc))
 		echo html::image($pixelgifsrc);
 
@@ -95,7 +101,7 @@
 							?>
 							</li>
 							<li>
-							<?
+							<?php
 								echo html::anchor('https://google.com/+MedievaleuropeEuGame',
 									html::image(
 										array(
@@ -108,7 +114,7 @@
 							?>
 							</li>
 							<li>
-							<?
+							<?php
 								echo html::anchor('https://twitter.com/Medieval_Europe',
 									html::image(
 										array(
@@ -149,11 +155,11 @@
 					'class' => 'form-control') );
 				?>
 
-				<? if (!empty ($errors['username']))
+				<?php if (!empty ($errors['username']))
 				{
 				?>
 					<div class="alert alert-danger text-left"><?= $errors['username']; ?></div>
-				<? } ?>
+				<?php } ?>
 			</div>
 			</div>
 
@@ -168,11 +174,11 @@
 					'class' => 'form-control') );
 				?>
 
-				<? if (!empty ($errors['email']))
+				<?php if (!empty ($errors['email']))
 				{
 				?>
 					<div class="alert alert-danger text-left"><?= $errors['email']; ?></div>
-				<? } ?>
+				<?php } ?>
 				</div>
 			</div>
 
@@ -195,11 +201,11 @@
 				<div class="col-xs-12 text-center">
 					<div class="g-recaptcha" data-theme = 'dark' data-sitekey="6Lf_v3MUAAAAAFs0o7zvMGoDd1XUvFSAP3qDq49Q"></div>
 
-				 <? if (!empty ($errors['captchaanswer']))
+				 <?php if (!empty ($errors['captchaanswer']))
 					{
 					?>
         <div class="alert alert-danger text-left"><?= $errors['captchaanswer']; ?></div>
-				<? } ?>
+				<?php } ?>
 
 			</div>
 

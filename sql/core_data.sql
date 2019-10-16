@@ -4976,6 +4976,7 @@ INSERT INTO `structure_types_cfgitems` (`id`, `structure_type_id`, `cfgitem_id`)
 -- Structure for view `kingdoms_v`
 --
 DROP TABLE IF EXISTS `kingdoms_v`;
+DROP VIEW IF EXISTS `kingdoms_v`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`medievaleurope`@`localhost` SQL SECURITY DEFINER VIEW `kingdoms_v`  AS  select `kingdoms`.`id` AS `id`,`kingdoms`.`name` AS `name`,`kingdoms`.`image` AS `image`,`kingdoms`.`status` AS `status`,`kingdoms`.`title` AS `title`,`kingdoms`.`slogan` AS `slogan`,`kingdoms`.`color` AS `color`,`kingdoms`.`language1` AS `language1`,`kingdoms`.`language2` AS `language2`,`kingdoms`.`lastattacked` AS `lastattacked`,`kingdoms`.`activityscore` AS `activityscore`,`kingdoms`.`forumurl` AS `forumurl` from `kingdoms` where (`kingdoms`.`status` <> 'deleted') ;
 COMMIT;

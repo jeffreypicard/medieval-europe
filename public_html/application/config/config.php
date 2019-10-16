@@ -65,7 +65,7 @@ $config['internal_cache_key'] = 'purrpaomiaomiao';
  * Do not enable this option if you are using output compression in php.ini!
  */
 
-$config['output_compression'] = 5;
+$config['output_compression'] = FALSE;
 
 /**
  * Enable or disable global XSS filtering of GET, POST, and SERVER data. This
@@ -89,7 +89,7 @@ $config['output_compression'] = 5;
  *  4 - Debugging
  */
 
-$config['log_threshold'] =3;
+$config['log_threshold'] =4;
 
 /**
  * Message logging directory.

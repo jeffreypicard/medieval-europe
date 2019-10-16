@@ -30,12 +30,12 @@ $config['default'] = array
 	'connection'    => array
         (
                 'type'     => 'mysqli',
-                'user'     => 'USERNAME',
-                'pass'     => 'PASSWORD',
+                'user'     => 'medievaleurope',
+                'pass'     => 'ThisIsAPassword!1',
                 'host'     => 'localhost',
                 'port'     => FALSE,
                 'socket'   => FALSE,
-                'database' => 'DATABASE',
+                'database' => 'medieval_prod',
         ),
 	'character_set' => 'utf8',
 	'table_prefix'  => '',

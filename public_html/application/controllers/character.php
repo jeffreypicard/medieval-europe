@@ -53,6 +53,7 @@ class Character_Controller extends Template_Controller
 
 	public function create()
 	{
+		kohana::log('info', '-> character.php create');
 
 		$view = new View('character/create');
 		$sheets  = array('gamelayout'=>'screen', 'submenu'=>'screen');
@@ -61,7 +62,7 @@ class Character_Controller extends Template_Controller
 
 		$combo = null;
 
-    $form = array ( 'charname'    => '',
+    		$form = array ( 'charname'    => '',
 			'charsurname' => null,
 			'charsex'     => 'M',
 			'charculture' => 'Italian',
@@ -402,6 +403,7 @@ class Character_Controller extends Template_Controller
 
 		$view -> bind('form', $form );
 
+		kohana::log('info', '-> character.php end create');
 	}
 
 

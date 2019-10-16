@@ -8,6 +8,7 @@ class Page_Controller extends Template_Controller
 	
 	public function getpayoutstats()
 	{
+		kohana::log('info', '-> in getpayoutstats...');
 		
 		$view = new View ('page/minedoubloons');
 		$sheets  = array('gamelayout' => 'screen',  'character' => 'screen', 'submenu'=>'screen');		
@@ -62,6 +63,7 @@ class Page_Controller extends Template_Controller
 	
 	public function minedoubloons()
 	{
+		kohana::log('info', '-> in minedoubloons...');
 		$char = Character_Model::get_info( Session::instance()->get('char_id') ); 
 
 		$view = new view('page/minedoubloons');
@@ -79,6 +81,7 @@ class Page_Controller extends Template_Controller
 	
 	public function fullchatscreen()
 	{
+		kohana::log('info', '-> in fullchatscreen...');
 		$view = new view ('page/fullchatscreen');
 		$title = 'Medieval Europe Chat';
 		$char = Character_Model::get_info( Session::instance()->get('char_id') ); 
@@ -116,7 +119,7 @@ class Page_Controller extends Template_Controller
 			
 			if ( in_array( $page, array( 
 				'terms-of-use', 
-				'game-rules', 
+				'game-rules',
 				'privacy-and-cookies',
 				'userregistered',				
 				) ) )
@@ -149,6 +152,7 @@ class Page_Controller extends Template_Controller
 			
 			else
 			{
+				kohana::log('info', '-> template/gamelayout view');
 				$this -> template = new View('template/gamelayout');
 				$sheets  = array(
 					'gamelayout' => 'screen', 
@@ -174,12 +178,13 @@ class Page_Controller extends Template_Controller
 	
 	public function index()
 	{
+		kohana::log('info', '-> in index...');
 		
 		// GOOGLE SSO		
 		$google = new Google_Bridge_Model();
 		
 		// FACEBOOK SSO
-		$fb = new Facebook_Bridge_Model();
+		//$fb = new Facebook_Bridge_Model();
 
 		$ipaddress = $this -> input -> ip_address();
 		
@@ -204,10 +209,10 @@ class Page_Controller extends Template_Controller
 		}
 		else
 		{
-			
+			kohana::log('info', '-> Creating view template/homepage');
 			$this -> template = new View('template/homepage');
 			$sheets = array('home' => 'screen');
-			$view = new view('page/home');			
+			$view = new View('page/home');			
 			
 			if ( $this -> input -> get('referreruser') )
 				$referreruser = $this -> input -> get('referreruser');
@@ -245,18 +250,20 @@ class Page_Controller extends Template_Controller
 			
 			kohana::log('info', '-> Showing home page...');
 			
-			$view -> facebook_login_url = $fb -> get_login_url();
+			//$view -> facebook_login_url = $fb -> get_login_url();
+			$view -> facebook_login_url = "ASDF";
 			$view -> google_login_url = $google -> get_google_login_url();
 			$view -> form = $form;						
 			$this -> template -> title = $title;
 			$this -> template -> sheets = $sheets;
 			$this -> template -> content = $view;						
 			
-		}	
+		}
 	}
 	
 	public function retire()
 	{
+		kohana::log('info', '-> in retire...');
 		$char = Character_Model::get_info( Session::instance()->get('char_id') ); 
 		if ( $char -> is_meditating($char -> id) )
 			$retireaction = Character_Action_Model::get_pending_action( $char -> id );
@@ -277,6 +284,7 @@ class Page_Controller extends Template_Controller
 	
 	public function jail()
 	{
+		kohana::log('info', '-> in page...');
 	
 		$view = new view ('page/jail');
 		$sheets  = array('gamelayout'=>'screen', 'submenu'=>'screen');
@@ -320,6 +328,7 @@ class Page_Controller extends Template_Controller
 	
 	public function battlereport( $battle_id = null, $round_id = 1 )
 	{
+		kohana::log('info', '-> in battlereport...');
 		$view = new view ('page/battlereport');
 		$sheets  = array('gamelayout'=>'screen', 'submenu'=>'screen', 'battlereport' => 'screen');
 		
@@ -365,6 +374,7 @@ class Page_Controller extends Template_Controller
 	
 	public function kingdomstats( ) 
 	{
+		kohana::log('info', '-> in kingdomstats...');
 		
 		$view = new View ('page/kingdomstats');
 		$sheets  = array('gamelayout' => 'screen',  'character' => 'screen', 'submenu'=>'screen');		
@@ -418,6 +428,7 @@ class Page_Controller extends Template_Controller
 		$mode = 'all', 
 		$centeronplayer = false )
 	{
+		kohana::log('info', '-> in rankings...');
 		
 		$sheets  = array('gamelayout'=>'screen', 'submenu'=>'screen');		
 		$paginationlimit = 25;
@@ -547,6 +558,7 @@ class Page_Controller extends Template_Controller
 	
 	public function serverinfo ( ) 
 	{
+		kohana::log('info', '-> in serverinfo...');
 		
 		$view = new View ('page/serverinfo');
 		$sheets  = array(
@@ -561,6 +573,8 @@ class Page_Controller extends Template_Controller
 	
 	public function readnews( $newsid )
 	{		
+		kohana::log('info', '-> in readnews...');
+		
 		$view = new view( 'page/readnews');
 		$this -> template = new View('template/blank');
 		$sheets  = array('bootstrap_me' => 'screen');

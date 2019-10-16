@@ -17,6 +17,7 @@
 	<link href="/favicon.ico" rel="icon" type="image/x-icon" />
 
 	<?php
+	kohana::log('debug', '-> gamelayout.php line 20');
 	$version = "2.9.5.1";
 	echo html::meta('description', 'Medieval Europe is an historical browser game with elements of rpg, strategy and deep mechanics.');
 	echo html::meta('content-type', 'text/html; charset=utf-8' );
@@ -506,6 +507,7 @@ function forceCompleteAction() {
 			<!-- Current Quest -->
 
 			<?
+			kohana::log('info', '-> gamelayout.php line 509');
 			if (!is_null($activequest)) { ?>
 			<div id="currentquest">
 				<table>
@@ -655,7 +657,7 @@ function forceCompleteAction() {
 				<div id="contenttop"></div>
 				<div id="contentcenter">
 					<div id="wrapper">
-					<?php $message = Session::instance()->get('user_message'); echo $message ?>
+					<?php $message = Session::instance()->get('user_message'); echo $message; ?>
 					<?php
 						$db -> query("select '--content--'");
 						echo $content ;
@@ -860,6 +862,8 @@ function forceCompleteAction() {
 	$this->profiler -> render();
 	echo '</div>';
 }
+
+kohana::log('info', '-> end of gamelayout.php');
 ?>
 </body>
 </html>

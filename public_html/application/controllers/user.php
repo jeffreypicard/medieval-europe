@@ -17,7 +17,7 @@ class User_Controller extends Template_Controller
 		$google = new Google_Bridge_Model();	
 		
 		// FACEBOOK SSO
-		$fb = new Facebook_Bridge_Model();
+		//$fb = new Facebook_Bridge_Model();
 		
 		$view = new View('page/home');		
 		$this -> template = new View('template/homepage');		
@@ -84,7 +84,7 @@ class User_Controller extends Template_Controller
 		
 
 		$view -> form = $form;		
-		$view -> facebook_login_url = $fb -> get_login_url();
+		//$view -> facebook_login_url = $fb -> get_login_url();
 		$view -> google_login_url = $google -> get_google_login_url();
 		
 	}
@@ -313,7 +313,7 @@ class User_Controller extends Template_Controller
 	{
 		
 		// FACEBOOK SSO
-		$fb = new Facebook_Bridge_Model();
+		//$fb = new Facebook_Bridge_Model();
 		// GOOGLE SSO		
 		$google = new Google_Bridge_Model();		
 
@@ -409,7 +409,7 @@ class User_Controller extends Template_Controller
 		}
 		
 		kohana::log('debug', '-> Redirecting to view...' );
-		$view -> facebook_login_url = $fb -> get_login_url();
+		//$view -> facebook_login_url = $fb -> get_login_url();
 		$view -> google_login_url = $google -> get_google_login_url();
 		$view -> referrerurl = $this -> input -> post('referral');
 				
@@ -1373,6 +1373,8 @@ class User_Controller extends Template_Controller
 	
 	public function _checkcaptcha(Validation $array, $field)
 	{
+		$valid = true;
+		return;
 		
 		$query = http_build_query([
 		 'secret' => '6Lf_v3MUAAAAANqZZNLdcnp61ux0aEXhCWkfPqkE',

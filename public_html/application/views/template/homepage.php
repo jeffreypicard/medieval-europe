@@ -85,6 +85,8 @@
 
 <body>
 
+<?php kohana::log('info', '-> In homepage.php...'); ?>
+
 <div class="container">
 
 	<div class="row" id="header">
@@ -177,5 +179,6 @@
 <?= html::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', FALSE); ?>
 <?= html::script('https://code.jquery.com/ui/1.11.4/jquery-ui.min.js', FALSE); ?>
 
+<?php kohana::log('info', '-> End of homepage.php...'); ?>
 </body>
 </html>
