@@ -16,7 +16,7 @@ $config['servername'] = 'Classic';
 * Admin email
 */
 
-$config['adminemail'] = 'support@eightyeightbrands.com';
+$config['adminemail'] = 'jeff@picardtechnologies.com';
 
 /**
  * Registrazioni abilitate?

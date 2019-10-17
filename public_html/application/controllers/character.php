@@ -388,6 +388,8 @@ class Character_Controller extends Template_Controller
 
 				$db -> query("set autocommit = 1");
 
+				Character_Model::modify_stat_d($char -> user_id, 'speedbonus', 100, null, null, true );
+
 			}
 			else
 			{

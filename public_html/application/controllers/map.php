@@ -54,6 +54,9 @@ class Map_Controller extends Template_Controller
 		$kingdoms = Configuration_Model::getcfg_kingdoms();
 		Database::instance() -> query("select '--regionpaths--'");
 		$region_paths = Configuration_Model::get_cfg_regions_paths2();		
+
+		//$regions_str = print_r($regions, true);
+		//kohana::log('info', $regions_str);
 				
 		// La chiesa del char ha il dogma per vedere le risorse?
 		
@@ -168,7 +171,7 @@ class Map_Controller extends Template_Controller
 			if ( $current_position -> type == "land" and in_array( $info['data'] -> type, array('mixed', 'sea')) )
 			{
 				kohana::log('debug', $current_position -> name . '-> adding sail link');
-				if ( array_key_exists( $current_position -> id, $regions_with_structures['harbor'] ) )
+				if ( !is_null($regions_with_structures['harbor']) && array_key_exists( $current_position -> id, $regions_with_structures['harbor'] ) )
 				{
 					$linktravel = true;
 					$linktravelaction = 'character/sail/' . $info['data'] -> id2;

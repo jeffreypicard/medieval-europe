@@ -90,10 +90,21 @@
 	<th class='center'><?=kohana::lang('regionview.normaltraveltime');?></th>
 	<th></th>
 	<?
+		kohana::log('info', count($linked_regions));
 		$i=0;
 		foreach ( $linked_regions as $linkedregionid => $linkedregion )
 		{  
-			if ($linkedregion['status'] != 'disabled')
+			/*
+			for ($linkedregion as $k => $v) {
+				kohana::log('info', "\t" . $k . "=>" . $v);
+			}
+			 */
+			if (!array_key_exists('status', $linkedregion)) {
+				kohana::log('error', "linkedregionid" . $linkedregionid . ":" . count($linkedregion));
+				$var = print_r($linkedregion, true);
+				kohana::log('error', $var);
+			}
+			else if ($linkedregion['status'] != 'disabled')
 			{
 			
 				( $i % 2 == 0 ) ? $class = 'alternaterow_1' : $class = '';
