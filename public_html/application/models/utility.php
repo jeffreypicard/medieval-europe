@@ -2,7 +2,11 @@
 
 use PHPMailer\PHPMailer\PHPMailer;
 //use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\OAuth;
 use PHPMailer\PHPMailer\Exception;
+use League\OAuth2\Client\Provider\Google;
+
+require 'vendor/autoload.php';
 
 class Utility_Model
 {
@@ -290,26 +294,47 @@ static function mail( $to, $subject, $body, $attachment = null, $unsubscribelink
 
 	require_once(dirname(realpath(__FILE__)) . "/../libraries/vendors/PHPMailer/src/PHPMailer.php");
 	require_once(dirname(realpath(__FILE__)) . "/../libraries/vendors/PHPMailer/src/SMTP.php");
+	require_once(dirname(realpath(__FILE__)) . "/../libraries/vendors/PHPMailer/src/OAuth.php");
 	require_once(dirname(realpath(__FILE__)) . "/../libraries/vendors/PHPMailer/src/Exception.php");
 
 	kohana::log("info", "Sending email to: " . $to);
 
+	$clientId = "";
+	$clientSecret = "";
+	$refreshToken = "";
+	$email = '';
+	$provider = new Google(
+	    [
+		'clientId' => $clientId,
+		'clientSecret' => $clientSecret,
+	    ]
+	);
 	$rc = true;
 	$mail = new PHPMailer(true);
 	$mail->isSMTP();
-	$mail->Host = '';
+	$mail->Host = 'smtp.gmail.com';
 	$mail->SMTPAuth = true;
-	$mail->Username = 'support@medieval-europe.eu';
-	$mail->Password = '';
-	$mail->SMTPDebug  = 0;
+	$mail->setOAuth(
+	    new OAuth(
+		[
+		    'provider' => $provider,
+		    'clientId' => $clientId,
+		    'clientSecret' => $clientSecret,
+		    'refreshToken' => $refreshToken,
+		    'userName' => $email,
+		]
+	    )
+	);
+	$mail->AuthType = 'XOAUTH2';
+	$mail->SMTPDebug  = 2;
   //$mail->Debugoutput = 'error_log';
-	//$mail->Port       = 465;
+	$mail->Port       = 587;
 	$mail->CharSet = 'UTF-8';
-	//$mail->SMTPSecure = 'ssl';
-	$mail->From = 'support@medieval-europe.eu';
-	$mail->FromName = 'Medieval-Europe Support';
+	$mail->SMTPSecure = 'tls';
+	$mail->From = '';
+	$mail->FromName = 'Medieval-Europe Unofficial Test Server';
 	$mail->addAddress($to);
-	$mail->addReplyTo('support@medieval-europe.eu', 'Medieval-Europe Support');
+	$mail->addReplyTo('', 'Medieval-Europe Unofficial Test Server');
 	$mail->isHTML(true);
 	$mail->WordWrap = 50;
 
