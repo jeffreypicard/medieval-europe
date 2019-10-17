@@ -20,10 +20,15 @@ try {
 	
 	$log->LogDebug('-> Recovering old capitals...');
 
+	/*
 	$urbino = mysql_query ("SELECT * FROM kingdoms WHERE name like '%urbino%'") or die (mysql_error());
 	if (mysql_num_rows($urbino)==0)
-		mysql_query("INSERT INTO `kingdoms` (`id`, `name`, `image`, `status`, `title`, `slogan`, `color`, `language1`, `language2`, `lastattacked`, `activityscore`, `forumurl`) VALUES (NULL, 'kingdoms.duchy-urbino', 'duchy-urbino', '', 'global.title_grandduke', '', '#7bc7ff', '', '', NULL, 0.00000, NULL);
+		#mysql_query("INSERT INTO `kingdoms` (`id`, `name`, `image`, `status`, `title`, `slogan`, `color`, `language1`, `language2`, `lastattacked`, `activityscore`, `forumurl`) VALUES (NULL, 'kingdoms.duchy-urbino', 'duchy-urbino', '', 'global.title_grandduke', '', '#7bc7ff', '', '', NULL, 0.00000, NULL);
+		mysql_query("INSERT INTO `kingdoms` (`name`, `image`, `status`, `title`, `slogan`, `color`, `language1`, `language2`, `lastattacked`, `activityscore`, `forumurl`) VALUES ('kingdoms.duchy-urbino', 'duchy-urbino', '', 'global.title_grandduke', '', '#7bc7ff', '', '', NULL, 0.00000, NULL);
 	") or die ( mysql_error());
+	 */
+
+	$log->LogDebug('-> updating regions...');
 	
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-normandia') where name = 'regions.avranches'") or die( mysql_error());	
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-serbia') where name = 'regions.beograde'") or die( mysql_error());
@@ -58,15 +63,20 @@ try {
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-sweden') where name = 'regions.ostergot-land'") or die( mysql_error());
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-sicilia') where name = 'regions.palermo'") or die( mysql_error());
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-francia') where name = 'regions.ile-de-france'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-ungheria') where name = 'regions.pest'") or die( mysql_error());
+	#$log->LogDebug('-> no error');
+	#mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-ungheria') where name = 'regions.pest'") or die( mysql_error());
+	#$log->LogDebug('-> no error');
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-boemia') where name = 'regions.praha'") or die( mysql_error());
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.republic-roma') where name = 'regions.roma'") or die( mysql_error());
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-savoia') where name = 'regions.savoy'") or die( mysql_error());
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.republic-siena') where name = 'regions.siena'") or die( mysql_error());
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-danimarca') where name = 'regions.sjaelland'") or die( mysql_error());
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.principality-valacchia') where name = 'regions.turnu'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-urbino') where name = 'regions.urbino'") or die( mysql_error());
+	#$log->LogDebug('-> no error');
+	#mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-urbino') where name = 'regions.urbino'") or die( mysql_error());
+	#$log->LogDebug('-> no error');
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-aragona') where name = 'regions.valencia'") or die( mysql_error());
+	$log->LogDebug('-> no error');
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.republic-venezia') where name = 'regions.venezia'") or die( mysql_error());
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.grand-duchy-lithuania') where name = 'regions.vilnius'") or die( mysql_error());
 
@@ -447,7 +457,7 @@ try {
 
 	// Rimuovo tutte le strutture
 	
-	mysql_query( "truncate table structures") or die (mysql_error()); 
+	#mysql_query( "truncate table structures") or die (mysql_error()); 
 	$log->LogDebug('-> Fixing diplomacy...');
 	
 	// Fix Capitals
@@ -462,7 +472,7 @@ try {
 		// pal. reale
 		mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
-		null, null, (select id from structure_types where type = 'royalpalace'),
+		null, null, (select id from structure_types where type = 'royalpalace_1'),
 		{$row['id']}, NULL, 'small')") or die(mysql_error());
 		
 		$royalpalaceid = mysql_insert_id();
@@ -470,7 +480,7 @@ try {
 		// castello
 		mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
-		null, {$royalpalaceid}, (select id from structure_types where type = 'castle'),
+		null, {$royalpalaceid}, (select id from structure_types where type = 'castle_1'),
 		{$row['id']}, NULL, 'small')") or die(mysql_error());
 		
 		$castleid = mysql_insert_id();
@@ -478,7 +488,7 @@ try {
 		// tribunale
 		mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
-		null, {$castleid}, (select id from structure_types where type = 'court'),
+		null, {$castleid}, (select id from structure_types where type = 'court_1'),
 		{$row['id']}, NULL, 'small')") or die(mysql_error());
 		
 		// barracks
@@ -489,12 +499,12 @@ try {
 		
 		mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
-		null, {$castleid}, (select id from structure_types where type = 'tavern'),
+		null, {$castleid}, (select id from structure_types where type = 'tavern_1'),
 		{$row['id']}, NULL, 'small')") or die(mysql_error());
 		
 		mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
-		null, {$castleid}, (select id from structure_types where type = 'market'),
+		null, {$castleid}, (select id from structure_types where type = 'market_1'),
 		{$row['id']}, NULL, 'small')") or die(mysql_error());
 		
 		$sql = "
@@ -511,13 +521,13 @@ try {
 			$log->LogDebug("Adding harbour in region: {$row['name']}");
 			mysql_query("insert into structures (
 			id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
-			null, null, (select id from structure_types where type = 'harbor'),
+			null, null, (select id from structure_types where type = 'harbor_1'),
 			{$row['id']}, NULL, 'small')") or die(mysql_error());
 		}
 		
 		mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
-		null, null, (select id from structure_types where type = 'dump'),
+		null, null, (select id from structure_types where type = 'dump_1'),
 		{$row['id']}, NULL, 'small')") or die(mysql_error());
 		
 	}
@@ -536,17 +546,18 @@ try {
 		
 		mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
-		null, null, (select id from structure_types where type = 'nativevillage'),
+		null, null, (select id from structure_types where type = 'nativevillage_1'),
 		{$row['id']}, NULL, 'small')") or die(mysql_error());
 		
 		mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
-		null, null, (select id from structure_types where type = 'dump'),
+		null, null, (select id from structure_types where type = 'dump_1'),
 		{$row['id']}, NULL, 'small')") or die(mysql_error());
 		
 	}
 	
 	// Fix Religious HQ
+	$log->LogDebug('Fixing Religious HQ 1...');
 	
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
@@ -555,6 +566,7 @@ try {
 	
 	$parentstructure_id = mysql_insert_id();
 	
+	$log->LogDebug('Fixing Religious HQ 2...');
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_2' and church_id = 1),
@@ -562,6 +574,7 @@ try {
 	
 	$parentstructure_id = mysql_insert_id();
 	
+	$log->LogDebug('Fixing Religious HQ 3...');
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_3' and church_id = 1),
@@ -569,12 +582,15 @@ try {
 	
 	$parentstructure_id = mysql_insert_id();
 	
+	$log->LogDebug('Fixing Religious HQ 4...');
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_4' and church_id = 1),
 		(select id from regions where name = 'regions.roma'), NULL, 'small')") or die(mysql_error());
 	
 	
+	/*
+	$log->LogDebug('Fixing Religious HQ 5...');
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, null, (select id from structure_types where type = 'religion_1' and church_id = 3),
@@ -582,6 +598,7 @@ try {
 		
 	$parentstructure_id = mysql_insert_id();
 	
+	$log->LogDebug('Fixing Religious HQ 6...');
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_2' and church_id = 3),
@@ -589,6 +606,7 @@ try {
 	
 	$parentstructure_id = mysql_insert_id();
 	
+	$log->LogDebug('Fixing Religious HQ 7...');
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_3' and church_id = 3),
@@ -596,11 +614,14 @@ try {
 	
 	$parentstructure_id = mysql_insert_id();
 	
+	$log->LogDebug('Fixing Religious HQ 8...');
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_4' and church_id = 3),
 		(select id from regions where name = 'regions.turnu'), NULL, 'small')") or die(mysql_error());
+	 */
 	
+	$log->LogDebug('Fixing Religious HQ 9...');
 
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
@@ -609,6 +630,7 @@ try {
 		
 	$parentstructure_id = mysql_insert_id();
 	
+	$log->LogDebug('Fixing Religious HQ 10...');
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_2' and church_id = 5),
@@ -616,6 +638,7 @@ try {
 	
 	$parentstructure_id = mysql_insert_id();
 	
+	$log->LogDebug('Fixing Religious HQ 11...');
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_3' and church_id = 5),
@@ -623,11 +646,13 @@ try {
 	
 	$parentstructure_id = mysql_insert_id();
 	
+	$log->LogDebug('Fixing Religious HQ 12...');
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_4' and church_id = 5),
 		(select id from regions where name = 'regions.cairo'), NULL, 'small')") or die(mysql_error());
 			
+	$log->LogDebug('Fixing Religious HQ 13...');
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, null, (select id from structure_types where type = 'religion_1' and church_id = 6),
@@ -635,6 +660,7 @@ try {
 	
 	$parentstructure_id = mysql_insert_id();
 	
+	$log->LogDebug('Fixing Religious HQ 14...');
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_2' and church_id = 6),
@@ -642,6 +668,7 @@ try {
 	
 	$parentstructure_id = mysql_insert_id();
 	
+	$log->LogDebug('Fixing Religious HQ 15...');
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_3' and church_id = 6),
@@ -649,6 +676,7 @@ try {
 	
 	$parentstructure_id = mysql_insert_id();
 	
+	$log->LogDebug('Fixing Religious HQ 16...');
 	mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_4' and church_id = 6),
@@ -663,13 +691,13 @@ try {
 	and   r.`type` != 'sea' 
 	and   not exists
 	(select * from structures where region_id = r.id and structure_type_id 
-	= (select id from structure_types where type = 'nativevillage'));"
+	= (select id from structure_types where type = 'nativevillage_1'));"
 		) or die (mysql_error());	
 	
 	while ( $row = mysql_fetch_assoc( $rset ) ) 
 		mysql_query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id) values (
-		null, null, (select id from structure_types where type = 'nativevillage'),
+		null, null, (select id from structure_types where type = 'nativevillage_1'),
 		{$row['id']}, NULL)") or die(mysql_error());
 		
 	// Rimuovo tutte le risorse.
