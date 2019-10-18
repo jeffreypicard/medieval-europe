@@ -688,7 +688,7 @@ try {
 	
 	$log -> LogDebug('Adding nativevillages to independent regions...');
 	$rset = mysql_query("
-	select distinct r.name, s.structure_type_id from regions r, structures s
+	select distinct r.id, r.name, s.structure_type_id from regions r, structures s
 	where r.kingdom_id = 37
 	and   s.region_id = r.id 
 	and   r.`type` != 'sea' 
