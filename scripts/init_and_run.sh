@@ -7,6 +7,8 @@ php5.6 /usr/bin/composer require league/oauth2-google
 cd /var/www/medieval-europe/public_html/application/models
 php5.6 /usr/bin/composer require league/oauth2-google
 
+sleep 10
+
 service apache2 start
 service mysql start
 service memcached start

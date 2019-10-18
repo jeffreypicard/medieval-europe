@@ -28,7 +28,7 @@ $config['registration'] = TRUE;
 * Send email
 */
 
-$config['sendnotifications'] = TRUE;
+$config['sendnotifications'] = FALSE;
 
 /*
 * multilogin_check
