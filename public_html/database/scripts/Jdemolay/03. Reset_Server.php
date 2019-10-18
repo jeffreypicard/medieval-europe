@@ -80,6 +80,7 @@ try {
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.republic-venezia') where name = 'regions.venezia'") or die( mysql_error());
 	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.grand-duchy-lithuania') where name = 'regions.vilnius'") or die( mysql_error());
 
+	/*
 	$log->LogDebug('-> Removing unwanted Kingdoms...');
 	
 	// Rimozione vecchi regni mergiati e relative regioni
@@ -143,10 +144,12 @@ try {
 	'kingdoms.kingdom-scozia',
 	'kingdoms.kingdom-sweden'
 	);") or die( mysql_error());
+	 */
 
+	#set status='disabled', kingdom_id = 37 
 	mysql_query("
 	update regions 
-	set status='disabled', kingdom_id = 37 
+	set kingdom_id = 37 
 	where name in 
 	(
 	'regions.forcalquier',
