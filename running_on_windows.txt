@@ -1,0 +1,31 @@
+1) If you don't have windows pro or enterprise, install docker toolbox https://docs.docker.com/toolbox/toolbox_install_windows/
+2) Run Docker Quickstart Terminal
+3) Note the ip address of the default machine that prints out in the terminal, something like 192.168.99.100
+4) In the terminal run the following commands
+    * docker pull gcr.io/me-test-server/server
+    * docker images (note the image id of the me test server)
+    * docker run -p 80:80 <image_id>
+        - This can take several minutes as there are some php libraries that need to be downloaded
+        - If you get any out of memory errors, stop the vm (docker-machine stop default)
+          open VirtualBox, increase the amount of memory to the vm, then start the vm again
+          (docker-machine start default).
+5) Go to ip address from step 3 in your browser.
+6) Email are disabled, so to create a user there's a bit of a process
+    * Open another docker quickstart terminal
+    * run docker container ls, note the container name
+    * run docker exec -it <container_name> bash
+    * run ls /var/www/medieval-europe/public_html/application/logs/
+      there will be a log in the with the current date in the name, i.e. 2019-10-20.log.php
+    * run tail -f /var/www/medieval-europe/public_html/application/logs/<date>.log.php
+    * Go back to your browser and create a user
+    * In the log information being printed out in the terminal there will be a section like the following
+2019-10-20 00:32:20 +00:00 --- debug: ------- REGISTER USER START -------
+2019-10-20 00:32:20 +00:00 --- debug: -> Not sending email because notifications are disabled.
+2019-10-20 00:32:20 +00:00 --- debug: ------- EMAIL BEGINS -------
+2019-10-20 00:32:20 +00:00 --- debug: subject: Welcome to Medieval Europe
+2019-10-20 00:32:20 +00:00 --- debug: Welcome to Medieval Europe. You just signed up with the following credentials: User: <username>, password: <password>. To confirm your email address and activate your account, please click on the following link: https://192.168.99.100/index.php/user/activate/1/5dabab148a6295.83280348 or copy it into the browser address bar. Thanks again for signing up at Medieval Europe.
+2019-10-20 00:32:20 +00:00 --- debug: ------- EMAIL ENDS -------
+2019-10-20 00:32:20 +00:00 --- debug: ------- REGISTER USER END -------
+
+    * After you finish the character creation process, you can follow the link printed out
+      (remember to replace https with http) to activate the user.
