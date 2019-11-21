@@ -61,8 +61,8 @@ class Batch_Model
 
 
 /**
-* calcola il bonus giornaliero in base
-* ai giocatori vivi nelle ultime 24h
+* calculate the daily bonus based
+* to the players alive in the last 24h
 * @param str $securitykey Security Key
 * @return none
 **/
@@ -83,7 +83,7 @@ class Batch_Model
 		$db = Database::instance();
 
 		///////////////////////////////////
-		// Daily revenue per Regno
+		// Daily revenue per Kingdom
 		///////////////////////////////////
 
 		$sql = "select k.id, k.name, count(c.name) active_residents
@@ -158,19 +158,19 @@ class Batch_Model
 
 		kohana::log('info', '-> Cleaning up database...');
 
-		// cancella righe dalle tabelle online
+		// delete rows from online tables
 
 
-		// structure events -- 1 mese
+		// structure events -- 1 month
 		kohana::log('info', '-> Cleaning up structure_events...');
 		Database::instance() -> query( "delete from structure_events where timestamp < ( unix_timestamp() - (1*30*24*3600))" );
-		// character events -- 15 gg
+		// character events -- 15 days
 		kohana::log('info', '-> Cleaning up character_events...');
 		Database::instance() -> query( "delete from character_events where timestamp < ( unix_timestamp() - (15*24*3600))" );
-		// character actions -- 15 gg
+		// character actions -- 15 days
 		kohana::log('info', '-> Cleaning up character_actions...');
 		Database::instance() -> query( "delete from character_actions where (status = 'completed' or status = 'canceled') and endtime < ( unix_timestamp() - (15*24*3600)) and character_id <> -1");
-		// character messages -- 1 mese
+		// character messages -- 1 month
 		kohana::log('info', '-> Cleaning up messages...');
 		Database::instance() -> query( "delete from messages where date < ( unix_timestamp() - (1*30*24*3600)) and archived = 'N' ") ;
 		kohana::log('info', '-> Cleaning up toplistvotes...');
@@ -200,7 +200,7 @@ class Batch_Model
 	}
 
 	/**
-	* calcola le statistiche
+	* calculate the statistics
 	* @param $securitykey security key
 	* @return none
 	*/
@@ -229,7 +229,7 @@ class Batch_Model
 			return;
 		}
 
-		// Gioielli
+		// Jewelry
 
 		$sql = "
 		select i.id, i.character_id char_id, ci.tag, ci.name from items i, cfgitems ci
@@ -308,7 +308,7 @@ class Batch_Model
 	}
 
 	/*
-	* Abbassa il livello di intossicazione
+	* Lower the level of intoxication
 	* @param securitykey Security key per i batch
 	* @return none
 	*/
@@ -437,7 +437,7 @@ class Batch_Model
 			$kingdomhistory -> end = 1956438000;
 			$kingdomhistory -> save();
 
-			// Aggiornamento capitale.
+			// Capital update.
 
 			$sql = "
 			UPDATE `regions`
@@ -448,11 +448,11 @@ class Batch_Model
 
 			Database::instance() -> query ($sql);
 
-			// aggiungo palazzo reale
+			// I add the royal palace
 
 			$sql = "INSERT INTO `structures` (`id`, `parent_structure_id`, `structure_type_id`, `region_id`, `character_id`, `state`, `start`, `end`, `history`, `customstorage`, `locked`, `attribute1`, `attribute2`, `attribute3`, `attribute4`, `attribute5`, `attribute6`, `size`, `description`, `image`, `message`) VALUES (NULL, NULL, 7, (select id from regions where name = '{$capitalname}'), NULL, 100.00, NULL, NULL, NULL, NULL, 0, '', NULL, NULL, NULL, NULL, NULL, '', '', '', '')";
 
-			// linka il castello al palazzo reale
+			// link the castle to the royal palace
 
 			Database::instance() -> query ($sql);
 
@@ -461,7 +461,7 @@ class Batch_Model
 			$castle -> parent_structure_id = $royalpalace -> id;
 			$castle -> save();
 
-			// configurazione tasse
+			// tax configuration
 
 			$sql = "
 			INSERT INTO `taxes` (`id` ,`tag` ,`type` ,`region_id` ,`kingdom_id` ,`name` ,`description` ,`value`)
@@ -483,7 +483,7 @@ class Batch_Model
 			$kingdom = ORM::factory('kingdom') -> where
 				('name', 'kingdoms.' . $newkingdomname ) -> find();
 
-			// configurazione diplomacy_relations
+			// configure diplomacy_relations
 
 			$sql = "SELECT *
 			FROM kingdoms_v
@@ -527,7 +527,7 @@ class Batch_Model
 	}
 
 	/**
-	* Manda avvisi per scadenza basic package
+	* Send basic package expiration notices
 	* @param string $securitykey SecurityKEY
 	* @return none
 	*/
@@ -584,7 +584,7 @@ class Batch_Model
 	}
 
 	/**
-	* Mergia 2 regni
+	* Merge 2 Kingdoms
 	* @params string $securitykey key
 	* @param string $kingdomsourcename Kingdom Source Name
 	* @param string $kingdomtargetname Kingdom Target Name
@@ -635,30 +635,30 @@ class Batch_Model
 				$royalpalacetarget -> id . "
 				where parent_structure_id =  " . $royalpalacesource -> id );
 
-			// rimuovi il Re.
+			// Remove the king
 
 			kohana::log('info', '-> MergeKingdoms: Dethroning King');
 
 			$kingdomsource -> dethrone_king();
 
-			// distruggi il palazzo reale
+			// destroy the royal palace
 
 			kohana::log('info', '-> MergeKingdoms: Destroying Royal Palace...');
 
 			$royalpalacesource -> destroy();
 
-			// rimuovi tutte le relazioni diplomatiche del regno rimosso
+			// remove all diplomatic relations of the removed kingdom
 
 			kohana::log('info', '-> MergeKingdoms: Removing All Diplomatic Relations...');
 
 			Database::instance() -> query("delete from diplomacy_relations where sourcekingdom_id = " . $kingdomsource -> id . " or
 			targetkingdom_id = " . $kingdomsource -> id );
 
-			// sposta le
+			// move
 
 			Database::instance() -> query ("update kingdom_forum_boards set kingdom_id = {$kingdomtarget -> id} where kingdom_id = {$kingdomsource -> id}");
 
-			// rimuovi il regno
+			// remove the kingdom
 
 			kohana::log('info', '-> MergeKingdoms: Cleaning up db...');
 			kohana::log('info', '-> MergeKingdoms: Cleaning up kingdom taxes...');
@@ -672,7 +672,7 @@ class Batch_Model
 			kohana::log('info', '-> MergeKingdoms: Cleaning up kingdom...');
 			//Database::instance() -> query("update kingdoms_history set end = unix_timestamp() where kingdom_id = " . $kingdomsource -> id );
 
-			// TODO: se nuovo regno, il vecchio finisce e inserire una riga per il nuovo nome
+			// TODO: if new realm, the old one ends and insert a line for the new name
 
 			if ( $newkingdomname != $kingdomtargetname )
 			{
@@ -683,7 +683,7 @@ class Batch_Model
 				Database::instance() -> query($sql);
 			}
 
-			// Muovi regioni
+			// Move regions
 
 			kohana::log('info', '-> MergeKingdoms: Moving regions...');
 
@@ -695,7 +695,7 @@ class Batch_Model
 				$region -> save();
 			}
 
-			// Evento
+			// Event
 
 			kohana::log('info', '-> MergeKingdoms: Adding event...');
 
@@ -951,7 +951,7 @@ class Batch_Model
 
 			}
 
-			// diamo i soldi.
+			// let's give the money.
 
 			foreach ( $referrals as $key => $value )
 			{
@@ -965,7 +965,7 @@ class Batch_Model
 
 
 
-					// evento
+					// event
 
 					Character_Event_Model::addrecord(
 						$referral -> id, 'normal', '__events.referralcoinsgiven;' . $value['total'] );
@@ -1022,8 +1022,8 @@ class Batch_Model
 
 		kohana::log('info', '-> ----- RECHARGING RESOURCES -----');
 
-		// seleziono tutte le strutture in un regno conquistato che hanno
-		// qualche risorsa da ricaricare
+		// I select all the structures in a conquered kingdom that have
+		// some resources to recharge
 
 		$sql = "
 		select s.id, r.id region_id, sr.resource, sr.current, sr.max, r.kingdom_id, k.name kingdom_name, r.name region_name, from_unixtime(sr.next_recharge)
@@ -1042,7 +1042,7 @@ class Batch_Model
 		)
 		";
 
-		// trovo tutte le risorse che sono in una regione con un castello che ha il trofro dump.
+		// I find all the resources that are in a region with a castle that has a trophy dump.
 
 		$resources = Database::instance() -> query( $sql );
 
