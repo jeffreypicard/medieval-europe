@@ -13,21 +13,21 @@ class Battle_Conquer_IR_Model extends Battle_Type_Model
 	var $be = null;
 	
 	/** 
-	* Esegue tutta la battaglia
+	* Performs the entire battle
 	* 
-	* @param par vettore di parametri	
-	* par[0]: obj gruppo che attacca
-	* par[1]: obj region da attaccare
-	* par[2]: obj battaglia
-	* @param test flag di test
+	* @param par vector of parameters	
+	* par[0]: obj attacking group
+	* par[1]: obj region to attack
+	* par[2]: obj battle
+	* @param test flag of test
 	* @return 
 	*/
 	
 	public function run( $par, &$battlereport, $test=false)
 	{
 		
-		// la parte transazionale è omessa perchè questa è l' unica battaglia
-		// che accade tramite azione.
+		// the transactional part is omitted because this is the only battle
+		// which happens by action.
 		
 		$this -> be = new Battle_Engine_Model();		
 		kohana::log('debug', '-> Starting Conquer IR battle.' );
@@ -41,10 +41,10 @@ class Battle_Conquer_IR_Model extends Battle_Type_Model
 	}		
 	
 	/** 
-	* Carica i due team
+	* Upload the two teams
 	* 
-	* @param par vettore di parametri
-	* @param test flag di test
+	* @param par vector of parameters
+	* @param test flag of test
 	* @return 
 	*/
 	
@@ -54,8 +54,8 @@ class Battle_Conquer_IR_Model extends Battle_Type_Model
 		$attackers = array();
 		$defenders = array();
 		
-		// aggiungo i membri del gruppo che sono 
-		// nella regione da attaccare (meno quelli in convalescenza...)
+		// I add the members of the group that I am 
+		// in the region to attack (minus those in convalescence ...)
 		
 		$group_members = $this -> par[0] -> get_all_members( 'joined', $this -> par[0] -> id ); 		
 		foreach ( $group_members as $group_member )
@@ -77,12 +77,12 @@ class Battle_Conquer_IR_Model extends Battle_Type_Model
 			
 		}		
 		
-		// metti il capitano di default		
+		// put the default captain		
 		$captain = $this -> be -> loadcharbattlecopy( $this -> par[0] -> character -> id );
 		$attackers[$captain['char']['key']] = $captain;
 		
-		// creo nativi...
-		// cerco quante regioni ha il regno dell' organizzatore del gruppo
+		// I create natives ...
+		// I look for how many regions the realm of the group organizer has
 		
 		$db = Database::instance();
 		$sql = "select count(*) regions 
@@ -97,7 +97,7 @@ class Battle_Conquer_IR_Model extends Battle_Type_Model
 		$pointstodistribute = intval($this -> compute_native_stats ( $nregions 	) );
 		kohana::log('debug', 'points to distribute: ' . $pointstodistribute ); 
 		
-		// creo nativi
+		// I create natives
 		
 		for ($i=1;$i<=$nativenumbers;$i++)
 		{
@@ -124,7 +124,7 @@ class Battle_Conquer_IR_Model extends Battle_Type_Model
 			$native['char']['faithlevel'] = 0;
 		
 			/////////////////////////////////
-			// Arma gli NPC
+			// Arm the NPCs
 			/////////////////////////////////
 			
 			$weapon = null;
@@ -155,7 +155,7 @@ class Battle_Conquer_IR_Model extends Battle_Type_Model
 			
 			
 			/////////////////////////////////
-			// Distribuisci stats
+			// Distribute stats
 			/////////////////////////////////
 			
 			$stats = $this -> distribute_stats( $points ); 
@@ -193,10 +193,10 @@ class Battle_Conquer_IR_Model extends Battle_Type_Model
 	}
 	
 	/** 
-	* calcola i numeri di nativi
+	* calculate number of natives
 	* 
-	* @param n. regioni	
-	* @return n. nativi
+	* @param n. regions	
+	* @return n. natives
 	*/
 	
 	public function compute_native_numbers( $nregions )
@@ -217,7 +217,7 @@ class Battle_Conquer_IR_Model extends Battle_Type_Model
 	}
 	
 	/** 
-	* Combatte
+	* Combat
 	* 
 	* @param none
 	* @return none
@@ -262,10 +262,10 @@ class Battle_Conquer_IR_Model extends Battle_Type_Model
 	}
 	
 	/** 
-	* Calcola il totale statistiche da distribuire
+	* Calculate the total statistics to be distributed
 	* 
-	* @param n. regioni	
-	* @return n. nativi
+	* @param n. region	
+	* @return n. native
 	*/
 	
 	public function compute_native_stats( $nregions )
@@ -279,7 +279,7 @@ class Battle_Conquer_IR_Model extends Battle_Type_Model
 	}
 	
 	/** 
-	* Verifica se il capitano può attaccare
+	* Check if the captain can attack
 	* 
 	* @param $group
 	* @return none
@@ -287,8 +287,8 @@ class Battle_Conquer_IR_Model extends Battle_Type_Model
 	
 	function iscaptainallowedtoattack( $group )
 	{
-		// controlliamo se il capitano ha con sè un ordine del re per 
-		// attaccare questa regione e se è ancora valido.				
+		// we check if the captain has with him an order of the king for 
+		// attack this region and if it is still valid.				
 		
 		$db = Database::instance();
 		$sql = "select i.* from items i, characters c, cfgitems ci
@@ -314,7 +314,7 @@ class Battle_Conquer_IR_Model extends Battle_Type_Model
 	}
 	
 	/** 
-	* Aftermath della battaglia
+	* Aftermath of the battle
 	* 
 	* @param none
 	* @return none
@@ -324,7 +324,7 @@ class Battle_Conquer_IR_Model extends Battle_Type_Model
 	{
 	
 		///////////////////////////
-		// stabilisco il vincitore
+		// I set the winner
 		///////////////////////////
 		
 		$attackerwins = $defenderwins = 0;		
@@ -378,16 +378,16 @@ class Battle_Conquer_IR_Model extends Battle_Type_Model
 	}
 	
 	/**
-	* Distribuisce il totale dei punti tra
-	* le principali stat
-	* @param $total totale punti da distribuire
-	* @return array con stat distribuite
+	* Distributes the total points between
+	* the main statutes
+	* @param $total total points to be distributed
+	* @return array with distributed stat
 	*/
 	
 	function distribute_stats ( $total )
 	{
 	
-		// sistemo la strength
+		// I fix the strength
 		$r = rand(1,20);
 		$a['str'] = $r;
 		$total -= $r;
