@@ -16,7 +16,7 @@ class Skill_Model
 	function add( $character )
 	{
 		
-		// se il char ha già troppi, non aggiungere skill.
+		// if the char already has too many, don't add skills.
 		
 		if ( Skill_Model::get_character_skillcount( $character -> id ) >= 3 )
 		{
@@ -51,8 +51,8 @@ class Skill_Model
 	}
 	
 	/*
-	* Mostra un div con le informazioni dello skill
-	* @param int $character_id ID Personaggio
+	* Show a div with the information of the skill
+	* @param int $character_id ID Character
 	* @return str $html
 	*/
 	
@@ -95,10 +95,10 @@ class Skill_Model
 	function getDecreasefactor() { return $this->decreasefactor; }
 
 	/*
-	* Torna la proficiency dello skill 
-	* per il personaggio
+	* The proficiency of the skill is back 
+	* for the character
 	* @param int $character_id 
-	* @return int $proficiency Proficienza nello skill
+	* @return int $proficiency Proficiency in the skill
 	*/
 	
 	function getProficiency( $character_id )
@@ -115,7 +115,7 @@ class Skill_Model
 	}
 
 	/*
-	* Rimuove uno skill
+	* Removes a skill
 	* @param obj $char Character_Model
 	* @return boolean
 	*/	
@@ -146,15 +146,15 @@ class Skill_Model
 	}
 	
 	/*
-	* Riduce proficiency
-	* @param int $character_id ID Personaggio		
+	* Reduces proficiency
+	* @param int $character_id ID Character		
 	* @return none
 	*/
 	
 	function decreaseproficiency( $character_id )
 	{
 		
-		// in meditazione gli skill non decadono
+		// in meditation the skills do not decay
 		
 		if ( Character_Model::is_meditating( $character_id  ) )
 			return;
@@ -181,8 +181,8 @@ class Skill_Model
 	
 	
 	/*
-	* Ritorna se un personaggio ha uno skill o meno
-	* @param int $character_id ID Personaggio
+	* Return if a character has a skill or not
+	* @param int $character_id ID Character
 	* @param str $tag Tag
 	* @return boolean
 	*/
@@ -207,9 +207,9 @@ class Skill_Model
 	
 			
 	/*
-	* Conta gli skill di un char
-	* @param int $character_id ID Personaggio
-	* @return int numero skills
+	* Count the skills of a char
+	* @param int $character_id ID Character
+	* @return int number skills
 	*/
 	
 	function get_character_skillcount( $character_id )
@@ -226,10 +226,10 @@ class Skill_Model
 	
 	
 	/*
-	* Incrementa proficiency
-	* @param int $character_id ID Personaggio		
-	* @param int $delta numero da aggiungere
-	* @param boolean $replace se true, rimpiazza valore
+	* Increase proficiency
+	* @param int $character_id ID Character		
+	* @param int $delta number to add
+	* @param boolean $replace if true, replace value
 	* @return none
 	*/
 	
