@@ -5,10 +5,10 @@ class Structure_Event_Model extends ORM
   protected $sorting = array('id' => 'desc');
 
 	/**
-	* Funzione che aggiunge un annuncio o un evento alla struttura
-	* @param structure_id id struttura	
-	* @param text Testo dell' annuncio
-	* class classe CSS dell' annuncio. Per ora esiste solo evidence
+	* Function that adds an announcement or event to the structure
+	* @param structure_id id structure	
+	* @param text Text of the announcement
+	* class CSS class of the announcement. For now, only evidence exists
 	*/
 	
 	public function add( $structure_id, $text, $eventclass = null )
@@ -24,10 +24,10 @@ class Structure_Event_Model extends ORM
 	}
 	
 	/**
-	* Funzione che aggiunge un annuncio o un evento alla struttura
-	* @param structure_id id struttura	
-	* @param text Testo dell' annuncio
-	* class classe CSS dell' annuncio. Per ora esiste solo evidence
+	* function that adds an announcement or event to the structure
+	* @param structure_id id structure	
+	* @param text Text of the announcement
+	* class CSS class of the announcement. For now, only evidence exists
 	*/
 	
 	public function newadd( $structure_id, $text, $eventclass = null )
