@@ -19,7 +19,7 @@ class Quest_Crafting_Model extends Quest_Model
 			return false;			
 		}
 		
-		// aggiunge bottega Locanda
+		// adds workshop Inn
 		
 		
 		$structure = StructureFactory_Model::create('chef_1', null);
@@ -34,7 +34,7 @@ class Quest_Crafting_Model extends Quest_Model
 		$item -> quality = 10;		
 		$item -> additem( 'character', $character -> id , 1 );
 		
-		// aggiunge gli items
+		// add items
 		
 		$item = Item_Model::factory( null, 'wheat_bag' );		
 		$item -> additem( 'structure', $structure -> id , 4 );
@@ -42,7 +42,7 @@ class Quest_Crafting_Model extends Quest_Model
 		$item = Item_Model::factory( null, 'wood_piece' );		
 		$item -> additem( 'structure', $structure -> id , 2 );		
 		
-		// da un bonus velocità
+		// from a speed bonus
 				
 		
 		Character_Model::modify_stat_d(
@@ -106,7 +106,7 @@ class Quest_Crafting_Model extends Quest_Model
 	{
 	
 		$char -> modify_coins( +80, 'questreward' );
-		// distruggi il negozio regalato (doniamo le scarpe)
+		// destroy the structure (we donate the extra resources)
 		
 		$shop = ORM::factory('structure', $instance -> spare3 );
 		if ( $shop -> loaded )
