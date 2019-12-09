@@ -14,16 +14,16 @@ class CA_Excommunicateplayer_Model extends Character_Action_Model
 	protected $immediate_action = false;
 	protected $fpcost = 0;
 	
-	protected $basetime       = 6;  // 6 ore
-	protected $attribute      = 'intel';  // attributo forza
-	protected $appliedbonuses = array ( 'workerpackage' ); // bonuses da applicare
+	protected $basetime       = 6;  // 6 hours
+	protected $attribute      = 'intel';  // attribute strength
+	protected $appliedbonuses = array ( 'workerpackage' ); // bonuses to apply
 	
-	// L'azione richiede che il personaggio indossi
-	// un determinato equipaggiamento
+	// The action requires the character to wear
+	// certain equipment
 	
 	protected $requiresequipment = true;
 	
-	// Equipaggiamento o vestiario necessario in base al ruolo
+	// Equipment or clothing needed based on the role
 	
 	protected $equipment = array
 	(
@@ -140,15 +140,15 @@ class CA_Excommunicateplayer_Model extends Character_Action_Model
 	
 	
 	
-	// Effettua tutti i controlli relativi al move, sia quelli condivisi
-	// con tutte le action che quelli peculiari del move
+	// Perform all the controls related to the move, both those shared
+	// with all the actions that those peculiar to the move
 	// @input: 
-	// $par[0] = oggetto char che invoca l' azione
-	// $par[1] = oggetto char che subisce l' azione
-	// $par[2] = struttura da cui parte l' azione
-	// $par[3] = motivazione
-	// @output: TRUE = azione disponibile, FALSE = azione non disponibile
-	//          $messages contiene gli errori in caso di FALSE
+	// $par[0] = char object that invokes the action
+	// $par[1] = char object that undergoes action
+	// $par[2] = structure from which the action starts
+	// $par[3] = motivation
+	// @output: TRUE = action available, FALSE = action not available
+	//          $messages contains errors in case of FALSE
 	
 	protected function check( $par, &$message )
 	{ 
@@ -163,11 +163,11 @@ class CA_Excommunicateplayer_Model extends Character_Action_Model
 		if ( $par[3] == '' )
 		 { $message = Kohana::lang("ca_excommunicateplayer.reasonismandatory"); return false; }				
 		
-		// controllo parametri URL
+		// parameter control URL
 		if ( !$par[1] -> loaded or !$par[2] -> loaded or $par[2] -> region -> id != $par[0] -> position_id )
 		{ $message = Kohana::lang("global.operation_not_allowed"); return false; }				
 		 
-		// controllo faith points
+		// control faith points
 		$this -> fpcost = $this -> get_neededfp ( $par ); 
 		$fppoints = Structure_Model::get_stat_d( $par[2] -> id, 'faithpoints' ) ;		
 		if ( !$fppoints -> loaded or $fppoints -> value < $this -> fpcost )
@@ -178,21 +178,21 @@ class CA_Excommunicateplayer_Model extends Character_Action_Model
 		if ( !$fl -> loaded or $fl -> value < self::FAITHLEVELREQUESTED )
 		{ $message = Kohana::lang("religion.faithleveltoolow", self::FAITHLEVELREQUESTED ); return false; }
 		
-		// Controllo che il char abbia l'energia e la sazieta' richiesti
+		// Check that the char has the energy and the satiation required
 		if (
 			$par[0] -> energy < self::DELTA_ENERGY  or
 			$par[0] -> glut < self::DELTA_GLUT )
 		{ $message = Kohana::lang("charactions.notenoughenergyglut"); return false; }		
 				
-		// Controllo che il char target sia della stessa chiesa
+		// Check that the char target is from the same church
 		if ( $par[2] -> structure_type -> church_id != $par[1] -> church_id )
 		{   $message = Kohana::lang("global.error-charnotcorrectchurch"); return false; }		
 		
-		// controllo scroll presente
+		// scroll control present
 		if ( Character_Model::has_item( $par[0]->id, 'paper_piece', 1 ) == false )
 		{   $message = kohana::lang('charactions.paperpieceneeded'); return false; }		
 		
-		// il giocatore non può avere ruoli religiosi.
+		// the player cannot have religious roles.
 		$role = $par[1] -> get_current_role();
 		if ( !is_null($role) and $role -> get_roletype() == 'religious' )
 		{   $message = Kohana::lang("ca_excommunicateplayer.error-playerhasreligiousrole"); return false; }				
@@ -211,10 +211,10 @@ class CA_Excommunicateplayer_Model extends Character_Action_Model
 		$this -> endtime = $this -> starttime + $timeaction;			
 		$this -> save();
 		
-		// rimuovi fp points
+		// remove fp points
 		$par[2] -> modify_fp( - $this -> fpcost, 'excommunication' );
 				
-		// rimuovi un paper
+		// remove a paper
 		$item = Item_Model::factory(null, 'paper_piece');
 		$item -> removeitem( "character", $par[0] -> id, 1);
 		
@@ -223,13 +223,13 @@ class CA_Excommunicateplayer_Model extends Character_Action_Model
 		return true;
 	}
 
-	// Esecuzione dell' azione. 
-	// Questa funzione viene chiamata quando viene invocata una 
-	// complete_expired_action e gestisce le azioni
-	// inserite nella character_actions
-	// - si caricano i parametri dal database
-	// - si esegue l' azione in base ai parametri
-	// - si mette l' azione in stato completed
+	// Implementation of the action. 
+	// This function is called when one is invoked 
+	// complete_expired_action and manages the actions
+	// put in the character_actions
+	// - the parameters are loaded from the database
+	// - the action is performed according to the parameters
+	// - you put the action in completed status
 	
 	public function complete_action( $data )
 	{
@@ -237,11 +237,11 @@ class CA_Excommunicateplayer_Model extends Character_Action_Model
 		$char = ORM::factory('character', $data -> character_id );
 		$target = ORM::factory('character', $data -> param1 );
 		
-		// Consumo degli items/vestiti indossati
+		// Consumption of items / clothes worn
 		Item_Model::consume_equipment( $this->equipment, $char );
 		
 		///////////////////////////////////////////////////////////////////
-		// Sottraggo l'energia e la sazietà al char
+		// I take energy and satiety from char
 		///////////////////////////////////////////////////////////////////
 				
 		$char -> modify_energy ( - self::DELTA_ENERGY, false, 'excommunicate' );
@@ -252,13 +252,13 @@ class CA_Excommunicateplayer_Model extends Character_Action_Model
 		$afp_decrement = 0;
 	
 		//////////////////////////////////////////////////////////////////////
-		// Diminuisci il FL del target (100%)
+		// Decrease the target FL (100%)
 		//////////////////////////////////////////////////////////////////////
 		
 		$target -> modify_faithlevel( $fl_newvalue, true );
 		
 		//////////////////////////////////////////////////////////////////////
-		// Diminuisci i faith point accumulati
+		// Decrease the accumulated faith points
 		//////////////////////////////////////////////////////////////////////
 				
 		$contributedfps = $target -> get_stats( 'fpcontribution', $target -> church_id );		
@@ -272,7 +272,7 @@ class CA_Excommunicateplayer_Model extends Character_Action_Model
 				true );
 		
 		//////////////////////////////////////////////////////////////////////
-		// Aggiungi statistica di Scomunica
+		// Add Excommunication statistic
 		//////////////////////////////////////////////////////////////////////				
 		
 		$target -> modify_stat( 
@@ -283,7 +283,7 @@ class CA_Excommunicateplayer_Model extends Character_Action_Model
 			true );
 				
 		//////////////////////////////////////////////////////////////////////
-		// Scomunica
+		// Excommunication
 		//////////////////////////////////////////////////////////////////////				
 		
 		$target -> church_id = 4;
@@ -340,11 +340,11 @@ class CA_Excommunicateplayer_Model extends Character_Action_Model
 	}
 	
 	/**
-	* Costo in FP - dipende dalla anzianità del char
+	* Cost in FP - depends on the seniority of the char
 	*/
 	
 	/**
-	* Costo in FP - dipende dalla fedeltà del char (AFP accumulati)
+	* Cost in FP - depends on the fidelity of the char (AFP accumulated)
 	*/
 	
 	protected function get_neededfp( $par )
