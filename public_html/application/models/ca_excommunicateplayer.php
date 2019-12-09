@@ -3,7 +3,7 @@
 class CA_Excommunicateplayer_Model extends Character_Action_Model
 {
 	
-	// Costanti	
+	// Constants	
 	
 	const DELTA_GLUT = 36;
 	const DELTA_ENERGY = 50;
