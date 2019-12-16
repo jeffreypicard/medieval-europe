@@ -7,14 +7,14 @@ class CA_Declarewar_Model extends Character_Action_Model
 	
 	protected $immediate_action = true;
 	
-	// Effettua tutti i controlli relativi all' azione, sia quelli condivisi
-	// con tutte le action che quelli peculiari 
-	// @input: array di parametri
-	// par[0]: oggetto char
-	// par[1]: oggetto regno a cui si dichiara guerra
-	// par[2]: struttura palazzo reale
-	// @output: TRUE = azione disponibile, FALSE = azione non disponibile
-	//          $message contiene il messaggio di ritorno	
+	// Perform all the controls related to the action, both those shared
+	// with all the actions that peculiar ones
+	// @input: array of parameters
+	// par[0]: char object
+	// par[1]: realm object to which war is declared
+	// par[2]: royal palace structure
+	// @output: TRUE = action available, FALSE = action not available
+	//          $message contains the return message	
 	
 	protected function check( $par, &$message )
 	{ 					
@@ -36,7 +36,7 @@ class CA_Declarewar_Model extends Character_Action_Model
 			return false;			
 		}
 		
-		// control: to declare war you must have declared hostile at least 48 hours
+		// control: to declare war you must not have declared hostile diplomatic realtion under at least 48 hours
 		
 		$dr = Diplomacy_Relation_Model::get_diplomacy_relation( $par[0] -> region -> kingdom_id, $par[1] -> id );
 		
