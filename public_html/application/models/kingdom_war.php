@@ -4,8 +4,8 @@ class Kingdom_War_Model extends ORM
 {
 	
 	/*
-	* Termina una guerra 
-	* @param str $reason (Ragione per cui è terminata)
+	* End a war 
+	* @param str $reason (Reason for which it is terminated)
 	* @return none 
 	*/
 
