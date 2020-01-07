@@ -3,33 +3,33 @@
 
 class CA_Curehealth_Model extends Character_Action_Model
 {
-	// Glut ed energia necessari per eseguire l'azione
+	// Glut and energy needed to perform the action
 	const DELTA_GLUT = 10;
 	const DELTA_ENERGY = 10;
-	// Punti fede necessari per eseguire l'azione
-	// Devono essere presenti nella struttura governata dal sacerdote
+	// Faith points required to perform the action
+	// They must be present in the structure governed by the priest
 	const REQUESTEDFP = 50;
 	
-	// Livello di fede minima richiesti al char che viene curato
-	// e al sacerdote che esegue le cure
+	// Minimum level of faith required from the char being treated
+	// and to the priest who performs the treatments
 	/*const CHAR_FAITHLEVELREQUESTED = 75;*/
 	const PRIEST_FAITHLEVELREQUESTED = 90;
 	
-	// Azione è cancellabile?
+	// Is the action cancelable
 	protected $cancel_flag = true;
-	// Azione non immediata
+	// Not immediate action
 	protected $immediate_action = false;
 
 	protected $basetime       = 2;  
-	protected $attribute      = 'intel';  // attributo intelligenza
-	protected $appliedbonuses = array ( 'workerpackage' ); // bonuses da applicare
+	protected $attribute      = 'intel';  // intelligence attribute
+	protected $appliedbonuses = array ( 'workerpackage' ); // bonuses to be applied
 
-	// L'azione richiede che il personaggio indossi
-	// un determinato equipaggiamento
+	// The action requires the character to wear
+	// a certain equipment
 	protected $requiresequipment = true;
 	protected $controlledstructure = null;
 
-	// Equipaggiamento o vestiario necessario in base al ruolo
+	// Equipment or clothing needed by role
 	protected $equipment = array
 	(
 		'church_level_1' => array
@@ -121,13 +121,13 @@ class CA_Curehealth_Model extends Character_Action_Model
 	);
 	
 	
-	// Effettua tutti i controlli relativi alla cura malattia, sia quelli condivisi
-	// con tutte le action che quelli peculiari della cura
+	// Carries out all checks relating to disease treatment, both shared
+	// with all the actions that those peculiar to the cure
 	// @input: 
-	// $par[0] = char che cura
-	// $par[1] = char che è curato
-	// @output: TRUE = azione disponibile, FALSE = azione non disponibile
-	//          $messages contiene gli errori in caso di FALSE
+	// $par[0] = char who heals
+	// $par[1] = char who is healed
+	// @output: TRUE = stock available, FALSE = action not available
+	//          $messages contains errors in case of FALSE
 	
 	protected function check( $par, &$message )
 	{ 
@@ -135,20 +135,20 @@ class CA_Curehealth_Model extends Character_Action_Model
 		
 		$has_dogma_bonus = Church_Model::has_dogma_bonus($par[0] -> church_id, 'curehealthextended');	
 				
-		// Check: controlli modello padre (check_equipment)
+		// Check: controls parent model (check_equipment)
 		if ( ! parent::check( $par, $message, $par[0] -> id, $par[1] -> id ) )					
 			return false;
 		
-		// Check: il char che cura non ha un ruolo religioso
+		// Check: the char that cures does not have a religious role
 		if ( ! $par[0] -> has_religious_role() )
 		{ $message = Kohana::lang("global.operation_not_allowed"); return false; }		
 		
 		$role = $par[0] -> get_current_role();		
 		$this -> controlledstructure = $role -> get_controlledstructure();  
 		
-		// Check: char che cura non esiste
-		// Check: char che viene curato non esiste
-		// Check: Struttura dove si cura non esiste
+		// Check: char who cures does not exist
+		// Check: char that is cured does not exist
+		// Check: Structure where cure is not available
 		
 		if
 		( 
@@ -158,8 +158,8 @@ class CA_Curehealth_Model extends Character_Action_Model
 		{ $message = Kohana::lang("global.operation_not_allowed"); return false; }	
 
 		
-		// Check: il char che cura non ha energia sufficiente
-		// Check: il char che cura non ha sazietà sufficiente
+		// Check: the char that cures does not have enough energy
+		// Check: the char who cures does not have enough glut
 		if
 		(
 			$par[0] -> energy < (self::DELTA_ENERGY)  or
@@ -167,13 +167,13 @@ class CA_Curehealth_Model extends Character_Action_Model
 		)
 		{ $message = Kohana::lang("charactions.notenoughenergyglut"); return false; }
 		
-		// Check: il curante non ha livello fede sufficiente
+		// Check: the caregiver does not have sufficient faith level
 		$fl = $par[0] -> get_stat( 'faithlevel' );
 		if ( $fl -> value < self::PRIEST_FAITHLEVELREQUESTED )
 		{ $message = Kohana::lang("global.error-charisnotfaithfulenough", self::PRIEST_FAITHLEVELREQUESTED); return false; }
 		
-		// Check: la chiesa non ha il bonus dogma
-		// Check: i char non sono nella stessa regione della struttura religiosa		
+		// Check: the church does not have the dogma bonus
+		// Check: the chars are not in the same region as the religious structure		
 		if 
 		( 
 			! $has_dogma_bonus and
@@ -186,7 +186,7 @@ class CA_Curehealth_Model extends Character_Action_Model
 			return false; 
 		}
 				
-		// Check: i char sono in regioni differenti
+		// Check: the chars are in different regions
 		
 		if ( $par[0] -> position_id != $par[1] -> position_id )
 		{ 
@@ -194,34 +194,34 @@ class CA_Curehealth_Model extends Character_Action_Model
 			return false; 
 		}	
 						
-		// Check: il char che viene curato è impegnato in un'altra azione
-		// a meno che sia recovery
+		// Check: the char being treated is engaged in another action
+		// unless it's recovery
 		
 		$pendingaction = Character_Action_Model::get_pending_action( $par[1] ); 
 		if ( !is_null( $pendingaction ) and Character_Model::is_recovering( $par[1] -> id ) == false )		
 		{ $message = Kohana::lang("global.error-characterisbusy", $par[1] -> name ); return false; }
 				
-		// Check: la struttura non ha abbastanza FP per curare il char
+		// Check: the structure does not have enough FP to cure the char
 		$fp = Structure_Model::get_stat_d( $this -> controlledstructure -> id, 'faithpoints' ); 		
 		if ( ! $fp -> value or	$fp -> value < self::REQUESTEDFP )
 		{ $message = Kohana::lang("global.error-notenoughfp", self::REQUESTEDFP); return false; }
 		
-		// Check: Il curatore ha il medical kit?
+		// Check: Does the one who cures have the medical kit?
 		if ( ! Character_Model::has_item( $par[0] -> id, 'medicalkit') )
 		{ $message = Kohana::lang("ca_cure.error_no_medikit" ); return false; }
 		
-		// Check: la religione non ha il bonus dogma
-		// Check: il sacerdote è di livello 1,2 o 3		
+		// Check: religion has no dogma bonus
+		// Check: the priest is level 1,2,3 or 4		
 		
 		if 
 		(
 			! $has_dogma_bonus and
-			in_array ($role->tag, array('church_level_1', 'church_level_2', 'church_level_3'))
+			in_array ($role->tag, array('church_level_1', 'church_level_2', 'church_level_3', 'church_level_4'))
 		)
 		{ $message = Kohana::lang("global.operation_not_allowed"); return false; }
 		
-		// Check: il char che deve essere curato è ateo 
-		// Check: la chiesa non ha il bonus dogma
+		// Check: the char to be treated is an atheist 
+		// Check: the church does not have the dogma bonus
 		if 
 		(
 			$par[1] -> church -> name == 'nochurch' and ! $has_dogma_bonus
@@ -229,7 +229,7 @@ class CA_Curehealth_Model extends Character_Action_Model
 		{ $message = Kohana::lang("ca_cure.error-cantcureatheist"); return false; }	
 		
 		
-		// Check: il personaggio da curare ha una religione diversa dal char che cura		
+		// Check: the character to be treated has a religion different from the char he is healing		
 		if
 		(
 			$par[1] -> church_id != $par[0] -> church_id 
@@ -238,30 +238,30 @@ class CA_Curehealth_Model extends Character_Action_Model
 		)
 		{ $message = Kohana::lang("ca_cure.error-cantcuredifferentfaithfollower"); return false; }				
 		
-		// Tutti i checks sono stati superati
+		// All checks have been passed
 		
 		return true;
 	}
 
 	/*
-	* Funzione per l'inserimento dell'azione nel DB.
-	* Questa funzione appende solo una azione _non la esegue_
-	* @param  array    $par       $par[0] = char che cura, $par[1] = char che viene curato
-	*                             $par[1] = struttura del char che cura
-	* @output boolean             TRUE = azione disponibile, FALSE = azione non disponibile
-	* @output string   $messages  contiene gli errori in caso di FALSE
+	* Function for inserting the action into the DB.
+	* This function only has one action _not executes it_
+	* @param  array    $par       $par[0] = char who cures, $par[1] = char who is cured
+	*                             $par[1] = structure of the char that cures
+	* @output boolean             TRUE = stock available, FALSE = action not available
+	* @output string   $messages  contains errors in case of FALSE
 	*/
 	
 	protected function append_action( $par, &$message )
 	{
 		
-		// Carico l'eventuale bonus sul cura malattie
+		// I charge the eventual disease cure bonus
 		$church = ORM::factory('church', $this -> controlledstructure->structure_type->church_id );
 		
 		
 		$has_dogma_bonus = Church_Model::has_dogma_bonus($this -> controlledstructure->structure_type->church_id,'curehealthextended');
 		
-		// Imposto il tempo di cura in base a: ateo / fedele
+		// Set the cure time based on: atheist / faithful
 		if 
 		(
 			$par[1] -> church -> name == 'nochurch' and 
@@ -276,7 +276,7 @@ class CA_Curehealth_Model extends Character_Action_Model
 		)
 		{ $this -> basetime = 2; }
 		
-		// Se il char sta recuperando salute, l' azione recovery va cancellata.
+		// If the char is recovering health, the recovery action must be canceled.
 		
 		$was_recovering = false;
 		
@@ -290,8 +290,8 @@ class CA_Curehealth_Model extends Character_Action_Model
 		}
 		
 		/////////////////////////////////////////////////
-		// Salva una action blocking per chi deve curare
-		// solo se il prete non sta curando sè stesso
+		// Save an action blocking for those who need to heal
+		// only if the priest is not healing himself
 		/////////////////////////////////////////////////
 		
 		if ( $par[0]-> id != $par[1] -> id )
@@ -301,11 +301,11 @@ class CA_Curehealth_Model extends Character_Action_Model
 			$this -> starttime = time();			
 			$this -> status = "running";	
 			
-			// salva il char di chi cura	
+			// save the char of those who care	
 			$this -> param1 = $par[0] -> id;
-			// salva il char di chi è curato
+			// save the char of those who are treated
 			$this -> param2 = $par[1] -> id;		
-			// salva l' id della struttura religiosa		
+			// save the id of the religious structure		
 			$this -> param3 = $this -> controlledstructure -> id;
 			
 			if ( $was_recovering == true )
@@ -316,7 +316,7 @@ class CA_Curehealth_Model extends Character_Action_Model
 		}
 		
 		/////////////////////////////////////////////////
-		// Salva una action blocking per chi è curato		
+		// Save an action blocking for the cured		
 		/////////////////////////////////////////////////
 		
 		$a = new Character_Action_Model();		
@@ -325,11 +325,11 @@ class CA_Curehealth_Model extends Character_Action_Model
 		$a -> starttime = time();			
 		$a -> status = "running";	
 		
-		// Id del char di chi cura	
+		// Id of the char of those who cure	
 		$a -> param1 = $par[0] -> id;
-		// Id del char di chi è curato
+		// Id of the char of those who are cured
 		$a -> param2 = $par[1] -> id;	
-		// Id della struttura religiosa	controllata dal curante
+		// Id of the religious structure controlled by the healer
 		$a -> param3 = $this -> controlledstructure -> id;
 		
 		if ( $was_recovering == true )
@@ -339,15 +339,15 @@ class CA_Curehealth_Model extends Character_Action_Model
 		$a -> endtime = $a->starttime + $this -> get_action_time( $par[0], $par[1] );
 		$a -> save();		
 
-		// Rimuove medical kit
+		// Remove medical kit
 		$i = Item_Model::factory( null, 'medicalkit' );
 		$i -> removeitem( "character", $par[0]->id, 1 );
 		
-		// refresh della cache del prete...		
+		// priest cache refresh ...		
 		My_Cache_Model::delete(  '-charinfo_' . $par[0] -> id . '_currentpendingaction');				
 		
-		// Consuma i faith points dalla struttura controllata
-		// dal char che cura		
+		// Consume the faith points from the controlled structure
+		// from the char that cures		
 		
 		$this -> controlledstructure -> modify_stat
 		(
@@ -355,19 +355,19 @@ class CA_Curehealth_Model extends Character_Action_Model
 			- self::REQUESTEDFP
 		);
 		
-		// Messaggio da visualizzare al curante
+		// Message to be displayed to the treating person
 		$message = kohana::lang('ca_cure.info-cure-ok');		
 		
-		// Notifica eventi di inizio cura
+		// Notification of start of treatment events
 		// *************************************
-		// Evento al char che viene curato
+		// Event to the char that is cured
 		Character_Event_Model::addrecord
 		( 
 			$par[1] -> id, 
 			'normal', 
 			'__events.curestartedtarget'.';'.$par[0] -> name
 		);
-		// Notifica al char che cura		
+		// Notification to the char who cures		
 		Character_Event_Model::addrecord
 		( 
 			$par[0] -> id, 
@@ -375,47 +375,47 @@ class CA_Curehealth_Model extends Character_Action_Model
 			'__events.curestartedsource'.';'.$par[1] -> name
 		);
 		
-		// Append andata a buon fine
+		// Append successful
 		return true;
 	}
 
 	/*
-	* Esecuzione dell' azione di cura salute.
-	* Questa funzione viene chiamata quando viene invocata una complete_expired_action 
-	* e gestisce le azioni inserite nella character_actions
-	* - Si caricano i parametri dal database
-	* - Si esegue l'azione in base ai parametri
-	* - Si mette l'azione in stato completed
-	* @param  array    $data      [0] = id char che cura, [1] = id char che viene curato
-	*                             [2] = id struttura del char che cura
-	* @output boolean             TRUE = azione disponibile, FALSE = azione non disponibile
-	* @output string   $messages  contiene gli errori in caso di FALSE
+	* Execution of the health care action.
+	* This function is called when a complete_expired_action is called
+	* and manages the actions entered in the character_actions
+	* - The parameters are loaded from the database
+	* - The action is performed according to the parameters
+	* - The action is put in the completed state
+	* @param  array    $data      [0] = id char who cures, [1] = id char being cured for
+	*                             [2] = id structure of the char that cures
+	* @output boolean             TRUE = stock available, FALSE = action not available
+	* @output string   $messages  contains errors in case of FALSE
 	*/
 	
 	public function complete_action( $data )
 	{
 		
 		kohana::log('debug', '-> Completing action curedisease for char: ' . $data -> character_id );
-		// Char a cui è legata l'azione da completare
+		// Char to whom the action to be completed is linked
 		$charaction = ORM::factory('character', $data -> character_id );
-		// Char che ha eseguito la cura
+		// Char who performed the cure
 		$charsource = ORM::factory('character', $data -> param1 );
-		// Char che è stato curato
+		// Char who has been cured
 		$chartarget = ORM::factory('character', $data -> param2 );
-		// Struttura che è controllata dal curante
+		// Structure that is controlled by the care provider
 		$structure  = ORM::factory('structure', $data -> param3 );
 
 		/*******************************
-		* Azioni relative al curante
+		* Actions related to the caregiver
 		********************************/
 		
 		if ( $charaction -> id == $charsource -> id )
 		{			
 			
-			// Consumo degli items/vestiti indossati
+			// Consumption of worn items / clothes
 			
 			Item_Model::consume_equipment( $this->equipment, $charsource );					
-			// Aggiorno le stat del char che cura
+			// I update the stat of the char he cares for
 			
 			$charsource -> modify_stat
 			( 
@@ -424,7 +424,7 @@ class CA_Curehealth_Model extends Character_Action_Model
 				$structure -> structure_type -> church -> id
 			);
 				
-			// Aggiorno le stat della struttura controllata dal curante
+			// I update the stat of the structure controlled by the healer
 			
 			$structure ->  modify_stat
 			( 
@@ -432,7 +432,7 @@ class CA_Curehealth_Model extends Character_Action_Model
 				+1
 			);
 			
-			// Sottraggo energia e sazietà
+			// I subtract energy and glut
 			
 			$charsource -> modify_energy( - self::DELTA_ENERGY, false, 'curehealth' );
 			$charsource -> modify_glut( - self::DELTA_GLUT );
@@ -441,38 +441,38 @@ class CA_Curehealth_Model extends Character_Action_Model
 		}
 				
 		/*****************************************
-		 * Azioni relative a chi è stato curato
+		 * Actions related to those who have been treated
 		 *****************************************/
 		
 		if ( $charaction -> id == $chartarget -> id )
 		{	
-			// Carico l'eventuale bonus sul cura malattie
+			// I charge the eventual disease cure bonus
 			
 			$church = ORM::factory('church', $structure->structure_type->church_id );			
 			$has_dogma_bonus = Church_Model::has_dogma_bonus($structure->structure_type->church_id,'curehealthextended');
 			
-			// Ripristina  la salute
+			// Restore health
 			
 			$hptorestore = CA_Curehealth_Model::get_hptorestore( $chartarget, $has_dogma_bonus);
 				
 			$chartarget -> modify_health ( $hptorestore , true );							
 			$chartarget -> save();
 			
-			// Notifica evento per il char curato
+			// Event notification for the cured char
 			Character_Event_Model::addrecord
 			( 
 				$chartarget -> id, 
 				'normal', 
 				'__events.curefinishedoktarget'
 			);
-			// Notifica evento per il char che cura	
+			// Event notification for the char who cures	
 			Character_Event_Model::addrecord
 			( 
 				$charsource -> id, 
 				'normal', 
 				'__events.curefinishedoksource'.';'.$chartarget -> name
 			);
-			// Notifica evento per struttura
+			// Event notification by facility
 			Structure_Event_Model::newadd
 			( 
 				$structure -> id, 
@@ -485,7 +485,7 @@ class CA_Curehealth_Model extends Character_Action_Model
 	
 	public function cancel_action() { 
 			
-		// trova entrambe le azioni
+		// find both actions
 		
 		$sourcecharaction = ORM::factory('character_action') -> 
 			where ( 
@@ -509,15 +509,15 @@ class CA_Curehealth_Model extends Character_Action_Model
 		$sourcechar = ORM::factory('character', $this -> param1);
 		kohana::log('debug', '-> Source char is: ' . $sourcechar -> name);
 		
-		// L' azione non si può cancellare se l' azione di cura è conseguente
-		// ad una recovery
+		// The action cannot be canceled if the healing action is consequent
+		// to a recovery
 		
 		if ( $this -> param4 == true )
 			return false;
 		
-		// cancelliamo l' altra azione. Non possiamo chiamare il metodo 
-		// character_action -> cancel_pending_action altrimenti potrebbe 
-		// fallire la chiamata con il source char_id.
+		// we cancel the other action. We can't call the method 
+		// character_action -> cancel_pending_action otherwise it could 
+		// fail the call with the source char_id.
 		
 		if ($this -> character_id == $targetchar -> id )
 		{
@@ -552,22 +552,22 @@ class CA_Curehealth_Model extends Character_Action_Model
 		return true;
 	}
 
-	// Questa funzione costruisce un messaggio da visualizzare 
-	// in attesa che la azione sia completata.
+	// This function constructs a message to be displayed 
+	// waiting for the action to complete.
 	
 	public function get_action_message( $type = 'long') { }
 	
 	/*
-	* Calcola tempo elapsed della funzione (Overriden)
-	* @param Character_Model $sourcecharacter personaggio che cura
-	* @param Character_Model $stargetcharacter personaggio che è curato
-	* @return int $time tempo in secondi
+	* Calculate elapsed time of the function (Overriden)
+	* @param Character_Model $sourcecharacter character who cures
+	* @param Character_Model $stargetcharacter character who is cured
+	* @return int $time time in seconds
 	*/
 	
 	public function get_action_time( $sourcecharacter, $targetcharacter )
 	{
 		
-		// Calcola il tempo reale (applicando attributi e bonus ecc.)
+		// Calculate real time (applying attributes and bonuses etc.)
 		$time = parent::get_action_time( $sourcecharacter );
 		
 		kohana::log('debug', '-> Applying Faithful Bonus...');
@@ -578,11 +578,11 @@ class CA_Curehealth_Model extends Character_Action_Model
 	}
 	
 	/*
-	* Torna quanti HP vanno ripristinati
-	* @param Character_Model $character personaggio da curare
-	* @param bollean $has_dogma_bonus Flag che indica se la CHiesa ha
-  *	il bonus esteso
-	* @return int $hp numero di HP da ristorare
+	* Return how many HP should be restored
+	* @param Character_Model $character character to take care of
+	* @param bollean $has_dogma_bonus Flag which indicates whether the Church has
+   *  the extended bonus
+	* @return int $hp number of HP to be restored
 	*/
 	
 	public function get_hptorestore( $character, $has_dogma_bonus )
@@ -595,7 +595,7 @@ class CA_Curehealth_Model extends Character_Action_Model
 
 		if ( ! $has_dogma_bonus )
 		{
-			// Recupero la salute solo se il FL è
+			// Recupero la salute solo se il FL Ã¨
 			// Maggiore della salute attuale del char
 			$fl = Character_Model::get_stat_d( $character->id, 'faithlevel' );
 			
@@ -605,17 +605,17 @@ class CA_Curehealth_Model extends Character_Action_Model
 
 		// In presenza del bonus:
 		// L'ateo recupera il 100%, il fedele recupera il 100%
-		// Se il proprio FL è > dell'80% altrimenti il proprio FL
+		// Se il proprio FL Ã¨ > dell'80% altrimenti il proprio FL
 
 		if ( $has_dogma_bonus )
 		{
-			// Il char curato è ateo
+			// Il char curato Ã¨ ateo
 			
 			if ( $character -> church -> name == 'nochurch' )			
 				$hptorestore = 100 ;					
 			else
 			{
-				// Il char curato è un fedele
+				// Il char curato Ã¨ un fedele
 				$fl = Character_Model::get_stat_d( $character -> id, 'faithlevel' );
 				
 				kohana::log('debug', 'Faith Level of cured: ' . $fl -> value );
@@ -625,7 +625,7 @@ class CA_Curehealth_Model extends Character_Action_Model
 					$hptorestore = 100 ;
 				
 				// Altrimenti recupera il proprio FL, ammesso che
-				// sia più alto del suo livello di salute
+				// sia piÃ¹ alto del suo livello di salute
 				
 				elseif ( $fl -> value > $character -> health )				
 					$hptorestore = $fl -> value ;					
