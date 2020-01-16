@@ -12,7 +12,8 @@ class Disease_Flu_Model extends Disease_Model
 	protected $dexmalus = -1;
 	protected $intelmalus = 0;
 	protected $costmalus = 0;
-	protected $carmalus = 0;	
+	protected $carmalus = 0;
+	protected $iscurable = true;  			// is curable?
 	protected $iscyclic = true;
 	protected $isblocking = false;
 	protected $timedipendent = 'N';
