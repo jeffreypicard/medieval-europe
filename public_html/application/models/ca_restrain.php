@@ -6,30 +6,30 @@ class CA_Restrain_Model extends Character_Action_Model
 	protected $cancel_flag = false;
 	protected $immediate_action = false;
 	
-	const RESTRAIN_COOLDOWN = 86400; // 1 giorno
+	const RESTRAIN_COOLDOWN = 86400; // 1 day
 	const MAXRESTRAINPERIOD = 168; 
 	
-	protected $basetime       = 1;   // 1 ora
-	protected $attribute      = 'none';  // attributo forza
-	protected $appliedbonuses = array ( 'none' ); // bonuses da applicare
+	protected $basetime       = 1;   // 1 hour
+	protected $attribute      = 'none';  // attribute strength
+	protected $appliedbonuses = array ( 'none' ); // bonuses to be applied
 	
 	public function __construct()
 	{		
 		parent::__construct();
-		// questa azione non é bloccante per altre azioni del char.
+		// this action is not blocking for other char actions.
 		$this->blocking_flag = false;		
 		return $this;
 	}
 	
 	/**
-  *	Effettua tutti i controlli relativi al move, sia quelli condivisi
-	* con tutte le action che quelli peculiari del dig
+  *	Carries out all controls related to move, both shared
+	* with all the actions that those peculiar to the dig
 	* @param: par
-	*  par[0] = char che blocca
-	*  par[1] = char da bloccare
-	*  par[2] = n. ore
-	*  par[3] = motivo
-	* @return: TRUE = azione disponibile, FALSE = azione non disponibile
+	*  par[0] = char that freezes
+	*  par[1] = char to lock
+	*  par[2] = n. hours
+	*  par[3] = reasons
+	* @return: TRUE = action available, FALSE = action not available
 	*
 	*/
 	
@@ -43,7 +43,7 @@ class CA_Restrain_Model extends Character_Action_Model
 			return false;
 
 		///////////////////////////////////////////////////////////////////////
-		// controllo dati
+		// data control
 		///////////////////////////////////////////////////////////////////////
 		
 		if ( ! $par[0] -> loaded )
@@ -53,35 +53,35 @@ class CA_Restrain_Model extends Character_Action_Model
 		{ $message = kohana::lang('global.error-characterunknown'); return FALSE; }				
 		
 		///////////////////////////////////////////////////////////////////////		
-		// la motivazione è mandatoria.
+		// the reason is mandatory.
 		///////////////////////////////////////////////////////////////////////
 		
 		if ( strlen( $par[3] ) == 0 )
 		{ $message = kohana::lang('ca_restrain.reasonmandatory' ) ; return FALSE; }
 		
 		///////////////////////////////////////////////////////////////////////
-		// controllo ore di blocco
+		// control of blocking hours
 		///////////////////////////////////////////////////////////////////////
 
 		if ( $par[2] < 1 or $par[2] > self::MAXRESTRAINPERIOD )
 		{ $message = kohana::lang('ca_restrain.durationincorrect'); return FALSE; }
 		
 		///////////////////////////////////////////////////////////////////////		
-		// Non è possibile bloccare un char già bloccato		
+		// It is not possible to lock an already locked char		
 		///////////////////////////////////////////////////////////////////////
 		
 		if ( Character_Model::is_restrained( $par[1] -> id ) )
 		{ $message = kohana::lang('ca_restrain.alreadyrestrained', $par[1] -> name); return FALSE; }
 	
 		///////////////////////////////////////////////////////////////////////		
-		// non è possibile bloccare sè stessi
+		// you cannot lock yourself
 		///////////////////////////////////////////////////////////////////////
 		
 		if ( $par[1]->id == $par[0]->id )
 			{ $message = kohana::lang('ca_restrain.selfaction'); return FALSE; }
 			
 		///////////////////////////////////////////////////////////////////////		
-		// non si può bloccare un reggente
+		// a regent, head of church cannot be locked
 		///////////////////////////////////////////////////////////////////////
 		
 		$role = $par[1] -> get_current_role() ; 
@@ -90,22 +90,22 @@ class CA_Restrain_Model extends Character_Action_Model
 		{ $message = kohana::lang('ca_restrain.notenoughpower' ); return FALSE; }
 		
 		///////////////////////////////////////////////////////////////////////		
-		// Per bloccare un char, deve essere nel regno
+		// To lock a char, it must be in the kingdom
 		///////////////////////////////////////////////////////////////////////
 		
 		if ( ! $par[1] -> is_inkingdom( $par[0] -> region -> kingdom ) )		
 		{ $message = kohana::lang('ca_restrain.isnotinkingdom', $par[1] -> name ); return FALSE; }
 		
 		//////////////////////////////////////////////////////////////////////
-		// il giocatore ha gli item nesessari 
+		// the player has the necessary items
 		//////////////////////////////////////////////////////////////////////
 		
 		if ( ! Character_Model::has_item( $par[0]->id, 'paper_piece', 1 ) ) 
 		{ $message = kohana::lang('charactions.paperpieceneeded'); return FALSE; }				
 
 		//////////////////////////////////////////////////////////////////////
-		// Il regno del giocatore è in guerra con il regno di chi tenta di
-		// trattenerlo?
+		// The realm of the player is at war with the realm of those who try to
+		// hold him?
 		//////////////////////////////////////////////////////////////////////
 		
 		$restrainerkingdomrunningwars = Kingdom_Model::get_kingdomwars( $par[0] -> region -> kingdom_id, 'running');
@@ -121,14 +121,14 @@ class CA_Restrain_Model extends Character_Action_Model
 		{ $message = kohana::lang( 'charactions.error-characterisofenemykingdom'); return false;}	
 			
 		//////////////////////////////////////////////////////////////////////
-		// il giocatore è in recovering ma, è nel battlefield?
+		// the player is recovering but is he in the battlefield?
 		//////////////////////////////////////////////////////////////////////
 		
 		if ( Character_Model::is_recovering( $par[1] -> id ) and Character_Model::is_fighting( $par[1] -> id ) == true )
 		{ $message = kohana::lang('ca_restrain.error-charisfighting', $par[1] -> name); return FALSE; }				
 		
 		//////////////////////////////////////////////////////////////////////
-		// Cooldown di 24 ore
+		// Cooldown is 24 hour
 		//////////////////////////////////////////////////////////////////////
 		
 		$stat = Character_Model::get_stat_d( $par[1] -> id, 'lastrestrain', $par[0] -> region -> kingdom_id );
@@ -140,12 +140,12 @@ class CA_Restrain_Model extends Character_Action_Model
 	}
 
 
-	// Funzione per l'inserimento dell'azione nel DB.
-	// Questa funzione appende solo una azione _non la esegue_
-	// Al momento non si prevedono azioni istantanee.
+	// Function for inserting the action into the DB.
+	// This function only hangs one action _not executes it_
+	// At the moment no immediate actions are foreseen
 	// @input: $par[0] = structure, $par[1] = char
-	// @output: TRUE = azione disponibile, FALSE = azione non disponibile
-	//          $messages contiene gli errori in caso di FALSE
+	// @output: TRUE = action available, FALSE = action not available
+	//          $messages contains errors in case of FALSE
 	
 	protected function append_action( $par, &$message ) 
 	{
@@ -191,11 +191,11 @@ class CA_Restrain_Model extends Character_Action_Model
 		
 	}
 
-	// Esecuzione dell' azione. 
+	// Execution of the action. 
 	
 	public function complete_action( $data ) {
 	
-		// Salva la statistica, marca la fine del restrain.
+		// Save the statistic, mark the end of the restrain.
 		
 		$character = ORM::factory('character', $data -> character_id );
 		$character -> modify_stat(
@@ -212,8 +212,8 @@ class CA_Restrain_Model extends Character_Action_Model
 	
 	public function cancel_action( $data ){}
 	
-	// Questa funzione costruisce un messaggio da visualizzare 
-	// in attesa che la azione sia completata.
+	// This function constructs a message to be displayed
+	// waiting for the action to complete.
 	
 	public function get_action_message( $type = 'long') 
 	{
