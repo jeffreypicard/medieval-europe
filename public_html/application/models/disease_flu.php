@@ -7,7 +7,7 @@ class Disease_Flu_Model extends Disease_Model
 	protected $name = 'flu';
 	protected $diffusion = 10;
 	protected $hpmalus = 0;
-	protected $checkinterval = 12;
+	protected $checkinterval = 10;
 	protected $strmalus = -1;
 	protected $dexmalus = -1;
 	protected $intelmalus = 0;
