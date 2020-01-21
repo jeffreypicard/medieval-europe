@@ -15,12 +15,12 @@ class Battle_Conquer_R_Model extends Battle_Type_Model
 	var $battlefield = null;
 	
 	/** 
-	* Esegue tutta la battaglia
+	* Performs the entire battle
 	* 
-	* @param par vettore di parametri	
+	* @param par vector of parameters	
 	* par0: obj battle
 	* par1: obj character action battleround
-	* @param test flag di test
+	* @param test flag of test
 	* @return 
 	*/
 	
@@ -42,7 +42,7 @@ class Battle_Conquer_R_Model extends Battle_Type_Model
 	}	
 	
 	/** 
-	* Combatte
+	* Combat
 	* 
 	* @param none
 	* @return none
@@ -79,7 +79,7 @@ class Battle_Conquer_R_Model extends Battle_Type_Model
 	}
 			
 	/** 
-	* Aftermath della battaglia
+	* Aftermath of the battle
 	* 
 	* @param none
 	* @return none
@@ -92,8 +92,8 @@ class Battle_Conquer_R_Model extends Battle_Type_Model
 		$currentround = $this -> par[1] -> param1; 
 		
 		///////////////////////////
-		// stabilisco il vincitore
-		// per questo round
+		// set the winner
+		// for this round
 		///////////////////////////
 		
 		$attackerwins = $defenderwins = 0;
@@ -113,9 +113,9 @@ class Battle_Conquer_R_Model extends Battle_Type_Model
 		$this -> bm -> attacker_wins += $attackerwins;
 		$this -> bm -> defender_wins += $defenderwins;
 		
-		// Se la regione attaccata non ha il castello, 1 round.
-		// Se la regione attaccata ha il castello, 3 round
-		// Se la regione attaccata ha il p. reale, 5 round
+		// If the attacked region does not have a castle, 1 round.
+		// If the attacked region has a castle, 3 rounds
+		// If the attacked region has the p. real, 5 rounds
 		
 		$castle = $this -> attackedregion -> get_structure('castle');
 		$royalpalace = $this -> attackedregion -> get_structure('royalpalace');
@@ -133,7 +133,7 @@ class Battle_Conquer_R_Model extends Battle_Type_Model
 			
 		if ( $currentround >= $rounds )
 		{
-			// Stabilisce il vincitore di tutta la battaglia 
+			// Establishes the winner of the whole battle
 			
 			$battlewinners = 'none'; 			
 			
@@ -152,14 +152,14 @@ class Battle_Conquer_R_Model extends Battle_Type_Model
 			{
 			
 				////////////////////////////////////////////////////
-				// Caso: la regione non ha nè castello nè p. reale
+				// Case: the region has neither castle nor p. real
 				////////////////////////////////////////////////////				
 							
 				if ( is_null( $castle ) and is_null( $royalpalace ) )
 				{
 					kohana::log('info', "-> Case: no castle, no royal palace." );
 
-					// Annuncio prima che cambino le relazioni.		
+					// Announcement before relationships change.		
 					
 					Character_Event_Model::addrecord( 
 					null,
@@ -179,14 +179,14 @@ class Battle_Conquer_R_Model extends Battle_Type_Model
 				}
 				
 				////////////////////////////////////////////////////
-				// Caso: la regione ha solo il castello
+				// Case: the region has only the castle
 				////////////////////////////////////////////////////				
 				
 				
 				elseif ( !is_null( $castle ) and is_null( $royalpalace ) ) 
 				{
 				
-					// Annuncio prima che cambino le relazioni.		
+					// Announcement before relationships change.		
 					
 					kohana::log('info', "-> Case: Castle, no royal palace." );
 					Character_Event_Model::addrecord( 
@@ -208,8 +208,8 @@ class Battle_Conquer_R_Model extends Battle_Type_Model
 				}
 				
 				////////////////////////////////////////////////////
-				// Caso: la regione ha il palazzo reale ed il 
-				// castello (Capitale)
+				// Case: the region has the royal palace and the 
+				// castle (capital)
 				////////////////////////////////////////////////////			
 				
 				elseif ( !is_null( $castle ) and !is_null( $royalpalace )) 
@@ -217,8 +217,8 @@ class Battle_Conquer_R_Model extends Battle_Type_Model
 					
 					kohana::log('info', "Case: Castle, Royal palace." );
 					
-					// Detronizza il corrente Re, e metti il sostituto 
-					// se ha le caratteristiche corrette, è vivo ecc.
+					// Dethrone the current King, and put in a substitute 
+					// if it has the correct characteristics, it is alive etc.
 					
 					kohana::log('info', "Dethroning King..." );					
 					$this -> attackedregion -> kingdom -> dethrone_king();
@@ -305,7 +305,7 @@ class Battle_Conquer_R_Model extends Battle_Type_Model
 			where battle_id = " . $this -> bm -> id ;			
 			Database::instance() -> query( $sql ); 				
 			
-			// Aggiungi un evento @ town crier
+			// Add an event @ town crier
 		
 			$e = Character_Event_Model::addrecord( 
 			null,
@@ -316,7 +316,7 @@ class Battle_Conquer_R_Model extends Battle_Type_Model
 			html::anchor( 'page/battlereport/' . $this -> bm -> id , '[Report]')
 			);
 
-			// schedula un altro round
+			// schedule another round
 						
 			kohana::log('debug', 'Scheduling another round.' ); 
 			

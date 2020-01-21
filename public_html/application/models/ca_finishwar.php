@@ -6,26 +6,26 @@ class CA_Finishwar_Model extends Character_Action_Model
 	protected $immediate_action = true;
 	protected $war = null;
 	
-	// Effettua tutti i controlli relativi all' azione, sia quelli condivisi
-	// con tutte le action che quelli peculiari 
-	// @input: array di parametri
-	// par[0]: oggetto char
-	// par[1]: id guerra
-	// @output: TRUE = azione disponibile, FALSE = azione non disponibile
-	//          $message contiene il messaggio di ritorno	
+	// Perform all the controls related to the action, both those shared
+	// with all the actions that peculiar ones 
+	// @input: array of parameters
+	// par[0]: char object
+	// par[1]: id war
+	// @output: TRUE = action available, FALSE = action not available
+	//          $message contains the return message	
 	
 	protected function check( $par, &$message )
 	{ 	
 		
 		$allwars = Configuration_Model::get_kingdomswars();
 		
-		// guerra deve esistere e in corso
+		// war must exist and in progress
 		if (!isset($allwars[$par[1]]) or $allwars[$par[1]]['war'] -> status != 'running')
 		{
 			$message = kohana::lang( 'ca_finishwar.error-warnotfound');
 			return false;
 		}						
-		// può terminare la guerra solo chi l' ha lanciata
+		// only those who launched the war can end the war
 		$sourcekingdom = ORM::factory('kingdom', $allwars[$par[1]]['war'] -> source_kingdom_id);
 		$sourceking = $sourcekingdom -> get_king();
 		if (is_null($sourceking) or $sourceking -> id != $par[0] -> id )

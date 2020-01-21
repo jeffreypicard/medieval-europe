@@ -5,9 +5,9 @@ class Disease_Plague_Model extends Disease_Model
 
 	protected $level = 3;
 	protected $name = 'plague';
-	protected $diffusion = 5; // percentuale -> 5%
+	protected $diffusion = 10; // percentuale -> 5%
 	protected $hpmalus = -10;
-	protected $checkinterval = 12;
+	protected $checkinterval = 8;
 	protected $strmalus = -5;
 	protected $dexmalus = -5;
 	protected $intelmalus = -2;

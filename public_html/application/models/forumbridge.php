@@ -22,8 +22,8 @@ const SECURITYKEY = '4320482rwjlksrewjrerjelwjrlwj';
 const REGISTEREDUSERSGROUP = 32;
 
 /**
-* autentica l' utente nel forum 
-* @param: char oggetto utente
+* authenticate the user in the forum 
+* @param: char user object
 * @return: none
 */
 
@@ -43,7 +43,7 @@ function create_account( $char, $foruminstance, &$data )
 	$dateRegistered = time();	
 	$dbforum = Database::instance( $foruminstance );
 
-	// creo account sul forum 
+	// Create an account on the forum 
 	try {
 			
 		kohana::log( 'debug', '-> Creating account on forum: ' . $foruminstance ); 
@@ -56,7 +56,7 @@ function create_account( $char, $foruminstance, &$data )
 		
 		kohana::log('debug', '->Sending informational email to member:' .  $memberName );
 
-		// Invio via mail l'avviso di creazione dell'account sul forum
+		// Send the notice of creation of the account on the forum by email
 		
 		$data['username'] = $char -> user -> username;
 		$data['password'] = $temp_pwd;		
@@ -82,7 +82,7 @@ function create_account( $char, $foruminstance, &$data )
 	
 	function delete_account( $char, $foruminstance )
 	{
-		// inabilitazione utente forum
+		// forum user disabling
 		$dbforum = Database::instance( $foruminstance );
 		$salt = substr(md5(mt_rand()), 0, 4);
 		$temp_pwd = strtolower(substr(md5(date("Y-m-d H:i:s")),0,12));
@@ -91,7 +91,7 @@ function create_account( $char, $foruminstance, &$data )
 		try {
 			kohana::log( 'debug', 'Deleting account on forum: ' . $foruminstance );
 
-		// rinomina e disabilita il vecchio account
+		// rename and disable the old account
 			$sql = "UPDATE smf_members set member_name = '" . $this -> user -> username . '_' . $salt . "', email_address='deleted_" . $this -> user -> username . "@x.it' , password_salt = '$salt', passwd='$password', real_name = concat('(RIP) ' , real_name)	where member_name = '" . $this->user->username . "'" ; 
 			
 			kohana::log('info', $sql ); 

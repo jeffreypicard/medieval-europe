@@ -2,13 +2,13 @@
 class My_I18n_Model extends ORM
 {
 	/*
-	*	Funzione che traduce runtime una stringa con parametri
-	* Il primo parametro � la stringa da tradurre.
-	* Gli altri sono parametri da espandere
-	* Esempio: __global.fight;__weapon.sword;Mario Rossi
+	*	Function that translates runtime a string with parameters
+	* The first parameter � the string to be translated.
+	* The others are parameters to be expanded
+	* Example: __global.fight;__weapon.sword;Mario Rossi
 	* => sprintf( kohana::lang('global.fight'), kohana::lang('weapon.sword'), 'Mario Rossi');
-	*	@param text: testo da tradurre.
-	*	@return la stringa tradotta
+	*	@param text: text to be translated.
+	*	@return the translated string
 	*/
 
 	function translate( $text )

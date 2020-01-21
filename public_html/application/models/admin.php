@@ -79,7 +79,7 @@ class Admin_Model
 						car = round(car*70/100,0)
 					where id = {$newcharacter_id}");
 			
-			// action consumeglut
+			// action consume glut
 			
 			$db -> query("INSERT INTO `character_actions` VALUES (NULL,{$newcharacter_id}, NULL, NULL, 'consumeglut', 0, 1, 'running', unix_timestamp(), unix_timestamp(), NULL, NULL, NULL, NULL, NULL)");						
 			
@@ -106,18 +106,18 @@ class Admin_Model
 			
 			$db -> query("replace into items select * from ar_items where structure_id in (select id from ar_structures where character_id = {$newcharacter_id})");
 
-			// eventi
+			// event
 
 			$db -> query("replace into character_events select * from ar_character_events where character_id = {$newcharacter_id}");				
 			
-			// messaggi
+			// message
 			
 			$db -> query("replace into messages select * from ar_messages where char_id = {$newcharacter_id}");
 			
 			// bonuses
 			$db -> query("replace into character_premiumbonuses select * from ar_character_premiumbonuses where character_id = {$newcharacter_id}");			
 			
-			// altro
+			// other
 			
 			$db -> query("update characters set deathdate = null, death_region_id = null, health=100, energy=50, glut=50 where id = {$newcharacter_id}");
 			
@@ -156,19 +156,19 @@ class Admin_Model
 				if ($region -> loaded == false )
 					throw new Exception("Region {$regionname} Not Found");
 			
-				// cambia residenza e birth city
+				// change residence and birth city
 				$db -> query("update characters set 
 					position_id = {$region -> id},
 					region_id = {$region -> id},
 					birth_region_id = {$region -> id}
 					where id = {$newcharacter_id}");
 				
-				// cambia nome
+				// change name
 				
 				if (!is_null($newname))
 					$db -> query("update characters set name = '{$newname}' where id = {$newcharacter_id}");
 				
-				// manda messaggio a Re.
+				// send message to King.
 				
 				$king = $region -> get_roledetails( 'king' );
 				$vassal = $region -> get_roledetails( 'vassal' );
@@ -208,7 +208,7 @@ class Admin_Model
 		
 		Database::instance()->query("set autocommit = 1");
 		
-		$message = 'Personaggio resuscitato.';
+		$message = 'Resurrected character.';
 		
 		return true;
 		

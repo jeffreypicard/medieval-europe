@@ -2,12 +2,12 @@
 
 class Battlefield_Controller extends Template_Controller
 {
-	// Imposto il nome del template da usare
+	// I set the name of the template to use
 	
 	public $template = 'template/gamelayout';
 
 	/*
-	* Entra nel campo di battaglia
+	* Enter the battlefield
 	*/
 	
 	public function enter( $structure_id = null )
@@ -60,7 +60,7 @@ class Battlefield_Controller extends Template_Controller
 			}
 		}
 		
-		// Verifico l' attack mode
+		// I check the attack mode
 		
 		$fightmodestat = Character_Model::get_stat_d(
 			$char -> id,
@@ -73,7 +73,7 @@ class Battlefield_Controller extends Template_Controller
 			$fightmode = 'normal';
 		
 		
-		// se il battlefield non esiste, ridireziona alla città.
+		// if the battlefield does not exist, redirect to the city.
 		
 		if ( is_null( $structure ) )
 		{			
@@ -93,7 +93,7 @@ class Battlefield_Controller extends Template_Controller
 		$attackingregion = ORM::factory('region', $battle -> source_region_id ); 
 		$attackedregion = ORM::factory('region', $battle -> dest_region_id ); 
 		
-		// setta lo stato del player a fighting
+		// set the player's status to fighting
 		
 		if ( Character_Model::is_fighting( $char -> id ) == false ) 
 		{
@@ -109,7 +109,7 @@ class Battlefield_Controller extends Template_Controller
 		}
 		
 		///////////////////////////////////////
-		// conta i giocatori schierati
+		// counts the players lined up
 		///////////////////////////////////////
 		
 		$_attackers = array();
@@ -149,7 +149,7 @@ class Battlefield_Controller extends Template_Controller
 	}
 	
 	/*
-	* Permette di schierarsi con una fazione
+	* Allows you to side with a faction
 	* @param faction fazione (attack, defense)
 	* @param structure_id ID del battlefield
 	* 
@@ -158,13 +158,13 @@ class Battlefield_Controller extends Template_Controller
 	function joinfaction(  $faction, $structure_id )
 	{
 				
-		// Carico la struttura "Campo di battaglia"
+		// I load the structure "Battlefield"
 		
 		$structure = StructureFactory_Model::create( null, $structure_id );
 		$char = Character_Model::get_info( Session::instance()->get('char_id') );			
 		$ca = Character_Action_Model::factory("joinfaction");		
 		
-		// Passo come parametro il campo di battaglia
+		// I pass the battlefield as a parameter
 		
 		$par[0] = $char;
 		$par[1] = $structure;
@@ -185,7 +185,7 @@ class Battlefield_Controller extends Template_Controller
 	
 	
 	/*
-	* Lascia il campo di battaglia, ed entra nella città
+	* Leave the battlefield, and enter the city
 	*/
 	
 	function entercity( $structure_id = null)
@@ -220,8 +220,8 @@ class Battlefield_Controller extends Template_Controller
 	}
 	
 	/*
-	* Accedi al bottino del campo di battaglia
-	* @param structureid id struttura
+	* Access the battlefield loot
+	* @param structureid id structure
 	* @return none
 	*/
 	
@@ -233,7 +233,7 @@ class Battlefield_Controller extends Template_Controller
 		$battle = ORM::factory( 'battle', $structure -> attribute1 );			
 		
 		//////////////////////////////////////
-		// il battlefield, esiste?
+		// the battlefield, does it exist?
 		//////////////////////////////////////
 		
 		if ( !$structure -> loaded or $structure -> getParentType() != 'battlefield' )
@@ -243,7 +243,7 @@ class Battlefield_Controller extends Template_Controller
 		}	
 
 		//////////////////////////////////////
-		// La battaglia � in stato completed?
+		// Is the battle completed?
 		//////////////////////////////////////		
 		
 		if ( $battle -> status != 'completed' )
@@ -253,8 +253,8 @@ class Battlefield_Controller extends Template_Controller
 		}		
 		
 		//////////////////////////////////////
-		// Solo i giocatori della nazione 
-		// vincente possono accedere al bottino
+		// Only the players of the nation
+		// winners can access the loot
 		//////////////////////////////////////		
 		
 		$attackingregion = ORM::factory('region', $battle -> source_region_id ); 
