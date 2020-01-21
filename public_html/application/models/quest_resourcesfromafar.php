@@ -91,7 +91,7 @@ class Quest_Resourcesfromafar_Model extends Quest_Model
 	
 		// destroy the land
 
-        $terrain = ORM::factory('structure', $instance -> spare3 );
+        $forest = ORM::factory('structure', $instance -> spare3 );
         if ( $forest -> loaded )
             $forest -> destroy();
 		
