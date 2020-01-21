@@ -18,7 +18,13 @@ class Quest_Resourcesfromafar_Model extends Quest_Model
 			$message = 'quests.error-fightingnotcompleted';
 			return false;			
 		}
-			
+		 // add terrain
+
+        $structure = StructureFactory_Model::create('forest',  null);
+        $structure -> locked = true;
+        $structure -> character_id = $character -> id ;
+        $structure -> region_id = $character -> position_id ;
+		
 		// give items
 		
 		$item = Item_Model::factory( null, 'handaxe' );		
@@ -83,6 +89,12 @@ class Quest_Resourcesfromafar_Model extends Quest_Model
 	function finalize_quest( $char, $instance ) 
 	{
 	
+		// destroy the land
+
+        $terrain = ORM::factory('structure', $instance -> spare3 );
+        if ( $forest -> loaded )
+            $forest -> destroy();
+		
 		$char -> modify_coins( +320, 'questreward' );
 		Achievement_Model::add( $char, 'stat_tutorialcompleted', 1, 1 );
 		
