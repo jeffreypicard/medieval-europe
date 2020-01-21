@@ -31,6 +31,12 @@ class Quest_Resourcesfromafar_Model extends Quest_Model
 		$item -> quality = 20;
 		$item -> additem( 'character', $character -> id , 1 );
 		
+		// management for forest structures: put a forest for harvest
+		
+		if ( $structure -> structure_type -> supertype == 'forest' )
+			$structure -> attribute1 = 0;					
+		$structure -> save();
+		
 		Character_Model::modify_stat_d(
 			$character -> id,
 			'speedbonus',
