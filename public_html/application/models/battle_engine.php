@@ -86,24 +86,24 @@ class Battle_Engine_Model
 	}
 	
 	/** 
-	* La funzione fight mette a confronto due char e ne determina il vincitore. 
-	* Ritornerà quindi le strutture attacker e defender con gli attributi del char (Energy/health) e gli item (duration ecc) aggiornati. 
-	* Non è a carico della funzione eventuali ragionamenti sul vincitore o perdente, che dipendono dalle condizioni del combattimento a monte.    
-	* Ritornerà anche l’ id del char che ha vinto e il report del combattimento nel campo report.
+	* The fight function compares two chars and determines the winner. 
+	* The attacker and defender structures will then return with the char attributes (Energy / health) and the updated items (duration etc.).
+	* The function is not charged with any reasoning on the winner or loser, which depends on the conditions of the upstream fight.   
+	* The id of the char that won and the combat report in the report field will also return.
 	* 
-	* @param attacker struttura char di chi attacca in/out
-	* @param defender struttura char di chi difende in/out
-	* @param winner  id del giocatore che ha vinto out	
-	* @param battlestats statistica battaglia
-	* @param match numero match
-	* @return report  array report della battaglia
+	* @param attacker char structure of who attacks in / out
+	* @param defender char structure of who defends in/out
+	* @param winner  id of the player who won out	
+	* @param battlestats statistical battle
+	* @param match match number
+	* @return report  array report of the battle
 	*/
 	
 	
 	public function fight( &$attacker, &$defender, &$winner, &$battlestats, $match)
 	{
 	
-		// controlliamo se hanno energia
+		// let's check if they have energy
 		
 		if ( $attacker['char']['energy'] <= 0 and $defender['char']['energy'] <= 0 ) 
 		{
@@ -116,8 +116,8 @@ class Battle_Engine_Model
 			$match . ';' . $attacker['char']['name'] . ';' . $defender['char']['name'] ;
 		
 		////////////////////////////////////////////////////////////////////////////////////////////
-		// stabiliamo le percentuali di quanti colpi riesce ad infliggere
-		// in un turno l' attaccante ed il difensore.
+		// we establish the percentages of how many shots can inflict
+		// in one turn the attacker and the defender.
 		////////////////////////////////////////////////////////////////////////////////////////////
 							
 		$battleround = 1;
@@ -132,7 +132,7 @@ class Battle_Engine_Model
 		$defender['char']['faction'] = 'defender';
 		
 		
-		// determiniamo la percentale di hit e miss			
+		// we determine the hit and miss percentage			
 		$att_expectedchancetohit = intval((25 + ( $attacker['char']['dex'] - $defender['char']['dex'] )*1.1)/50 * 100 );
 		$def_expectedchancetohit = intval((25 + ( $defender['char']['dex'] - $attacker['char']['dex'] )*1.1)/50 * 100 );
 		
@@ -319,7 +319,7 @@ class Battle_Engine_Model
 			$initiative = '';			
 			$initiative = 'attacker';
 			
-			// Calcoliamo le statistiche per il combattimento			
+			// Calculate the statistics for the fight			
 				
 			$this -> get_fightstats( $attacker, $this->debug, $this -> cfgarmors, $this -> cfgweapons );
 			$this -> get_fightstats( $defender, $this->debug, $this -> cfgarmors, $this -> cfgweapons );	
@@ -406,8 +406,8 @@ class Battle_Engine_Model
 						
 			Battle_Engine_Model::battledebug('<b> --- Consecutive Attacks Info --- </b>', $this -> debug );
 				
-			// Determiniamo per questo turno quanti hit consecutivi hanno
-			// a disposizione l' attaccante ed il difensore	
+			// We determine for this turn how many consecutive hits they have
+			// the attacker and the defender are available	
 			
 			$att_cons_hits = $this -> get_consecutiveattacks( $attacker );
 			$def_cons_hits = $this -> get_consecutiveattacks( $defender );
@@ -417,8 +417,8 @@ class Battle_Engine_Model
 			
 			Battle_Engine_Model::battledebug('<b> --- Initiative Info --- </b>', $this -> debug );
 			
-			// stabiliamo l'iniziativa in base alla caratteristica reach dell' arma						
-			// se uno dei due char è stun, l' altro ha sempre l' iniziativa
+			// we establish the initiative based on the characteristic reach of the weapon						
+			// if one of the two chars is stun, the other always has the initiative
 			
 			if ( $attacker['char']['stunnedround'] > 0 or $defender['char']['stunnedround'] > 0  )
 			{
@@ -467,7 +467,7 @@ class Battle_Engine_Model
 			$attacker['char']['cons_hits'] = $att_cons_hits;
 			$defender['char']['cons_hits'] = $def_cons_hits;
 			
-			// copia in variabili di comodo per usare lo stesso blocco di codice			
+			// copy in convenient variables to use the same code block			
 			
 			if ( $initiative == 'attacker' )
 			{
@@ -564,23 +564,23 @@ class Battle_Engine_Model
 					
 					Battle_Engine_Model::battledebug( 'Hit n. '. $hits . '/' . $_attacker['char']['cons_hits'] , $this -> debug );
 					
-					// Ricalcoliamo le statistiche per il combattimento
+					// We recalculate the statistics for the fight
 					
 					$this -> get_fightstats( $_attacker, $this->debug, $this -> cfgarmors, $this -> cfgweapons );
 					$this -> get_fightstats( $_defender, $this->debug, $this -> cfgarmors, $this -> cfgweapons );
 					
-					// stabiliamo se il colpo è inferto
+					// we determine if the blow is inflicted
 					
 					$miss = false;
 					$hit = false;
 					
 					$battlestats['totalhits'][$_attacker['char']['name']]['total']++;
 					
-					// Logica di hit e miss
+					// Logic of hit and miss
 					
-					// se l' attacker è stun, hit è falso sicuramente					
-					// se il defender è stunned, hit è sicuro
-					// altrimenti la probabilità dipende dalla differenza tra le dex					
+					// if the attacker is stun, hit is certainly false					
+					// if the defender is stunned, hit is safe
+					// otherwise the probability depends on the difference between the dex					
 					
 					if ( $_attacker['char']['stunnedround'] > 0 )
 					{ 
@@ -634,8 +634,8 @@ class Battle_Engine_Model
 							}
 						}
 						
-						// Lancia un dato per determinare se il colpo
-						// è andato a buon fine o meno.
+						// Run a datum to determine if the hit
+						// has been successful or not.
 						
 						mt_srand();
 						$roll = mt_rand(1,100);
@@ -658,8 +658,8 @@ class Battle_Engine_Model
 							$blockedwithparry = false;
 						}
 						
-						// Se il char ha lo skill parry, teniamo conto dei tentativi riusciti e non riusciti
-						// Lo skill si attiva se l' attaccante usa arma e il difensore ha scudo o arma impugnata.
+						// If the char has the skill parry, we keep track of successful and unsuccessful attempts
+						// The skill is activated if the attacker uses a weapon and the defender has a shield or weapon.
 						
 						$blockedwithparry = false;
 						
@@ -711,7 +711,7 @@ class Battle_Engine_Model
 										kohana::log('debug', "roll: {$roll}: ***PARRY TENTATIVE FAILED!***");
 										Battle_Engine_Model::battledebug( '***PARRY TENTATIVE FAILED. ***', $this -> debug );
 										
-										// parata fallita, incrementiamo lo skill.
+										// failed parry, we increase the skill.
 										$deltaproficiency = round((100 - $_defender['char']['parry'] ) / 130 + 0.2 , 2 );
 										
 										Battle_Engine_Model::battledebug( "-> Parry failed. current proficiency: {$_defender['char']['parry']}. Incrementing by {$deltaproficiency}.", $this -> debug );
@@ -726,7 +726,7 @@ class Battle_Engine_Model
 						}
 							
 					}				
-					// se c'è un miss e l' attaccante NON è stunned => ha proprio sbagliato.
+					// if there is a miss and the attacker is NOT stunned => he is really wrong.
 					
 					//kohana::log('debug', "blockedwithparry: {$blockedwithparry}");
 					//kohana::log('debug', "hit: {$hit}");
@@ -737,7 +737,7 @@ class Battle_Engine_Model
 						$this -> battlereport[]['battlemiss'] = '__battle.miss;' . $_attacker['char']['name'];
 						$battlestats['totalhits'][$_attacker['char']['name']]['missed']++;
 					}					
-					// se c'è un miss e l' attaccante NON è stunned ma il colpo è stato parato
+					// if there is a miss and the attacker is NOT stunned but the shot has been parried
 					
 					if ( !$hit and $_attacker['char']['stunnedround'] <= 0 and $blockedwithparry)
 					{
@@ -756,7 +756,7 @@ class Battle_Engine_Model
 						//$battlestats['totalhits'][$_attacker['char']['name']]['successful']++;
 						
 						///////////////////////////////////
-						// stabiliamo il danno
+						// we establish the damage
 						///////////////////////////////////
 					
 						if ( isset( $_attacker['char']['weapons']['right_hand']['obj'] ) )
@@ -777,7 +777,7 @@ class Battle_Engine_Model
 								$_attacker['char']['wpn_mindamage'], $_attacker['char']['wpn_maxdamage'] );
 						
 						//////////////////////////////////////////////
-						// damage: se si combatte 
+						// damage: if you fight 
 						//////////////////////////////////////////////
 						
 						
@@ -819,7 +819,7 @@ class Battle_Engine_Model
 						Battle_Engine_Model::battledebug("Damage After: {$damage}", $this -> debug );
 						
 						
-						// se il difensore è stun, il damage è aumentato
+						// if the defender is stun, the damage is increased
 						
 						if ( $_defender['char']['stunnedround'] > 0 )
 						{					
@@ -830,7 +830,7 @@ class Battle_Engine_Model
 						}
 						
 						/* 
-							Colpo Critico
+							Critical blow
 						*/
 					
 						if ( isset( $_attacker['char']['weapons']['right_hand']['obj'] ) )
@@ -885,7 +885,7 @@ class Battle_Engine_Model
 						}
 						
 						/*
-						 Ripartizione danno tra bluntdamage e cutdamage
+						 Breakdown between bluntdamage and cutdamage
 						*/
 						
 						if ( isset( $_attacker['char']['weapons']['right_hand']['obj'] ) )					
@@ -904,7 +904,7 @@ class Battle_Engine_Model
 						, $this -> debug );
 						
 						/*
-						Determinazione parte del corpo colpita
+						Determining part of the affected body
 						*/
 					
 						$part='none'; 
@@ -1058,8 +1058,8 @@ class Battle_Engine_Model
 						
 						$battlestats['totaldamage'][$_attacker['char']['name']] += (int) round($totaldamage,0);
 						
-						// Se il total damage > 0, e l' attaccante è un npc-ratto, c'è
-						// una possibilità di attaccare la peste
+						// If the total damage> 0, and the attacker is a npc-rat, there is
+						// a chance to attack the plague
 						
 						if ( ($totaldamage) > 0 )
 						{
@@ -1128,7 +1128,7 @@ class Battle_Engine_Model
 								
 								Battle_Engine_Model::battledebug ( 'Attacks stunned: ' . $_defender['char']['stunnedround'] , $this -> debug );
 								
-								// i turni sono aumentati di 1 perchè poi questo viene sottratto.
+								// the turns are increased by 1 because then this is subtracted.
 								
 								//$_defender['char']['stunnedround'] += 1;
 								
@@ -1140,7 +1140,7 @@ class Battle_Engine_Model
 					}
 				
 					///////////////////////////////////
-					// Consumo Energia
+					// Consume Energy
 					///////////////////////////////////				
 										
 					if ( isset( $char['char']['weapons']['right_hand']['obj'] ) )			
@@ -1148,7 +1148,7 @@ class Battle_Engine_Model
 					else
 						$weaponreach = 1;
 						
-					// calcoliamo il peso dell' arma. Se nessuna arma il peso di default è 0 g			
+					// calcoliamo il peso dell' arma. Se nessuna arma il peso di default Ã¨ 0 g			
 					
 					if ( isset( $_attacker['char']['weapons']['right_hand']['obj'] ) )
 						$att_rightweaponweight = ($_attacker['char']['weapons']['right_hand']['obj'] -> weight / 1000);
@@ -1174,8 +1174,8 @@ class Battle_Engine_Model
 					
 					Battle_Engine_Model::battledebug("Drainrate: {$drainrate}", $this -> debug );
 					
-					// Se il personaggio è impattato dal bonus meditate e il fightmode è defend,
-					// il drainrate viene abbassato del 75%.
+					// If the character is impacted by the meditate bonus and the fight mode is defend,
+					// the drainrate is lowered by 75%.
 					
 					$energybonus = 0;
 					
@@ -1186,8 +1186,8 @@ class Battle_Engine_Model
 						$energybonus *= $_attacker['char']['faithlevel']/100;					
 					}
 					
-					// Se il personaggio è impattato dal bonus kill infidels e il fightmode è attack,
-					// il drainrate viene aumentato del 30%
+					// If the character is impacted by the bonus kill infidels and the fightmode is attack,
+					// the drainrate is increased by 30%
 					
 					if (isset($_attacker['char']['dogmabonus']['killinfidels']) and $_attacker['char']['fightmode'] == 'attack')
 					{
@@ -1203,8 +1203,8 @@ class Battle_Engine_Model
 					$drainrate *= (100 - $energybonus)/100;					
 					Battle_Engine_Model::battledebug("Drainrate After: {$drainrate}", $this -> debug );
 				
-					// se l' attaccante è stun, nno colpisce per default, ma 
-					// l' energia non deve essere tolta.
+					// if the attacker is stunned, no hits by default, but
+					// energy must not be removed.
 					
 					if ( $_attacker['char']['stunnedround'] > 0 ) 
 						$newenergy = $_attacker['char']['energy'];
@@ -1232,8 +1232,8 @@ class Battle_Engine_Model
 					
 					$hits++;
 					
-					// siccome swappiamo, è sempre l' attacker che è stunned quindi
-					// è nel turno attaccante che diminuiamo il counter
+					// since we swap, it is always the attacker who is stunned then
+					// it is in the attacking turn that we reduce the counter
 					
 					if ( $_attacker['char']['stunnedround'] >= 0 )
 						$_attacker['char']['stunnedround']--;
@@ -1242,7 +1242,7 @@ class Battle_Engine_Model
 				
 				}				
 				
-				// swappo attacker e defender
+				// swap attacker and defender
 				
 				Battle_Engine_Model::battledebug ('-> Swapping chars.' , $this -> debug );
 				$_x = $_attacker;
@@ -1278,8 +1278,8 @@ class Battle_Engine_Model
 				*/
 			}
 			
-			// I contendenti si sono scambiati i colpi, passiamo al prossimo turno
-			// e ricopiamo i valori nelle variabili master				
+			// The contenders exchanged the blows, we move on to the next round
+			// and copy the values into the master variables				
 			
 			if ( $_attacker['char']['faction'] == 'attacker' )
 			{
@@ -1339,7 +1339,7 @@ class Battle_Engine_Model
 	}
 			
 	/*
-	*	Funzione che formatta un fight report.	
+	*	Function that formats a fight report.	
 	*	@param text: report 
 	*	@return testo html
 	*/
@@ -1378,10 +1378,10 @@ class Battle_Engine_Model
 	}
 	
 	/*
-	* Funzione che carica in maniera efficiente
-	* le informazioni per la battaglia	
-	* @param int $char_id ID Personaggio
-	* @return $obj Copia del char
+	* Function that loads efficiently
+	* information for the battle	
+	* @param int $char_id ID Character
+	* @return $obj Copy of the char
 	*/
 	
 	function loadcharbattlecopy( $char_id )
@@ -1390,7 +1390,7 @@ class Battle_Engine_Model
 		$charcopy = array();
 		$char = ORM::factory('character', $char_id );		
 		
-		// calcoliamo gli attributi
+		// we calculate the attributes
 		
 		$charcopy['char']['obj'] = $char;
 		$charcopy['char']['type'] = $char -> type;
@@ -1451,7 +1451,7 @@ class Battle_Engine_Model
 			}			
 		}
 		
-		// Carica i bonus relativi alla chiesa
+		// Upload church-related bonuses
 		
 		if ( Church_Model::has_dogma_bonus($char -> church_id,'meditateanddefend') )
 			$charcopy['char']['dogmabonus']['meditateanddefend'] = true;
@@ -1473,7 +1473,7 @@ class Battle_Engine_Model
 	* Recomputes damage and defense related to items condition
 	* Removes equipment if condition <= 0
 	* @param array $charcopy Character Data
-	* @param boolean $debug stampare i messaggi di debug?
+	* @param boolean $debug to print debug messages?
 	* @return none
 	*/
 	
@@ -1643,9 +1643,9 @@ class Battle_Engine_Model
 	}
 	
 	/**
-	* Seleziona un combattente
-	* @param array $fighters Lista fighters
-	* @return str key array che identifica il fighter
+	* Select a fighter
+	* @param array $fighters Fighters list
+	* @return str key array which identifies the fighter
 	*/
 	
 	function pickfighter( $fighters ) 
@@ -1679,16 +1679,16 @@ class Battle_Engine_Model
 	}
 	
 	/**
-	* Lancia la battaglia
-	* @param attackers vettore di attaccanti
-	* @param defensers vettore di difensori
-	* @param type  tipo battaglia
-	* @param beaten	vettore che conterrà gli sconfitti
-	* @param winners vettore che conterrà quelli rimasti vivi
-	* @param report contiene report della battaglia	
-	* @param battlestats contiene statistiche
-	* @param test indica se è un test
-	* @param test indica se è il debug mode è on
+	* Launch the battle
+	* @param attackers vector of attackers
+	* @param defensers vector of defenders
+	* @param type  battle type
+	* @param beaten	vector which will contain the losers
+	* @param winners vector which will contain those left alive
+	* @param report contains reports of the battle
+	* @param battlestats contains statistics
+	* @param test indicates if it is a test
+	* @param test indicates if the debug mode is on
 	* @return none
 	*/
 	
@@ -1715,7 +1715,7 @@ class Battle_Engine_Model
 		$totalattackers = count( $attackers ); 
 		$totaldefenders = count( $defenders ); 
 		
-		// computa la totale energia e salute per statistiche.
+		// Compute the total energy and health for statistics.
 		
 		foreach ( $attackers as $key => $attacker )
 		{
@@ -1736,7 +1736,7 @@ class Battle_Engine_Model
 			$avg_health = $health / $totalfighters;
 			$avg_energy = $energy / $totalfighters;
 		}
-		// FInchè ci sono attaccanti o difensori e non abbiamo superato il massimo dei cicli, loop.
+		// Since there are attackers or defenders and we have not exceeded the maximum of loops, loops.
 		
 		while ( count ($defenders) > 0 and count ($attackers) > 0 and $cycle < self::CYCLES )
 		{
@@ -1760,7 +1760,7 @@ class Battle_Engine_Model
 			if ( !is_null($a) and !is_null($d) )
 			{
 				
-				// check: se tutti i char hanno energy < 0, finiamo la battaglia
+				// check: if all the chars have energy <0, we finish the battle
 				
 				$defenderswithenergy=0;
 				foreach ( $defenders as $defender )
@@ -1781,7 +1781,7 @@ class Battle_Engine_Model
 				$winner = 'none';
 					
 				/*****************************
-				* Esegui il combattimento
+				* Perform the fight
 				*****************************/				
 				
 				kohana::log('info', "-> {$a['char']['name']}, {$a_key} VS {$d['char']['name']}, {$d_key}");
@@ -1839,8 +1839,8 @@ class Battle_Engine_Model
 				$totalrounds += $battlestats['battlerounds'];
 				
 				/*****************************
-				* Detemina la squadra vincente
-				* e quella perdente
+				* Determine the winning team
+				* and the losing one
 				*****************************/     
 				
 				if ( $winner != 'none' )
@@ -1860,8 +1860,8 @@ class Battle_Engine_Model
 				
 								
 					/*****************************
-					 * Popup il prossimo avversario
-					 * del vincente				 
+					 * Popup the next opponent
+					 * of the winner				 
 					 *****************************/
 						
 					if ( $loserparty == 'attackers' )
@@ -1870,7 +1870,7 @@ class Battle_Engine_Model
 						//kohana::log('debug' , 'att fighter type is: ' . $a['char']['type'] ); 
 						//kohana::log('debug' , 'def fighter type is: ' . $d['char']['type'] ); 
 						
-						// aggiorna statistiche
+						// update statistics
 						
 						if ($a['char']['type'] == 'pc' )
 						{
@@ -2061,7 +2061,7 @@ class Battle_Engine_Model
 			"Battle Engine elapsed: " . $elapsed . " secs. " ;
 
 			
-		// battle champion solo per alcuni tipi di battaglia
+		// battle champion only for certain types of battle
 				
 		if ( in_array( $type, array( 'conquer_r', 'conquer_ir', 'revolt', 'nativerevolt', 'raid' ) ) )
 		{
@@ -2174,9 +2174,9 @@ class Battle_Engine_Model
 	
 	
 	/*
-	* Mette il char in convalescenza
-	* @param obj $defeated (oggetto charclone)
-	* @param obj $battle_type (tipo battaglia)
+	* Put the char in convalescence
+	* @param obj $defeated (charclone object)
+	* @param obj $battle_type (battle type)
 	* @return none
 	*/
 	
@@ -2219,8 +2219,8 @@ class Battle_Engine_Model
 	}
 	
 	/**
-	* Messaggio di debug
-	* @input: msg messaggio da stampare
+	* Debug message
+	* @input: msg message to print
 	* @return: none
 	*/
 	
@@ -2239,7 +2239,7 @@ class Battle_Engine_Model
 	}
 	
 	/**
-	* Establish how many 	 hits a char can deal
+	* Establish how many hits a char can deal
 	* @param obj $char Character
 	* @return int attacks
 	*/
@@ -2279,7 +2279,7 @@ class Battle_Engine_Model
 		$constitution_normalized = ( $char['char']['cost'] - 1 )/ (Character_Model::get_attributelimit() - 1);
 		
 		
-		// formula attacchi consecutivi nel caso si indossi una arma o si è a mani nudi	
+		// makes consecutive attacks in case you wear a weapon or are bare-handed	
 		
 		$negativefactors = $weaponweight_normalized + $armorencumbrance_normalized + $weaponreach_normalized;
 		$positivefactors = 1.5 * $energy_normalized + 1.5 * $constitution_normalized;

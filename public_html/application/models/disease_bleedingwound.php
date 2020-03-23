@@ -7,7 +7,7 @@ class Disease_Bleedingwound_Model extends Disease_Model
 	protected $name = 'bleedingwound';
 	protected $diffusion = 0; // percentuale -> 5%
 	protected $hpmalus = -1;
-	protected $checkinterval = 4;
+	protected $checkinterval = 3;
 	protected $strmalus = -2;
 	protected $dexmalus = -2;	
 	protected $intelmalus = 0;

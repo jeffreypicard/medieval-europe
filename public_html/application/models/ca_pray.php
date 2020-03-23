@@ -2,7 +2,7 @@
 
 class CA_Pray_Model extends Character_Action_Model
 {
-	// Costanti	
+	// Constants	
 	
 	const DELTA_GLUT = 3;
 	const DELTA_ENERGY = 3;
@@ -11,13 +11,13 @@ class CA_Pray_Model extends Character_Action_Model
 	protected $cancel_flag = true;
 	protected $immediate_action = false;
 	
-	// L'azione richiede che il personaggio indossi
-	// un determinato equipaggiamento
+	// The action requires the character to wear
+	// a certain equipment
 	
 	protected $requiresequipment = true;
 	
-	// Equipaggiamento o vestiario necessario in base al ruolo
-	// Consume_rate = percentuale di consumo dell'item
+	// Equipment or clothing needed based on the role
+	// Consume_rate = percentage of item consumption
 	
 	protected $equipment = array
 	(
@@ -218,7 +218,7 @@ class CA_Pray_Model extends Character_Action_Model
 		Item_Model::consume_equipment( $this->equipment, $char, $data->param3 );
 		
 		///////////////////////////////////////////////////////////////////
-		// Sottraggo l'energia e la sazietà al char
+		// Sottraggo l'energia e la sazietÃ  al char
 		///////////////////////////////////////////////////////////////////
 				
 		$char -> modify_energy ( - self::DELTA_ENERGY * $data -> param3, false, 'pray' );

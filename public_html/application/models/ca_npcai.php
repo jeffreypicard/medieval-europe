@@ -3,7 +3,7 @@
 class CA_NPCAI_Model extends Character_Action_Model
 {
 	
-	const CYCLE_TIME = 28800; // Tempo ciclo in secondi (8 ore)
+	const CYCLE_TIME = 28800; // Cycle time in seconds (8 hours)
 	
 	protected $cancel_flag = false;
 	protected $immediate_action = true;	
@@ -36,7 +36,7 @@ class CA_NPCAI_Model extends Character_Action_Model
 		
 		$char = ORM::factory('character', $data -> character_id);
 		
-		// Chiama NPCAI solo se l' NPC è vivo
+		// Call NPC AI only if the NPC is alive
 		
 		if ( is_null($char -> status) )
 		{
@@ -53,7 +53,7 @@ class CA_NPCAI_Model extends Character_Action_Model
 					
 		}		
 		
-		// Imposto il tempo per un nuovo ciclo
+		// Set the time for a new cycle
 			
 		$a = ORM::factory('character_action', $data -> id );
 		$a -> starttime = time() + self::CYCLE_TIME + (rand(1,2)*3600);
@@ -63,8 +63,8 @@ class CA_NPCAI_Model extends Character_Action_Model
 	}
 	
 
-	// Questa funzione costruisce un messaggio da visualizzare 
-	// in attesa che la azione sia completata.
+	// This function constructs a message to be displayed 
+	// waiting for the action to be completed.
 	public function get_action_message( $type = 'long') 
 	{		
 		return ;

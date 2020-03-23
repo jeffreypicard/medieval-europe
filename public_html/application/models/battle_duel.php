@@ -8,11 +8,11 @@ class Battle_Duel_Model extends Battle_Type_Model
 	var $battlefield = null;
 	
 	/** 
-	* Esegue tutta la battaglia
+	* Performs the entire battle
 	* 
-	* @param par vettore di parametri	
+	* @param par vector of parameters	
 	* par0: obj battle
-	* @param test flag di test
+	* @param test flag of tests
 	* @return 
 	*/
 	
@@ -33,10 +33,10 @@ class Battle_Duel_Model extends Battle_Type_Model
 	}
 
 	/** 
-	* Carica i due team
+	* Upload the two teams
 	* 
-	* @param par vettore di parametri
-	* @param test flag di test
+	* @param par vector of parameters
+	* @param test flag of tests
 	* @return 
 	*/
 	
@@ -48,8 +48,8 @@ class Battle_Duel_Model extends Battle_Type_Model
 		
 		kohana::log('info', '-> *** Loadteams *** ' );
 		
-		// Carichiamo i char solo se sono nella regione prevista del duello 
-		// e non stanno facendo nessuna azione bloccante
+		// We only load chars if they are in the planned region of the duel 
+		// and they are not doing any blocking action
 		
 		$attackerpendingaction = $this -> sourcechar -> get_currentpendingaction( $this -> sourcechar -> id );
 		$defenderpendingaction = $this -> destchar -> get_currentpendingaction( $this -> destchar -> id );
@@ -80,7 +80,7 @@ class Battle_Duel_Model extends Battle_Type_Model
 	}
 	
 	/** 
-	* Combatte
+	* Combat
 	* 
 	* @param none
 	* @return none
@@ -122,7 +122,7 @@ class Battle_Duel_Model extends Battle_Type_Model
 	}
 	
 	/** 
-	* Aftermath della battaglia
+	* Aftermath of the battle
 	* 
 	* @param none
 	* @return none
@@ -133,7 +133,7 @@ class Battle_Duel_Model extends Battle_Type_Model
 		
 		$attackerwins = $defenderwins = 0; 		
 		
-		// determino chi ha vinto e chi ha perso
+		// Determine who won and who lost
 		
 		if ( count($this -> attackers) == 0 and count($this -> defenders) > 0 )
 		{	
@@ -153,7 +153,7 @@ class Battle_Duel_Model extends Battle_Type_Model
 			$loser  = null;
 		}
 		
-		// controllo chi c'era e no, gestione honor
+		// check who was present and not present, manage honor
 		
 		kohana::log('info', '-> Attackers: ' . $this -> attackersnumber . ' Defenders: ' . $this -> defendersnumber );
 		
@@ -161,7 +161,7 @@ class Battle_Duel_Model extends Battle_Type_Model
 		
 		$duellocation = ORM::factory('region', $this -> bm -> source_region_id );
 					
-		// caso: uno dei due o tutti e due non si sono presentati.
+		// case: one of the two or both did not show up.
 		
 		if ( $this -> attackersnumber == 0 or $this -> defendersnumber == 0 )
 		{
@@ -244,7 +244,7 @@ class Battle_Duel_Model extends Battle_Type_Model
 		else
 		{
 			
-			// il duello si è svolto e c'è un perdente ed un vincitore.
+			// the duel took place and there is a loser and a winner.
 			
 			$this -> destchar -> modify_honorpoints( +1, 'duelpresence');
 			$this -> sourcechar -> modify_honorpoints( +1, 'duelpresence');
@@ -282,7 +282,7 @@ class Battle_Duel_Model extends Battle_Type_Model
 					null
 				);
 		
-				// eventi
+				// event
 			
 				Character_Event_Model::addrecord(
 					$winner -> id, 

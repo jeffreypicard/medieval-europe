@@ -4,9 +4,9 @@ class Diplomacy_Relation_Model extends ORM
 {
 
 /**
-* Ricava le info di una relazione diplomatica
-* @param int $id Id record stato diplomatico
-* @return info array oppure null
+* Get the info of a diplomatic report
+* @param int $id Id diplomatic status record
+* @return info array or null
 */
 
 public function get_info( $id )
@@ -29,8 +29,8 @@ public function get_info( $id )
 }
 
 /**
-* Torna le relazioni diplomatiche di un regno
-* @param int $kingdom_id Regno sorgente
+* The diplomatic relations of a kingdom are back
+* @param int $kingdom_id Source Kingdom
 * @return array
 */
 
@@ -49,19 +49,19 @@ public function get_diplomacy_relations( $kingdom_id )
 }
 
 /**
-* Torna la relazione tra un regno ed un altro
-* dalla release 2.9.4.4 le relazioni sono bidirezionali quindi
-* è sufficiente cercarne una
-* @param sourcekingdom_id regno sorgente
-* @param targetkingdom_id regno destinatario
+* The relationship between one kingdom and another returns
+* from the 2.9.4.4 release the relations are bidirectional then
+* it is sufficient to look for one
+* @param sourcekingdom_id source kingdom
+* @param targetkingdom_id recipient kingdom
 * @return array $relation
 *  - id: id
-*  - sourcekingdom_id: id kingdom sorgente
+*  - sourcekingdom_id: id kingdom source
 *  - targetkingdom_id: id kingdom target
-*  - type: tipo relazione (neutral ecc)
-*  - description: descrizione (non usata)
+*  - type: relationship type (neutral etc)
+*  - description: description (not used)
 *  - timestamp: data 
-*  - signed by: Id Reggente che ha firmato 
+*  - signed by: Id Regent who signed 
 */
 
 

@@ -6,7 +6,7 @@ class Structure_Model extends ORM
 	protected $belongs_to = array('structure_type', 'region', 'character');
 	protected $has_many = array('item', 'structure_event', 'structure_grant', 'structure_resource', 'structure_stat',
 	'structure_option');
-	// extra parametri rispetto a quelli in tabella.
+	// extra parameters compared to those in the table.
 	protected $maxlevel = 1;
 	protected $currentlevel = 1;
 	protected $price;
@@ -26,7 +26,7 @@ class Structure_Model extends ORM
 	const DAMAGEPERCENTAGELIMIT = 30;
 
 	/**
-	* Inizializza la classe
+	* Initialize the class
 	*/
 
 	public function init() {}

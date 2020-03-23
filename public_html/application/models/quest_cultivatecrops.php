@@ -19,7 +19,7 @@ class Quest_Cultivatecrops_Model extends Quest_Model
 			return false;			
 		}
 		
-		// da un bonus velocità
+		// from a speed bonus
 		
 		Character_Model::modify_stat_d(
 			$character -> id,
@@ -67,13 +67,13 @@ class Quest_Cultivatecrops_Model extends Quest_Model
 		$item -> quality = 10;
 		$item -> additem( 'character', $character -> id , 1 );
 	
-		// gestione per strutture di tipo terrain: metti stato incolto
+		// terrain management: put uncultivated state
 		
 		if ( $structure -> structure_type -> supertype == 'terrain' )
 			$structure -> attribute1 = 0;					
 		$structure -> save();
 		
-		// da un bonus velocità
+		// from a speed bonus
 		
 		Character_Model::modify_stat_d(
 			$character -> id,
@@ -121,7 +121,7 @@ class Quest_Cultivatecrops_Model extends Quest_Model
 	function finalize_quest( $char, $instance ) 
 	{
 				
-		// distruggi il terreno
+		// destroy the land
 		
 		$terrain = ORM::factory('structure', $instance -> spare3 );		
 		if ( $terrain -> loaded )

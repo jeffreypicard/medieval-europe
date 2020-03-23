@@ -5,9 +5,9 @@ class Trace_Sale_Model extends ORM
 
 	/**
 	* Trace sales
-	* cfgitem_id id oggetto
-	* quantity quantità comprata
-	* price prezzo di acquisto
+	* cfgitem_id object id
+	* quantity quantity purchased
+	* price purchase price
 	*/
 	
 	function add ( $cfgitem_id, $quantity, $price )

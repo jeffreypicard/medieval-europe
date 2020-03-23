@@ -38,7 +38,7 @@ class Achievement_Model
 		
 		}
 		
-		// Dobloni spesi
+		// Doubloons spent
 		
 		if ( $name == 'stat_boughtdoubloons' )
 		{
@@ -51,7 +51,7 @@ class Achievement_Model
 		
 		}
 		
-		// Duelli
+		// Duels
 		
 		if ( $name == 'stat_bestduelist' )
 		{
@@ -64,7 +64,7 @@ class Achievement_Model
 			if ( $value >= 1 and $value < 5) $stars = 1;
 		}
 
-		// massimizzazione attributi
+		// attribute maximization
 		
 		if ( in_array( $name,
 			array( 'stat_intel', 'stat_str', 'stat_dex', 'stat_cost', 'stat_car' ) ) )
@@ -89,7 +89,7 @@ class Achievement_Model
 		
 		}
 		
-		// Faith point accumulati (per religione)
+		// Times battle champion 
 		
 		if ( $name == 'stat_battlechampion' )
 		{			
@@ -101,7 +101,7 @@ class Achievement_Model
 				if ( $value >= 250 ) $stars = 5;		
 		}
 		
-		// Faith point accumulati (per religione)
+		// Faith point accumulated (per religion)
 		
 		if ( $name == 'stat_fpcontribution' )
 		{			

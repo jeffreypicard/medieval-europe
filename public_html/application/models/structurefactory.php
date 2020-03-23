@@ -3,9 +3,9 @@
 class StructureFactory_Model
 {
 	/**
-	* Istanzia una classe Struttura
-	* @param str $type yipo della struttura
-	* @param int $id ID struttura
+	* Instance a class structure
+	* @param str $type type of structure
+	* @param int $id ID structure
 	* @return obj $type o null;
 	*/
 	
@@ -15,7 +15,7 @@ class StructureFactory_Model
 		kohana::log('debug', '----- STRUCTUREFACTORY -----');
 		kohana::log('debug', "type: [{$type}], id: [{$id}]");
 		
-		// se viene passato l' id carichiamo direttamente la classe.
+		// if the id is passed, we load the class directly
 		if (!is_null($id))
 		{
 			$structure = ORM::factory('structure', $id );			

@@ -5,7 +5,7 @@ class Admin_Message_Model extends ORM
   protected $sorting = array('id' => 'desc');
 
 	/** 
-	* Carica l' ultimo messaggio dell' amministrazione
+	* Upload the last message of the administration
 	*/
 	
 	function get_last_message()

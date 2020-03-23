@@ -6,24 +6,24 @@ class CA_Declarewaraction_Model extends Character_Action_Model
 	protected $immediate_action = true;
 	protected $warcost = 0;
 
-	// Effettua tutti i controlli relativi all' azione, sia quelli condivisi
-	// con tutte le action che quelli peculiari
-	// @input: array di parametri
-	// par[0]: oggetto char
-	// par[1]: oggetto regione che sferra l'attacco
-	// par[2]: tipo attacco
-	// par[3]: oggetto regione che riceve l'attacco
-	// par[4]: eventuale candidato alla reggenza
+	// Perform all the controls related to the action, both those shared
+	// with all the actions that peculiar ones
+	// @input: array of parameters
+	// par[0]: char object
+	// par[1]: object region that attacks
+	// par[2]: attack type
+	// par[3]: object region that receives the attack
+	// par[4]: possible candidate for the regency
 	// par[5]: maxattackers
 	// par[6]: parameter 1
-	// @output: TRUE = azione disponibile, FALSE = azione non disponibile
-	//          $message contiene il messaggio di ritorno
+	// @output: TRUE = action available, FALSE = action not available
+	//          $message contains the return message
 
 	protected function check( $par, &$message )
 	{
 
 
-		// Cooldown su click
+		// Cooldown on click
 
 		$lastdeclarationsubmit =
 		Character_Model::get_stat_d(
@@ -69,52 +69,52 @@ class CA_Declarewaraction_Model extends Character_Action_Model
 		{ return false; }
 
 		////////////////////////////////
-		// check dati
+		// check data
 		////////////////////////////////
 
 		if ( !$par[3] -> loaded )
 		{ $message = kohana::lang( 'global.error-regionunknown'); return false;}
 
-		// controllo se la regione � disabled
+		// check if the region � disabled
 
 		if ( $par[3] -> status == 'disabled' )
 		{ $message = kohana::lang( 'global.operation_not_allowed'); return false;}
 
-		// Il regno che lancia l' attacco � in guerra?
+		// The kingdom that launches the attack � at war?
 		$attackingkingdomrunningwars = Kingdom_Model::get_kingdomwars( $par[1] -> kingdom_id, 'running');
 
 		if (count($attackingkingdomrunningwars) == 0 )
 		{ $message = kohana::lang( 'ca_declarewaraction.error-attackingkingdomisnotinwar'); return false;}
 
-		// Il regno che � attaccato � in guerra?
+		// The kingdom that � defends � at war?
 		$defendingkingdomrunningwars = Kingdom_Model::get_kingdomwars( $par[3] -> kingdom_id, 'running');
 		if (count($defendingkingdomrunningwars) == 0 )
 		{ $message = kohana::lang( 'ca_declarewaraction.error-defendingkingdomisnotinwar'); return false;}
 
-		// I due regni, sono nella medesima guerra?
+		// Are the two kingdoms in the same war?
 
 		if ($attackingkingdomrunningwars[0]['war'] -> id  != $defendingkingdomrunningwars[0]['war'] -> id)
 		{ $message = kohana::lang( 'ca_declarewaraction.error-defendingkingdomisnotinsamewar'); return false;}
 
-		// Devono essere passati almeno 2 giorni dall' ultima dichiarazione di guerra
+		// At least 2 days must have passed since the last declaration of war
 		if ( (time() - $attackingkingdomrunningwars[0]['war']->start) < ( kohana::config('medeur.war_cooldownbeforeattacks') * 24 * 3600 ) )
 		{ $message = kohana::lang( 'ca_declarewaraction.error-youcannotattackyet'); return false;}
 
-		// La relazione diplomatica con il regno in cui si attacca � ostile?
+		// Is the diplomatic relationship with the kingdom in which it attacked � hostile?  
 
 		$diplomacyrelation = Diplomacy_Relation_Model::get_diplomacy_relation( $par[1] -> kingdom_id, $par[3] -> kingdom_id);
 		if ($diplomacyrelation['type'] != 'hostile')
 		{ $message = kohana::lang( 'ca_declarewaraction.error-diplomacyrelationisnothostile'); return false;}
 
-		// Conquista capitale: controllo se il regno ha almeno
-		// 3 regioni
+		// Capital conquest: check if the kingdom has at least
+		// 3 regions
 
 		if ( $par[2] == 'conquer_r' and $par[3] -> capital and count( $par[3] -> kingdom -> regions ) > 3 )
 		{$message = kohana::lang('ca_declarewaraction.mustreduceownedregions');return false;}
 
 		////////////////////////////////
-		// Controllo candidato reggenza
-		// se si attacca una capitale.
+		// Regency candidate check
+		// if a capital is attacked.
 		////////////////////////////////
 
 		if ( $par[2] == 'conquer_r' and $par[3] -> capital and Character_Role_Model::check_eligibility( $par[4], 'king', null, $message ) == false  )
@@ -123,29 +123,29 @@ class CA_Declarewaraction_Model extends Character_Action_Model
 		if ( $par[2] == 'conquer_r' and $par[3] -> capital and $par[4] -> id == $par[0] -> id )
 		{ $message = kohana::lang('ca_declarewaraction.error-youcannotbetheregentcandidate') . ':' . $message; return false;}
 
-		// Il regno che dichiara l'attacco non pu� essere sotto attacco.
+		// The realm that declares the attack cannot� be under attack.
 		$data = null;
 		$iskingdomfighting = Kingdom_Model::is_fighting( $par[1] -> kingdom_id, $data ) ;
 		if ( $iskingdomfighting == true )
 		{ $message = kohana::lang( 'ca_declarewaraction.attacker_isfighting', kohana::lang($par[1]->name) ) ; return false; }
 
-		// Se il regno da attaccare � gi� sotto attacco, non � possi
-		// bile dichiarare azioni ostili, se invece sta attaccando, ok.
+		// If the kingdom to attack �already� under attack, not � possible
+		// to declare hostile actions, if you are attacking, ok.
 
 		$iskingdomfighting = Kingdom_Model::is_fighting( $par[3] -> kingdom_id, $data );
 		if ( $iskingdomfighting == true and $data['defending'] == true )
 		{	$message = kohana::lang( 'ca_declarewaraction.defender_isfighting',
 			kohana::lang( $par[3] -> kingdom -> name) ) ; return false;	}
 
-		// Nella regione c'� un battlefield? Se s� non si pu� attaccare
-		// (non si pu� attaccare la stessa regione contemporaneamente
+		// In the region there� a battlefield? If yes� you can't� attack
+		// (you can't� attack the same region simultaneously
 
 		$battlefield = $par[3] -> get_structure('battlefield');
 		if ( !is_null( $battlefield ) )
 		{ $message = kohana::lang( 'ca_declarewaraction.error-battlefieldpresent' ) ; return false; }
 
-		// costo: se chi lancia l' attacco � chi ha lanciato la guerra o un suo alleato
-		// il costo � 0
+		// cost: if who launches the attack � who launched the war or one of his allies
+		// the cost � 0
 
 		$diplomacyrelationwithkingdomthatdeclaredwar = Diplomacy_Relation_Model::get_diplomacy_relation(
 			$par[1] -> kingdom_id , $attackingkingdomrunningwars[0]['war'] -> source_kingdom_id
@@ -171,7 +171,7 @@ class CA_Declarewaraction_Model extends Character_Action_Model
 			}
 		}
 
-		// Non � possibile raidare la reliquia della propria religione.
+		// Not � possible to raid the relic of one's religion.
 		/*
 		if ( $par[2] == 'raid' and $par[6] == 'relic_' . $par[0] -> church -> name)
 		{
@@ -189,7 +189,7 @@ class CA_Declarewaraction_Model extends Character_Action_Model
 	function complete_action( $data )
 	{
 
-		// invio evento al Re del regno attaccato
+		// sending event to the King of the attacked kingdom
 
 	}
 
@@ -208,7 +208,7 @@ class CA_Declarewaraction_Model extends Character_Action_Model
 		$role_att = $king_att -> get_current_role();
 
 		//////////////////////////////////////
-		// Aggiungo un record in battle
+		// I add a record in battle
 		//////////////////////////////////////
 
 		$attackingkingdomrunningwars = Kingdom_Model::get_kingdomwars( $par[1] -> kingdom_id, 'running');
@@ -240,16 +240,16 @@ class CA_Declarewaraction_Model extends Character_Action_Model
 		$wdr -> save();
 
 		//////////////////////////////////////
-		// Tolgo i soldi
+		// I take the money out
 		//////////////////////////////////////
 
 		$royalpalace = $par[1] -> kingdom -> get_structure('royalpalace');
 		$royalpalace -> modify_coins( - $this -> warcost, 'declarewaraction' );
 
 		//////////////////////////////////////
-		// Informa il Re difensore
-		// in caso di Raid, il Re � informato
-		// solo quando il battleraid � pronto
+		// Inform the defending king
+		// in the case of Raid, the King � informed
+		// only when the battleraid � ready
 		//////////////////////////////////////
 
 		if ( $par[2] != 'raid' )
@@ -267,7 +267,7 @@ class CA_Declarewaraction_Model extends Character_Action_Model
 		}
 
 		//////////////////////////////////////
-		// Informa il Re attaccante
+		// Inform the attacking King
 		//////////////////////////////////////
 		if (!is_null( $king_def ))
 			Character_Event_Model::addrecord(
@@ -281,8 +281,8 @@ class CA_Declarewaraction_Model extends Character_Action_Model
 				);
 
 		//////////////////////////////////////
-		// Aggiunge evento a banditore
-		// eccetto raid
+		// Add event to auctioneer
+		// except raid
 		//////////////////////////////////////
 
 		if ( $par[2] != 'raid' )
@@ -301,7 +301,7 @@ class CA_Declarewaraction_Model extends Character_Action_Model
 			);
 		}
 
-		// Schedula una azione per costruire il campo di battaglia
+		// Schedule an action to build the battlefield
 
 		$a = new Character_Action_Model();
 		$a -> character_id = $king_att -> id;

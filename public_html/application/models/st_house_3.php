@@ -9,7 +9,7 @@ class ST_House_3_Model extends ST_House_Model
 		parent::init();
 		$this -> setBaseprice( 4200 );	
 		$this -> setStorage( 2800000 );
-		$this -> setRestFactor( 7 );
+		$this -> setRestFactor( 12 );
 	}
 	
 	

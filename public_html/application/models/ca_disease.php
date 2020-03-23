@@ -7,10 +7,10 @@ class CA_Disease_Model extends Character_Action_Model
 	
 	
 	/** 
-	* Effettua tutti i controlli 
-	* @param: par: array di parametri
-	* par[0]: oggetto char
-	* par[1]: nome disease
+	* Perform all checks 
+	* @param: par: array of parameters
+	* par[0]: char object
+	* par[1]: name disease
 	*/
 	
 	
@@ -21,7 +21,7 @@ class CA_Disease_Model extends Character_Action_Model
 		{ return false; }
 		
 		/////////////////////////////////////////////////////
-		// controllo dati
+		// data check
 		/////////////////////////////////////////////////////
 		
 		if ( !$par[0]->loaded )
@@ -38,7 +38,7 @@ class CA_Disease_Model extends Character_Action_Model
 		
 		$char = ORM::factory('character', $data -> character_id );
 		
-		// istanzia la classe corretta
+		// instantiate the correct class
 		
 		$disease = "Disease_" . ucfirst( $data -> param1 ) . "_Model";
 		$class = new $disease();

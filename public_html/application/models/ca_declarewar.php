@@ -7,20 +7,20 @@ class CA_Declarewar_Model extends Character_Action_Model
 	
 	protected $immediate_action = true;
 	
-	// Effettua tutti i controlli relativi all' azione, sia quelli condivisi
-	// con tutte le action che quelli peculiari 
-	// @input: array di parametri
-	// par[0]: oggetto char
-	// par[1]: oggetto regno a cui si dichiara guerra
-	// par[2]: struttura palazzo reale
-	// @output: TRUE = azione disponibile, FALSE = azione non disponibile
-	//          $message contiene il messaggio di ritorno	
+	// Perform all the controls related to the action, both those shared
+	// with all the actions that peculiar ones
+	// @input: array of parameters
+	// par[0]: char object
+	// par[1]: realm object to which war is declared
+	// par[2]: royal palace structure
+	// @output: TRUE = action available, FALSE = action not available
+	//          $message contains the return message	
 	
 	protected function check( $par, &$message )
 	{ 					
 		sleep(15);
 		
-		// non si può dichiarare guerra a sè stessi		
+		// one cannot declare war on oneself		
 		
 		if ( $par[1] -> id == $par[0] -> region -> kingdom_id)
 		{
@@ -28,7 +28,7 @@ class CA_Declarewar_Model extends Character_Action_Model
 			return false;
 		}				
 		
-		// controllo se ci sono sufficienti fondi nel Palazzo Reale
+		// check if there are sufficient funds in the Royal Palace
 		
 		if ( $par[2] -> get_item_quantity( 'silvercoin' ) < self::REQUIREDFUNDS )
 		{
@@ -36,7 +36,7 @@ class CA_Declarewar_Model extends Character_Action_Model
 			return false;			
 		}
 		
-		// controllo: per dichiarare guerra si deve aver dichiarato hostile almeno da 48h
+		// control: to declare war you must not have declared hostile diplomatic realtion under at least 48 hours
 		
 		$dr = Diplomacy_Relation_Model::get_diplomacy_relation( $par[0] -> region -> kingdom_id, $par[1] -> id );
 		
@@ -48,21 +48,21 @@ class CA_Declarewar_Model extends Character_Action_Model
 		}
 		
 		
-		// controllo che il regno che dichiara guerra non sia già impegnato in guerra
+		// check that the kingdom declaring war is not already engaged in war
 		
 		$attackingkingdomrunningwars = Kingdom_Model::get_kingdomwars( $par[0] -> region -> kingdom_id, 'running');		
 		if (count($attackingkingdomrunningwars) > 0 )
 		{ $message = kohana::lang( 'ca_declarewar.error-attackingkingdomisatwar'); return false;}
 	
-		// controllo che il regno a cui si dichiara guerra non sia già impegnato in guerra
+		// check that the kingdom to which war is declared is not already engaged in war
 		
 		$defendingkingdomrunningwars = Kingdom_Model::get_kingdomwars( $par[1] -> id, 'running');
 		if (count($defendingkingdomrunningwars) > 0 )
 		{ $message = kohana::lang( 'ca_declarewar.error-defendingkingdomisatwar'); return false;}	
 		
 		
-		// controllo che il regno non abbia partecipato come attaccante
-		// ad una guerra nelle ultime ore
+		// check that the kingdom has not participated as a attacker
+		// to a war in the last hours
 		
 		$lastwar = Kingdom_Model::get_last_war( $par[0] -> region -> kingdom_id );
 		
@@ -86,7 +86,7 @@ class CA_Declarewar_Model extends Character_Action_Model
 	public function execute_action ( $par, &$message) 
 	{
 		
-		// Toglie denari a struttura
+		// Removes money from the structure
 		
 		$par[2] -> modify_coins( - self::REQUIREDFUNDS, 'wardeclaration');
 		
@@ -101,14 +101,14 @@ class CA_Declarewar_Model extends Character_Action_Model
 		$sourcekingdomallies = Kingdom_Model::get_allies($par[0] -> region -> kingdom_id);
 		$targetkingdomallies = Kingdom_Model::get_allies($par[1] -> id);
 
-		// Agg. Regno Che dichiara
+		// Agg. Kingdom That declares
 		$kingdomwar_kingdom = new Kingdom_Wars_Ally_Model();
 		$kingdomwar_kingdom -> kingdom_war_id = $war -> id;
 		$kingdomwar_kingdom -> kingdom_id = $par[0] -> region -> kingdom_id;
 		$kingdomwar_kingdom -> role = 'attacker';
 		$kingdomwar_kingdom -> save();
 		
-		// Agg. Regno a cui è dichiarato 
+		// Agg. Kingdom to which it is declared 
 		$kingdomwar_kingdom = new Kingdom_Wars_Ally_Model();
 		$kingdomwar_kingdom -> kingdom_war_id = $war -> id;
 		$kingdomwar_kingdom -> kingdom_id = $par[1] -> id;
@@ -117,7 +117,7 @@ class CA_Declarewar_Model extends Character_Action_Model
 		
 		
 		
-		// Alleati
+		// Allies
 		foreach( $sourcekingdomallies as $sourcekingdomally_id )
 		{
 			$kingdomwar_kingdom = new Kingdom_Wars_Ally_Model();

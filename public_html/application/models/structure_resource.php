@@ -5,7 +5,7 @@ class Structure_Resource_Model extends ORM
 	protected $belongs_to = array('structure' ); 
 
 	/**
-	* modifica risorse
+	* edit resources
 	*/
 	
 	public function modify_quantity( $delta )
@@ -17,9 +17,9 @@ class Structure_Resource_Model extends ORM
 	}
 	
 	/*
-	* Torna il livello della risorsa
-	* @param in $structure_id ID Struttura
-	* @return int livello %o false se non c'è risorsa
+	* Go back to the resource level
+	* @param in $structure_id ID Structure
+	* @return int level %o false if there is no resource
 	*/
 	
 	static function get_resourcelevel( $structure_id )
@@ -41,7 +41,7 @@ class Structure_Resource_Model extends ORM
 	}
 	
 	/*
-	* Torna le risorse di ogni regione
+	* Return the resources of each region
 	* @param none
 	* @return obj $rset ResultSet
 	*/
