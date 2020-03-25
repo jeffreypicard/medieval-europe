@@ -44,6 +44,7 @@ $lang = Array
 'kingdom-jerusalem' => 'Kudüs Krallığı',
 'kingdom-mamluk' => 'Memlük Sultanlığı',
 'kingdom-cyrene' => 'Kirene Krallığı',
+'grandduchy-cyrenaica'=> 'Cyrenaica halifeliği' ,
 'kingdom-seljuq' => 'Anadolu Selçuklu Devleti',
 'kingdom-ottoman' => 'Osmanlı İmparatorluğu',
 'kingdom-bulgaria' => 'Bulgaristan Çarlığı',
