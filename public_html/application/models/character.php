@@ -34,7 +34,7 @@ class Character_Model extends ORM
 	}
 	
 	/**
-	* Determina se un char è online
+	* Determina se un char Ã¨ online
 	* @param int $char_id ID Character
 	* @return bool 
 	*/
@@ -46,7 +46,7 @@ class Character_Model extends ORM
 	}
 	
 	/**
-	* Calcola se un char è newborn o meno
+	* Calcola se un char Ã¨ newborn o meno
 	* @param Character_Model $char Personaggio
 	* @return boolean
 	*/
@@ -247,7 +247,7 @@ class Character_Model extends ORM
 	}
 	
 	/** 
-	* Controlla se il char ha la quantità  di soldi f
+	* Controlla se il char ha la quantitÃ Â  di soldi f
 	* @return  boolean
 	*/
 	
@@ -281,7 +281,7 @@ class Character_Model extends ORM
 	* @param int $id id Character
 	* @param string $tag che identifica l' oggetto
 	* @param int $quantity numero di oggetti
-	* @param boolean $fullqualitycheck se true, applica il controllo qualità  = 100%
+	* @param boolean $fullqualitycheck se true, applica il controllo qualitÃ Â  = 100%
 	* return false o true
 	*/
 	
@@ -494,7 +494,7 @@ class Character_Model extends ORM
 		if ( ! $excludecart )
 		{
 		
-			// controlliamo, se ha il cart3 se è scaduto. Se lo è, distruzione.
+			// controlliamo, se ha il cart3 se Ã¨ scaduto. Se lo Ã¨, distruzione.
 			
 			if ( 
 				Character_Model::has_item( $this->id, 'cart_3', 1 ) 
@@ -524,8 +524,8 @@ class Character_Model extends ORM
 				}	
 			}
 			
-			// se il giocatore ha pià¹ cart, viene calcolata la massima 
-			// capacità , ma non si cumula
+			// se il giocatore ha piÃ Â¹ cart, viene calcolata la massima 
+			// capacitÃ Â , ma non si cumula
 			
 			if ( Character_Model::has_item( $this->id, 'cart_3', 1 ) )
 			{ $btw += self::CART_3_STORAGE; }
@@ -562,7 +562,7 @@ class Character_Model extends ORM
 		
 		$db = Database::instance();
 		
-		// sottraggo dal peso trasportato solo il peso del carretto pià¹ grande
+		// sottraggo dal peso trasportato solo il peso del carretto piÃ Â¹ grande
 		
 		kohana::log('debug', '-> Transportedweight before cart computation: ' . 
 			$transportedweight/1000 . ' Kg' );
@@ -604,8 +604,8 @@ class Character_Model extends ORM
 	* Ritorna il fattore di riposo, legato alla casa posseduta dal char.
 	* La taverna ha invece un fattore di riposo fisso.
 	* @param structure oggetto struttura
-	* @param freerest true/false indica se il rest è gratis
-	* @param cartrest true/false indica se il rest è nel cart
+	* @param freerest true/false indica se il rest Ã¨ gratis
+	* @param cartrest true/false indica se il rest Ã¨ nel cart
 	* @return info vettore
 	*   restfactor: fattore di recupero (punti energia recuperati per ora)
 	*   timeforfullenergy: tempo (in secondi) per recuperare piena energia
@@ -621,14 +621,14 @@ class Character_Model extends ORM
 		
 		if ( $cartrest == false )
 		{
-			// se il rest è gratis o è c/o il villaggio dei nativi, il RF è basso
+			// se il rest Ã¨ gratis o Ã¨ c/o il villaggio dei nativi, il RF Ã¨ basso
 			
 			$age = $this -> get_age();
 			
 			if ( $freerest === true and $this -> get_age() > 90) 
 				$base_rf = 1.8;		
 			
-			// RF dipende dal livello della struttura, dalla costituzione e dalla sazietà 				
+			// RF dipende dal livello della struttura, dalla costituzione e dalla sazietÃ Â 				
 			
 			$base_rf = $base_rf * pow( $structure -> structure_type -> restlevel , 0.2 );
 			
@@ -710,7 +710,7 @@ class Character_Model extends ORM
 
 	
 	/** 
-	* Modifica la sazietà 
+	* Modifica la sazietÃ Â 
 	* @param delta delta da aggiungere o sottrarre	
 	* @param deltaflag se true, assegna direttamente il valore passato
 	* @return none
@@ -732,7 +732,7 @@ class Character_Model extends ORM
 
 		kohana::log( 'debug', 'modifying glut: ' . $delta . ' to char: ' . $this -> name . ' ' . $this -> id );
 		
-		// Non invalido la cache perchè l' invalidazione è sul save.
+		// Non invalido la cache perchÃ¨ l' invalidazione Ã¨ sul save.
 		
 	}
 
@@ -794,14 +794,14 @@ class Character_Model extends ORM
 		
 		kohana::log( 'debug', '-> modifying health: ' . $delta . ' to char: ' . $this->name . ' ' . $this -> id );
 				
-		// Non invalido la cache perchè l' invalidazione è sul save.		
+		// Non invalido la cache perchÃ¨ l' invalidazione Ã¨ sul save.		
 
 	}
 	
 	/**
-	* funzione che ritorna la quantità  di un certo item
+	* funzione che ritorna la quantitÃ Â  di un certo item
 	* param tag tag dell' oggetto
-	* return q quantità  posseduta
+	* return q quantitÃ Â  posseduta
 	*/
 	
 	function get_item_quantity_d( $char_id, $tag )
@@ -835,9 +835,9 @@ class Character_Model extends ORM
 	
 	
 	/**
-	* funzione che ritorna la quantità  di un certo item
+	* funzione che ritorna la quantitÃ Â  di un certo item
 	* param tag tag dell' oggetto
-	* return q quantità  posseduta
+	* return q quantitÃ Â  posseduta
 	*/
 	
 	function get_item_quantity( $tag )
@@ -908,7 +908,7 @@ class Character_Model extends ORM
 		return $currentrole;
 	}
 	
-	// functione che torna il character che è il riporto
+	// functione che torna il character che Ã¨ il riporto
 	// gerarchico.
 	// @output: struttura character_role se esiste altrimenti null
 	//
@@ -928,7 +928,7 @@ class Character_Model extends ORM
 			{
 				case 'king': 
 				case 'duke':
-				case 'seigneur':				
+				case 'lord':	
 				case 'doge':
 				case 'count':
 				case 'church_level_1':
@@ -1402,7 +1402,7 @@ class Character_Model extends ORM
 	}
 	
 	/** 
-	* Funzione che ritorna se l' utente è morto o meno
+	* Funzione che ritorna se l' utente Ã¨ morto o meno
 	* @input: nessuno
 	* @output: true o false
 	*/
@@ -1438,7 +1438,7 @@ class Character_Model extends ORM
 	{	
 		$this -> status = $status;		
 		
-		// Non invalido la cache perchè l' invalidazione è sul save.		
+		// Non invalido la cache perchÃ¨ l' invalidazione Ã¨ sul save.		
 
 	}
 	
@@ -1470,8 +1470,8 @@ class Character_Model extends ORM
 		$parameters = implode ('/', Router::$arguments );
 		$char_id = Session::instance()->get('char_id'); 
 
-		// se il gioco è in modalità  admin
-		// e il char non è admin, si butta fuori.
+		// se il gioco Ã¨ in modalitÃ Â  admin
+		// e il char non Ã¨ admin, si butta fuori.
 		
 		kohana::log('debug', '*** Handle Character Status ***');
 		
@@ -2023,9 +2023,9 @@ class Character_Model extends ORM
 	}
 	
 	/**
-	* Calcola l' età  del char in giorni
-	* @param mode: days ritorna l' età  in giorni altrimenti in secondi
-	* @return età  in secondi o giorni
+	* Calcola l' etÃ Â  del char in giorni
+	* @param mode: days ritorna l' etÃ Â  in giorni altrimenti in secondi
+	* @return etÃ Â  in secondi o giorni
 	*/	
 	
 	function get_age( $mode = 'days' )
@@ -2038,10 +2038,10 @@ class Character_Model extends ORM
 	}
 	
 	/**
-	* Calcola l' età  del char in giorni
+	* Calcola l' etÃ Â  del char in giorni
 	* Modello Statico
-	* @param mode: days ritorna l' età  in giorni altrimenti in secondi
-	* @return età  in secondi o giorni
+	* @param mode: days ritorna l' etÃ Â  in giorni altrimenti in secondi
+	* @return etÃ Â  in secondi o giorni
 	*/	
 	
 	static function get_age_s( $character_id, $mode = 'days' )
@@ -2075,7 +2075,7 @@ class Character_Model extends ORM
 	
 	/**
 	* Modifica una statistica del char, ma 
-	* è possibile specificare il charid destinatario
+	* Ã¨ possibile specificare il charid destinatario
 	* @param int id char
 	* @param string statname
 	* @param int value
@@ -2321,7 +2321,7 @@ class Character_Model extends ORM
 	* @param str $name Nome della Statistica
 	* @param str $searchparam Parametro Ricerca
 	* @param str $searchaparam2 Parametro Ricerca
-	* @return Character_Stat_Model (se non esiste, la proprietà  loaded è false)
+	* @return Character_Stat_Model (se non esiste, la proprietÃ Â  loaded Ã¨ false)
 	*/
 
 	
@@ -2351,7 +2351,7 @@ class Character_Model extends ORM
 	* @param  string $name stat name
 	* @param  string $param1 searchparam1
 	* @param  string $param2 searchparam2
-	* @return Character_Stat_Model (se non esiste, la proprietà  loaded è false)
+	* @return Character_Stat_Model (se non esiste, la proprietÃ Â  loaded Ã¨ false)
 	*/
 	
 	static function get_stat_d( $char_id, $name, $param1 = null, $param2 = null )
@@ -2457,8 +2457,8 @@ class Character_Model extends ORM
 	/**
 	* Ritorna le stat di un char
 	* @param str $name nome statistica
-	* @param str $param1 se passato, è un criterio di ricerca
-	* @param str $param2 se passato, è un criterio di ricerca
+	* @param str $param1 se passato, Ã¨ un criterio di ricerca
+	* @param str $param2 se passato, Ã¨ un criterio di ricerca
 	* @return array $stats, null se non trovata
 	*/
 	
@@ -2511,8 +2511,8 @@ class Character_Model extends ORM
 	* Ritorna le stat di un char
 	* @param int $character_id ID Personaggio
 	* @param str $name nome statistica
-	* @param str $param1 se passato, è un criterio di ricerca
-	* @param str $param2 se passato, è un criterio di ricerca
+	* @param str $param1 se passato, Ã¨ un criterio di ricerca
+	* @param str $param2 se passato, Ã¨ un criterio di ricerca
 	* @return array $stats, null se non trovata
 	*/
 	
@@ -2839,7 +2839,7 @@ class Character_Model extends ORM
 	{
 		$db = Database::instance();
 		
-		// Selezioni i gruppi di cui il char è il proprietario
+		// Selezioni i gruppi di cui il char Ã¨ il proprietario
 		// o a cui appartiene come membro approvato (non pendente)
 		$sql = "( (select groups.* 
 		          from groups left join group_characters 
@@ -2870,12 +2870,12 @@ class Character_Model extends ORM
 		if ( is_null ( $role ) ) 
 			return null;
 		
-		// se è un re le controlla tutte.
+		// se Ã¨ un re le controlla tutte.
 		
 		if ( $role -> tag == 'king' )			
 			$regions = ORM::factory('region') -> where ( 'kingdom_id', $this -> region -> kingdom -> id ) -> find_all(); 		
 		
-		// se è un vassallo controlla solo le regioni con native village
+		// se Ã¨ un vassallo controlla solo le regioni con native village
 		// figli del castello
 		
 		elseif ( $role -> tag == 'vassal' )
@@ -2941,7 +2941,7 @@ class Character_Model extends ORM
 	}
 	
 	/**
-	* determina se il char è in cura (o sta curando)
+	* determina se il char Ã¨ in cura (o sta curando)
 	* @param char_id id char
 	* @return true o false
 	*/
@@ -2952,7 +2952,7 @@ class Character_Model extends ORM
 	}
 	
 	/**
-	* Determina se il char è malato
+	* Determina se il char Ã¨ malato
 	* @param none
 	* @return true o false
 	*/
@@ -2978,7 +2978,7 @@ class Character_Model extends ORM
 	
 	
 	/**
-	* determina se il char è imprigionato
+	* determina se il char Ã¨ imprigionato
 	* @param char_id id char
 	* @return true o false
 	*/
@@ -3000,7 +3000,7 @@ class Character_Model extends ORM
 	
 	/**
 	* Torna se il char sta combattendo
-	* Questo è uno stato speciale e va settato specificatamente in char.status
+	* Questo Ã¨ uno stato speciale e va settato specificatamente in char.status
 	* dalle singole azioni
 	*/
 	
@@ -3077,7 +3077,7 @@ class Character_Model extends ORM
 	}
 		
 	/**
-	* Controlla se il char è nel regno
+	* Controlla se il char Ã¨ nel regno
 	* @param kingdom oggetto kingdom
 	* @return boolean
 	*/
@@ -3123,7 +3123,7 @@ class Character_Model extends ORM
 	}	
 	
 	/**
-	* Verifica se il char è nudo o meno. 
+	* Verifica se il char Ã¨ nudo o meno. 
 	* Nudo: o non ha le scarpe o ha il torso o le gambe nude.
 	* @param int $char_id ID Character
 	* @return false o true
@@ -3867,7 +3867,7 @@ class Character_Model extends ORM
 		
 	/**
 	* Costruisce il menu orizzontale per la scheda profilo pubblico
-	* @param dead flag che dice se il char è morto oppure no
+	* @param dead flag che dice se il char Ã¨ morto oppure no
 	* @param action azione corrente
 	* @return html
 	*/
@@ -4117,7 +4117,7 @@ class Character_Model extends ORM
 			kohana::log( 'info', "-> Finding pending actions..." );
 			$pendingaction = Character_Model::get_currentpendingaction( $character -> id );
 				
-			// solo se non c'è pending action mettiamo a dormire il char.
+			// solo se non c'Ã¨ pending action mettiamo a dormire il char.
 
 			//kohana::log('info', kohana::debug($pendingaction) );
 			
@@ -4129,8 +4129,8 @@ class Character_Model extends ORM
 			{
 				kohana::log( 'info', "-> Eating..." );
 				
-				// trova il cibo trasportato e ordiniamolo per capacità  di 
-				// sazietà 
+				// trova il cibo trasportato e ordiniamolo per capacitÃ Â  di 
+				// sazietÃ Â 
 				
 				$fooditems = Database::instance() -> query("
 					select i.id, i.quantity, ci.tag, ci.spare1, ci.spare3, ci.category, ci.subcategory 
@@ -4226,7 +4226,7 @@ class Character_Model extends ORM
 				$role = $character -> get_current_role();				
 				$currentregion = ORM::factory('region', $character -> position_id );
 				
-				// se ha un ruolo e la struttura è presente
+				// se ha un ruolo e la struttura Ã¨ presente
 				// nella regione, provo a dormire nella struttura.
 				
 				$i = 0;
@@ -4263,8 +4263,8 @@ class Character_Model extends ORM
 				if (!is_null($relation))				
 				{
 					
-					// c'è una struttura governativa dello sposato?
-					// se sà¬, prendi il RestFactor.
+					// c'Ã¨ una struttura governativa dello sposato?
+					// se sÃ Â¬, prendi il RestFactor.
 					
 				}
 					
@@ -4478,7 +4478,7 @@ class Character_Model extends ORM
 	}
 	
 	/**
-	* Torna se un personaggio è sposato
+	* Torna se un personaggio Ã¨ sposato
 	* @param int $char_id ID Character
 	* @return array $data Informazioni sulla relazione o NULL se non trovata
 	*/
@@ -4514,9 +4514,9 @@ class Character_Model extends ORM
 		{
 			if
 			(
-				// Il rouolo è di tipo religioso
+				// Il rouolo Ã¨ di tipo religioso
 				in_array ( $role -> tag, array ('church_level_1', 'church_level_2', 'church_level_3', 'church_level_4' ) )
-				// Il ruolo è attuale
+				// Il ruolo Ã¨ attuale
 				and $role -> current
 			)
 			$has_religious_role = true;
