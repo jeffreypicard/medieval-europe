@@ -926,9 +926,9 @@ class Character_Model extends ORM
 		else
 			switch ( $role->tag )
 			{
-				case 'king': 
+				case 'king':
 				case 'duke':
-				case 'lord':	
+				case 'lord':
 				case 'doge':
 				case 'count':
 				case 'church_level_1':
