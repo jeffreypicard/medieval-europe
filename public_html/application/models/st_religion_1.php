@@ -15,15 +15,15 @@ class ST_Religion_1_Model extends Structure_Model
 	}
 	
 
-	// Funzione che costruisce i links comuni relativi alla struttura
-	// @output: stringa contenente i links relativi a questa struttura
+	// Function that builds the common links related to the structure
+	// @output: content string i links relative to that structure
 	public function build_common_links( $structure, $bonus = false )
 	{
 		
 		$links = parent::build_common_links( $structure );
 		
 		
-		// Azioni comuni accessibili a tutti i chars
+		// Common actions accessible to all chars
 		$links .= html::anchor( "/structure/info/" . $structure -> id, Kohana::lang('structures_actions.global_info'), array('class' => 'st_common_command')) . "<br/>";
 		
 		$links .= html::anchor( "/structure/donate/" . $structure -> id, Kohana::lang('structures_actions.global_deposit'), array('class' => 'st_common_command')) . "<br/>";	
@@ -46,13 +46,13 @@ class ST_Religion_1_Model extends Structure_Model
 		return $links;
 	}
 
-	// Funzione che costruisce i links speciali relativi alla struttura
-	// @output: stringa contenente i links relativi a questa struttura
+	// Function that builds the special links related to the structure
+	// @output: content string i links relative to that structure
 	public function build_special_links( $structure)
 	{
 		
 		
-		// Azioni speciali accessibili solo al char che governa la struttura
+		// Special actions accessible only to the char that governs the structure
 		$links = parent::build_special_links( $structure );
 
 		$links .= html::anchor( "/structure/rest/" . $structure -> id, Kohana::lang('structures_actions.rest'),

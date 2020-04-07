@@ -3,9 +3,9 @@
 class Structure_Type_Model extends ORM
 {
 	protected $table_name = "structure_types";	
-	const TERRAIN_BASE_VALUE = 100; // Valore monetario di base del terreno in game
+	const TERRAIN_BASE_VALUE = 100; // Basic monetary value of the terrain in game 
 
-	// Relazioni con gli altri modelli
+	// Relationship with other models
 	protected $has_many =  array('structure');
 	protected $belongs_to = array('church');
 	
@@ -16,9 +16,9 @@ class Structure_Type_Model extends ORM
 	}
 		
 	/**
-	* Trova le potenziali regioni
-	* dove è possibile costruire questo tipo di struttura
-	* @param: $structure: istanza struttura da cui si lancia la costruzione
+	* Find potential regions
+	* where it is possible to build this type of structure
+	* @param: $structure: structure instance from which the construction is launched
 	* @return array id: region_id, name: region_name
 	*/
 	
@@ -28,7 +28,7 @@ class Structure_Type_Model extends ORM
 		$sql = '';
 		if ( $this -> subtype == 'church' )
 		{
-			// sostituire con dijkstra
+			// replace with dijkstra
 			$sql = "select r.id, r.name from regions r, kingdoms_v k 
 			where r.kingdom_id = k.id 			
 			and   k.name != 'kingdoms.kingdom-independent' 

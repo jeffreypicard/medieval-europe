@@ -7,12 +7,12 @@ class CA_Assignrole_Model extends Character_Action_Model
 	protected $required_fp = 0;
 	protected $required_sc = 0;
 	
-	// L'azione richiede che il personaggio indossi
-	// un determinato equipaggiamento
+	// The action requires the character to wear
+	// a certain equipment
 	
 	protected $requiresequipment = true;
 	
-	// Equipaggiamento o vestiario necessario in base al ruolo
+	// Equipment or clothing required by role
 	
 	protected $equipment = array
 	(
@@ -128,16 +128,16 @@ class CA_Assignrole_Model extends Character_Action_Model
 	);	
 	
 	/**
-	* Effettua tutti i controlli relativi all' azione, sia quelli condivisi
-	* con tutte le action che quelli peculiari 
-	* @input: array di parametri
-	* par[0]: oggetto char di chi nomina
-	* par[1]: oggetto char di chi è nominato
-	* par[2]: tag ruolo
-	* par[3]: regione dove risiede la struttura a cui assegnare l' incarico
-	* par[4]: struttura da cui parte la nomina
-	* @output: TRUE = azione disponibile, FALSE = azione non disponibile
-	* $message contiene il messaggio di ritorno	
+	* Perform all controls related to the action, both shared
+	* with all the actions that the peculiar ones
+	* @input: array of parameters
+	* par[0]: char object of the nominator
+	* par[1]: har object of who is named
+	* par[2]: role tag
+	* par[3]: region where the structure to assign the assignment resides
+	* par[4]: structure from which the appointment starts
+	* @output: TRUE = action available, FALSE = action not available
+	* $message contains the return message	
 	*/
 	
 	protected function check( $par, &$message )
@@ -149,7 +149,7 @@ class CA_Assignrole_Model extends Character_Action_Model
 		{ return false; }				
 				
 		////////////////////////////////////////////
-		// controllo parametri manipolabili
+		// control of manipulable parameters
 		////////////////////////////////////////////
 		
 		if (
@@ -164,13 +164,13 @@ class CA_Assignrole_Model extends Character_Action_Model
 		$appointer_role = $par[0] -> get_current_role();
 		$appointed_role = $par[1] -> get_current_role();
 		
-		// Non applicabile ad un NPC
+		// Not applicable to an NPC
 		
 		if ($par[1] -> type == 'npc')
 		{$message = kohana::lang( 'ca_assignrole.error-cantassignroletonpc'); return false;}			
 		
 		////////////////////////////////////////////
-		// Il player ha già un ruolo NON GDR?
+		// Does the player already have a NON-GDR role?
 		////////////////////////////////////////////
 		
 		if ( !is_null( $appointed_role) and $appointed_role -> gdr == false )
@@ -183,8 +183,8 @@ class CA_Assignrole_Model extends Character_Action_Model
 		}		
 		
 		////////////////////////////////////////////
-		// controllo se il ruolo per la regione è
-		// già occupato
+		// check if the role for the region is
+		// already used
 		////////////////////////////////////////////
 		
 		$role = $par[3] -> get_roledetails( $par[2] ); 		
@@ -192,8 +192,8 @@ class CA_Assignrole_Model extends Character_Action_Model
 		if (!is_null( $role ))		
 			{$message = kohana::lang( 'global.rolealreadyassigned'); return false;}		
 		
-		// esiste la struttura ?
-		// il buildingsite non si controlla
+		// does the structure exist?
+		// the buildingsite is not controlled
 		
 		$structuretags = Character_Role_Model::get_controlledstructurestags( $par[2] );		
 		foreach ( $structuretags as $structuretag )
@@ -212,7 +212,7 @@ class CA_Assignrole_Model extends Character_Action_Model
 		}
 		
 		/////////////////////////////////////
-		// controllo costo
+		// cost control
 		/////////////////////////////////////
 		
 		if ( in_array( $par[2], 
@@ -240,8 +240,8 @@ class CA_Assignrole_Model extends Character_Action_Model
 			}
 		}
 		
-		// il candidato è dello stesso regno?
-		// controllo effettuato solo per inc. governativi
+		// is the candidate from the same kingdom?
+		// check carried out only for inc. government
 		
 		if ( !in_array( $par[2], 
 			array( 'church_level_2', 'church_level_3', 'church_level_4') ) 
@@ -253,7 +253,7 @@ class CA_Assignrole_Model extends Character_Action_Model
 		}		
 		
 		////////////////////////////////////////////		
-		// il candidato	 ha i corretti attributi?
+		// Does the candidate have the correct attributes?
 		////////////////////////////////////////////
 		
 		if ( Character_Role_Model::check_eligibility( $par[1], $par[2], $par[0] -> church, $message ) == false )
@@ -265,7 +265,7 @@ class CA_Assignrole_Model extends Character_Action_Model
 	}
 
 	
-	// nessun controllo particolare
+	// no special checks
 	protected function append_action( $par, &$message )
 	{	}
 
@@ -274,11 +274,11 @@ class CA_Assignrole_Model extends Character_Action_Model
 	
 		$appointer_role = $par[0] -> get_current_role();
 		
-		// Consumo degli items/vestiti indossati
+		// Consumption of worn items / clothes
 		Item_Model::consume_equipment( $this -> equipment, $par[0] );
 		
 		///////////////////////////////////////////
-		// creo il ruolo;
+		// I create the role;
 		///////////////////////////////////////////
 		
 		Character_Role_Model::start( $par[1], $par[2], $par[3], $par[4] -> id, null, false );
@@ -303,7 +303,7 @@ class CA_Assignrole_Model extends Character_Action_Model
 		}
 		
 				
-		// pubblica annuncio
+		// publish announcement
 		if ( in_array( $par[2], array( 'church_level_2', 'church_level_3', 'church_level_4') ) )
 		{
 			Character_Event_Model::addrecord(
