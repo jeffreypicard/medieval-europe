@@ -40,8 +40,9 @@ $lang = Array
 'kingdom-independent' => 'Provincë e pavarur',
 'grand-duchy-lithuania' => 'Mbretëria e Lituanisë',
 'teutonic-order' => 'Ordine Teutonico',
+'grandduchy-cyrenaica'=> 'Kalifati i Cyrenaica',
 'principality-kiev' => 'Mbretëria e Kievit',
-'kingdom-italy' => '',
+'kingdom-italy' => 'mbretëria e Italisë',
 );
 
 ?>

@@ -45,6 +45,7 @@ $lang = Array
 'kingdom-jerusalem' => 'Royaume de J&eacute;rusalem',
 'kingdom-mamluk' => 'Royaume du Mamelouke',
 'kingdom-cyrene' => 'Royaume de Cyr&egrave;ne',
+'grandduchy-cyrenaica'=> 'Califat de Cyrénaïque',
 'kingdom-seljuq' => 'Royaume de S&eacute;leucide',
 'kingdom-ottoman' => 'Empire Ottoman',
 'kingdom-bulgaria' => 'Royaume de Bulgarie',
