@@ -352,10 +352,10 @@ function forceCompleteAction() {
 			. '&nbsp;' .
 			html::anchor('/character/change_language/fr_FR', html::image(array('src' => 'media/images/flags-lang/fr.png'), array('title' => 'French', 'class' => 'image-flag')))
 			. '&nbsp;' .
-			html::anchor('/character/change_language/gr_GR', html::image(array('src' => 'media/images/flags-lang/gr.png'), array('title' => 'Greek', 'class' => 'image-flag')));
+			html::anchor('/character/change_language/gr_GR', html::image(array('src' => 'media/images/flags-lang/gr.png'), array('title' => 'Greek', 'class' => 'image-flag')))
                         . '&nbsp;' .
-		        html::anchor('/character/change_language/es_ES', html::image(array('src' => 'media/images/flags-lang/es.png'), array('title' => 'Spanish', 'class' => 'image-flag')))
-			. '&nbsp;' .
+		        html::anchor('/character/change_language/es_ES', html::image(array('src' => 'media/images/flags-lang/es.png'), array('title' => 'Spanish', 'class' => 'image-flag')));
+			
 
 		?>
 
