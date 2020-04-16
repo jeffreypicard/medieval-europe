@@ -32,6 +32,7 @@ function Selectlang()
 		case 'hu_HU': Kohana::config_set('locale.language', array('hu_HU', 'Hungary')); break;
 		case 'gr_GR': Kohana::config_set('locale.language', array('gr_GR', 'Greek')); break;
 		case 'pt_PT': Kohana::config_set('locale.language', array('pt_PT', 'Portuguese')); break;
+		case 'es_ES': Kohana::config_set('locale.language', array('es_ES', 'Spanish')); break;
 		default: Kohana::config_set('locale.language', array('en_US', 'English_United States'));	break;
 	}
 	

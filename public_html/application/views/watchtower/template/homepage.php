@@ -41,7 +41,7 @@
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	
 	<!--Start Cookie Script-->
-	<script type="text/javascript" charset="UTF-8" src="//cookie-script.com/s/3d6744b5683a21c9237c1198f11070ec.js"></script>
+	<script type="text/javascript" charset="UTF-8" src="http://chs03.cookie-script.com/s/c1a45fad0c67cfbc0502841bd4338ca7.js"></script>
 	<!--End Cookie Script-->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 
