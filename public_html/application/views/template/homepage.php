@@ -148,6 +148,9 @@
 					<li>
 					<?= html::anchor('character/change_language/gr_GR', html::image(array('src' => 'media/images/flags-lang/gr.png'), array('title' => 'Greek', 'class' => 'img-responsive', 'alt' => 'Greece flag')));?>
 					</li>
+					<li>
+				        <?=html::ancor('character/change_language/es_ES', html::image(array('src' => 'media/images/flags-lang/es.png'). array ('title' => 'Spanish', 'class' => 'img-responsive', 'alt' => 'Spanish flag')))/;?>
+					</li>
 				</ul>
 			</div>
 	</div>
