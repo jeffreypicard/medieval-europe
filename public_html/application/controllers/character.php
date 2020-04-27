@@ -163,7 +163,7 @@ class Character_Controller extends Template_Controller
 					url::redirect('character/create');
 				}
 
-				$region_id = Kingdom_Model::get_destination_region( $post['choosenkingdom_id']);
+				$region_id = Kingdom_Model::get_capitalregion( $post['choosenkingdom_id'] ) -> id;
 
 				if ( is_null( $region_id ) )
 				{

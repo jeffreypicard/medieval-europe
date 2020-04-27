@@ -43,6 +43,7 @@ class Church_Model extends ORM
 			and   s.region_id = r.id 
 			and   st.church_id = " . $church -> id );
 			
+			$s = array();
 			foreach ($structures as $structure)		
 				$s[$structure -> type][] = $structure;		
 			

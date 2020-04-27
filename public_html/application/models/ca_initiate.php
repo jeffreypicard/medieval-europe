@@ -84,8 +84,11 @@ class CA_Initiate_Model extends Character_Action_Model
 		// religioso di livello 4
 		
 		$role = $par[0] -> get_current_role();
-		if ( $role->tag != 'church_level_4' )
-		{ $message = Kohana::lang("ca_initiate.error-onlylevel4canbaptize"); return false; }
+		if ($role->tag != 'church_level_4' && $role->tag != 'church_level_3' && $role->tag != 'church_level_2' && $role->tag != 'church_level_1')
+		{
+			$message = Kohana::lang("ca_initiate.error-onlylevel4canbaptize");
+			return false;
+		}
 	
 		// Check: i personaggi non si trovano nella stessa regione della
 		// struttura religiosa controllata dal sacerdote

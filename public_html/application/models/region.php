@@ -11,7 +11,7 @@ class Region_Model extends ORM
 	const MAXCITIZENS_PLAINS = 50;
 	const MAXCITIZENS_HILLS = 40;
 	const MAXCITIZENS_MOUNTAINS = 30;
-	const MAXCITIZENS_CAPITAL = 50;
+	const MAXCITIZENS_CAPITAL = 200;
 
 
 	/**

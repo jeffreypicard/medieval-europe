@@ -509,6 +509,18 @@ try {
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, {$castleid}, (select id from structure_types where type = 'market_1'),
 		{$row['id']}, NULL, 'small')") or die(mysql_error());
+
+		# Add training grounds and academy to all kingdoms capitals
+		# @jpicard
+		mysql_query("insert into structures (
+		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
+		null, {$castleid}, (select id from structure_types where type = 'trainingground_1'),
+		{$row['id']}, NULL, 'small')") or die(mysql_error());
+
+		mysql_query("insert into structures (
+		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
+		null, {$castleid}, (select id from structure_types where type = 'academy_1'),
+		{$row['id']}, NULL, 'small')") or die(mysql_error());
 		
 		$sql = "
 			select rp.id  
