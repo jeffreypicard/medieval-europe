@@ -405,6 +405,7 @@ $lang = Array
 'mine_gold_desc' => 'Gold is a soft, transition metal, heavy, ductile, malleable yellow, due to the absorption of blue wavelengths from incident light. It is found in its native state in the form of nuggets, grains, and flakes in rocks and alluvial deposits.', 
 'mine_coal_desc' => 'Coal deposits are found on different depths and levels. Open-air quarries, very deep wells and tunnels are dug out to be able to reach the exposed coal seams.', 
 'mine_stone_desc' => 'A Mine is a place where the extraction of rocks and minerals of industrial interest takes place, thanks to the laborious work carried out mainly underground.', 
+'mine_iron_desc' => 'An Iron mine... where you mine iron... and maybe irony.', 
 'well_desc' => 'The Well and the cistern are the primary units for the storage of drinkable and potable water. In the Western Middle Ages all the buildings that were associated with the drawing water from both aquifers and underground reservoirs, were generally identified as a wells.', 
 'dump_desc' => 'Here you can throw away items that you no longer need to keep, (they will be periodically destroyed) or search through the garbage with the hope of finding something useful.', 
 'billboard_desc' => 'A wooden bulletin board where you can read the Kingdom\'\'s announcements, missions or job offers.', 

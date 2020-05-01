@@ -460,7 +460,10 @@ try {
 
 	// Rimuovo tutte le strutture
 	
-	#mysql_query( "truncate table structures") or die (mysql_error()); 
+
+	mysql_query( "SET FOREIGN_KEY_CHECKS = 0;") or die (mysql_error()); 
+	mysql_query( "truncate table structures") or die (mysql_error()); 
+	mysql_query( "SET FOREIGN_KEY_CHECKS = 1;") or die (mysql_error()); 
 	$log->LogDebug('-> Fixing diplomacy...');
 	
 	// Fix Capitals
@@ -831,6 +834,30 @@ try {
 		mysql_query("INSERT INTO `region_taxes` (`id`, `region_id`, `name`, `param1`, `hostile`, `neutral`, `friendly`, `allied`, `citizen`, `timestamp`) VALUES (NULL, {$row['id']}, 'valueaddedtax', NULL, 5, 5, 5, 5, 2, unix_timestamp())") or die(mysql_error());
 
 	}
+
+	/******************
+	 * Custom fixes
+	 *
+	 * TODO: Figure out the root cause and fix them in a less hacky way
+	 *
+	 * @jpicard
+	 * *****************/
+	$log->LogDebug('-> Custom fixes..');
+	
+	//Fix independent regions
+	mysql_query("UPDATE regions SET capital = '0' WHERE name = 'regions.siena';") or die( mysql_error());	
+	mysql_query("UPDATE regions SET capital = '0' WHERE name = 'regions.firenze';") or die( mysql_error());	
+	mysql_query("UPDATE regions SET kingdom_id = '37' WHERE name = 'regions.siena';") or die( mysql_error());	
+	mysql_query("UPDATE regions SET kingdom_id = '37' WHERE name = 'regions.firenze';") or die( mysql_error());	
+
+	//Fix broken kingdoms
+	mysql_query("UPDATE regions SET kingdom_id = '19' WHERE name = 'regions.lothian';") or die(mysql_error());
+	mysql_query("UPDATE regions SET kingdom_id = '28' WHERE name = 'regions.lisboa';") or die(mysql_error());
+	mysql_query("UPDATE regions SET kingdom_id = '18' WHERE name = 'regions.london';") or die(mysql_error());
+	mysql_query("UPDATE regions SET kingdom_id = '34' WHERE name = 'regions.sjaelland';") or die(mysql_error());
+	mysql_query("UPDATE regions SET kingdom_id = '39' WHERE name = 'regions.konigsberg';") or die(mysql_error());
+	mysql_query("UPDATE regions SET kingdom_id = '45' WHERE name = 'regions.bursa';") or die(mysql_error());
+	mysql_query("UPDATE regions SET kingdom_id = '25' WHERE name = 'regions.brugge';") or die(mysql_error());
 		
 	$log->LogDebug('-> Committing...');
 	mysql_query("commit");

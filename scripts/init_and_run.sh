@@ -9,6 +9,8 @@ php5.6 /usr/bin/composer require league/oauth2-google
 
 sleep 10
 
+echo 'sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"' >> /etc/mysql/mysql.conf.d/mysqld.cnf
+
 service apache2 start
 service mysql start
 service memcached start
