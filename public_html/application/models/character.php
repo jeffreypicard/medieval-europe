@@ -2954,15 +2954,17 @@ class Character_Model extends ORM
 	/**
 	* Determina se il char è malato
 	* @param none
-	* @return true o false
+	* @return true or false
 	*/
 	
 	function is_sick( )
 	{	
 		$count = 0;
 		$diseases = $this -> get_diseases();
-		
-		return ( count($diseases) > 0 ) ? true : false ; 
+
+		if ($diseases == null)
+			return false;
+		return count($diseases) > 0;
 	}
 	
 	/**
