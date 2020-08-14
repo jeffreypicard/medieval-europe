@@ -117,7 +117,7 @@ class Boardmessage_Controller extends Template_Controller
 			
 			//var_dump($c); exit;
 			
-			$rc = $c -> add( $params, $message ); 
+			$rc = $c -> add_message( $params, $message );
 			
 			if ( $rc )
 			{				
@@ -262,7 +262,7 @@ class Boardmessage_Controller extends Template_Controller
 	}
 	
 	/**
-	* Cambia la visibilità del messaggio
+	* Cambia la visibilitï¿½ del messaggio
 	* @param structure_id id struttura
 	* @param message_id id messaggio
 	* @return none

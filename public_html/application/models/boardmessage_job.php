@@ -106,7 +106,7 @@ class Boardmessage_Job_Model extends Boardmessage_Model
 	* Aggiunge post alla boardmessage (metodo usato dal sistema)
 	*/
 	
-	function add( $params, &$message )
+	function add_message($params, &$message )
 	{
 		
 		//var_dump( $params[0] ); exit; 
