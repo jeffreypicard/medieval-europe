@@ -266,7 +266,7 @@ class CA_CelebrateMarriage_Model extends Character_Action_Model
 		if ( $par[1] -> contains_item( 'meadbottle', 5 ) == false  )
 		{   $message = Kohana::lang("global.error-missingiteminstructure", 5, kohana::lang('items.meadbottle_name')); return false; }
 		
-		// C'è almeno un golden basin al 25%?
+		// C'ï¿½ almeno un golden basin al 25%?
 		$exists = false;
 		foreach ( $par[1] -> item as $item )
 			if ( $item -> cfgitem -> tag == 'goldenbasin' and $item -> quality >= self::GOLDENBASIN_WEAR )
@@ -413,7 +413,7 @@ class CA_CelebrateMarriage_Model extends Character_Action_Model
 		kohana::log('debug', '-> Officer: ' . $officer -> name );
 				
 		//////////////////////////////////////////////////////////////////
-		// Sottraggo l'energia e la sazietà al char
+		// Sottraggo l'energia e la sazietï¿½ al char
 		///////////////////////////////////////////////////////////////////
 				
 		$charaction -> modify_energy ( - self::DELTA_ENERGY, false, 'celebratemarriage' );
@@ -428,7 +428,7 @@ class CA_CelebrateMarriage_Model extends Character_Action_Model
 			// Consumo degli items/vestiti indossati
 			Item_Model::consume_equipment( $this->equipment, $officer );
 		
-			// rendo la proposta non più valida.
+			// rendo la proposta non piï¿½ valida.
 			
 			$proposal = ORM::factory('message') -> where
 			( array( 			
@@ -471,12 +471,12 @@ class CA_CelebrateMarriage_Model extends Character_Action_Model
 				
 		}
 		
-		// Azioni relative a chi ha subìto la funzione
+		// Azioni relative a chi ha subï¿½to la funzione
 		// 1. Setta relationship
 		
 		if ( $charaction -> id == $husband -> id )
 		{		
-			Character_Relationship_Model::add( $charaction -> id, $wife -> id, 'husband' );		
+			Character_Relationship_Model::add_model( $charaction -> id, $wife -> id, 'husband' );
 			Character_Event_Model::addrecord( 
 				$husband -> id , 
 				'normal', 
@@ -505,7 +505,7 @@ class CA_CelebrateMarriage_Model extends Character_Action_Model
 		
 		if ( $charaction -> id == $wife -> id )
 		{		
-			Character_Relationship_Model::add( $charaction -> id, $husband -> id, 'wife' );		
+			Character_Relationship_Model::add_model( $charaction -> id, $husband -> id, 'wife' );
 			Character_Event_Model::addrecord( 
 				$wife -> id , 
 				'normal', 

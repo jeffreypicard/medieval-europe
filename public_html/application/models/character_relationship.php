@@ -11,7 +11,7 @@ class Character_Relationship_Model extends ORM
 	* @return none
 	*/
 	
-	public function add( $sourcechar_id, $targetchar_id, $type )
+	public function add_model($sourcechar_id, $targetchar_id, $type )
 	{
 		kohana::log('debug', '-> Adding relationship: ' . $sourcechar_id . ' - ' . $targetchar_id . ' - ' . $type );
 		$rec = ORM::factory('character_relationship');
