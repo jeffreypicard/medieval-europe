@@ -304,7 +304,7 @@ class Suggestion_Model extends ORM
 	* @return bool
 	*/
 	
-	public function remove( $char, $id, $reason, &$message )
+	public function remove_model($char, $id, $reason, &$message )
 	{
 		$suggestion = ORM::factory('suggestion', $id);
 				

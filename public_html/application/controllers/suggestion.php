@@ -356,7 +356,7 @@ class Suggestion_Controller extends Template_Controller
 			
 			if ( $post -> validate() )
 			{
-				$rc = Suggestion_Model::remove( $char, $this -> input -> post('id'), $this -> input -> post('reason'), $message );
+				$rc = Suggestion_Model::remove_model( $char, $this -> input -> post('id'), $this -> input -> post('reason'), $message );
 
 				if ( $rc )
 				{				
