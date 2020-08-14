@@ -9,7 +9,7 @@ class Structure_Type_Model extends ORM
 	protected $has_many =  array('structure');
 	protected $belongs_to = array('church');
 	
-	static function factory( $type )
+	static function factory( $type, $id = NULL )
 	{				
 		$model = 'ST_' . $type . '_Model'; 		
 		return new $model;
