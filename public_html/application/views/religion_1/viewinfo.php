@@ -20,7 +20,7 @@
 		<br/>
 		<h5><?php echo kohana::lang('religion.dogmabonuses');?></h5>
 		<?
-		if ( count($info['dogmabonuses']) == 0 )
+		if ( is_null($info['dogmabonuses']) || count($info['dogmabonuses']) == 0 )
 		{
 		?>
 			<?= kohana::lang('global.none'); ?>
