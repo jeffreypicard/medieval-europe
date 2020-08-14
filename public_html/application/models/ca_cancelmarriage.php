@@ -231,7 +231,7 @@ class CA_CancelMarriage_Model extends Character_Action_Model
 		
 		if ( $par[2] -> church_id != $par[0] -> church_id )
 		{ $message = Kohana::lang("ca_celebratemarriage.error-husbandandwifenotofsamereligionofpriest"); return false; }		
-		// C'è almeno un golden basin al 25%?
+		// C'ï¿½ almeno un golden basin al 25%?
 		$exists = false;
 		foreach ( $par[1] -> item as $item )
 			if ( $item -> cfgitem -> tag == 'goldenbasin' and $item -> quality >= self::GOLDENBASIN_WEAR )
@@ -320,7 +320,7 @@ class CA_CancelMarriage_Model extends Character_Action_Model
 		
 		
 		//////////////////////////////////////////////////////////////////
-		// Sottraggo l'energia e la sazietà al char
+		// Sottraggo l'energia e la sazietï¿½ al char
 		///////////////////////////////////////////////////////////////////
 				
 		$charaction -> modify_energy ( - self::DELTA_ENERGY, false, 'cancelmarriage' );
@@ -381,14 +381,14 @@ class CA_CancelMarriage_Model extends Character_Action_Model
 			
 			if ( $requester -> sex == 'M' )	
 			{
-				Character_Relationship_Model::remove( $requester -> id, $partner -> id, 'husband' );
-				Character_Relationship_Model::remove( $partner -> id, $requester -> id, 
+				Character_Relationship_Model::remove_model( $requester -> id, $partner -> id, 'husband' );
+				Character_Relationship_Model::remove_model( $partner -> id, $requester -> id,
 				'wife');
 			}
 			else
 			{
-				Character_Relationship_Model::remove( $requester -> id, $partner -> id, 'wife' );
-				Character_Relationship_Model::remove( $partner -> id, $requester -> id, 'husband' );
+				Character_Relationship_Model::remove_model( $requester -> id, $partner -> id, 'wife' );
+				Character_Relationship_Model::remove_model( $partner -> id, $requester -> id, 'husband' );
 			}
 						
 			// events, annullment completed.

@@ -32,7 +32,7 @@ class Character_Relationship_Model extends ORM
 	* @return none
 	*/
 	
-	public function remove( $sourcechar_id, $targetchar_id, $type )
+	public function remove_model($sourcechar_id, $targetchar_id, $type )
 	{
 	
 		kohana::log('debug', '-> Removing relationship: ' . $sourcechar_id . ' - ' . $targetchar_id . ' - ' . $type );
