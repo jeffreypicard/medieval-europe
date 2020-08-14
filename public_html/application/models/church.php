@@ -50,21 +50,22 @@ class Church_Model extends ORM
 			$info['structures'] = $s;
 			if (isset($s['religion_4']))
 				$info['parishchurches'] = count($s['religion_4']);
-			
-			$headquarter = current($info['structures']['religion_1']);
-			reset($info['structures']['religion_1']);
-			$structure_hq = ORM::factory('structure', $headquarter -> id );		
-		
-			if ( $structure_hq -> contains_item( 'relic_' . $info['tag']) == true )
-			{
-				$dogmabonuses = $db -> query("
+
+			if (!is_null($info['structures']['religion_1'])) {
+                $headquarter = current($info['structures']['religion_1']);
+                reset($info['structures']['religion_1']);
+                $structure_hq = ORM::factory('structure', $headquarter->id);
+
+                if ($structure_hq->contains_item('relic_' . $info['tag']) == true) {
+                    $dogmabonuses = $db->query("
 				SELECT cd.id, cd.bonus, cd.url
 				FROM  church_dogmabonuses c, cfgdogmabonuses cd
 				WHERE c.cfgdogmabonus_id = cd.id
-				AND   c.church_id = {$church->id}");		
-					
-				$info['dogmabonuses'] = $dogmabonuses -> as_array();
-			}
+				AND   c.church_id = {$church->id}");
+
+                    $info['dogmabonuses'] = $dogmabonuses->as_array();
+                }
+            }
 			
 		}
 				
