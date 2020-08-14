@@ -37,7 +37,7 @@ class CA_Game_Dicesimple_Model extends Character_Action_Model
 		// al massimo, un click dopo ogni 5 secondi
 		
 		$res = Database::instance()->query( "select lastbettime from games where name = 'dicesimple'")-> as_array();
-		if ( $res[0] -> lastbettime > time() - 5 )
+		if ( !is_null($res) && count($res) > 0 && $res[0] -> lastbettime > time() - 5 )
 		{ $message = kohana::lang('ca_gamedice1.clickedtoofast'); return FALSE; }
 		
 		
