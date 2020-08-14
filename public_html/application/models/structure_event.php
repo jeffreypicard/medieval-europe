@@ -11,7 +11,7 @@ class Structure_Event_Model extends ORM
 	* class CSS class of the announcement. For now, only evidence exists
 	*/
 	
-	public function add( $structure_id, $text, $eventclass = null )
+	public function add_model($structure_id, $text, $eventclass = null )
 	{
 		$this->id=null;
 		$this->structure_id = $structure_id;

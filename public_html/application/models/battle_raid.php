@@ -111,7 +111,7 @@ class Battle_Raid_Model extends Battle_Type_Model
 			$totalraidedgoods = 0;
 		
 			// La percentuale di persone a cui 			
-			// Strutture distrurre è direttamente proporzionale
+			// Strutture distrurre ï¿½ direttamente proporzionale
 			// A quanti attaccanti sono rimasti
 			
 			$aliveattackersleft = count( $this -> attackers );			
@@ -186,7 +186,7 @@ class Battle_Raid_Model extends Battle_Type_Model
 						
 				///////////////////////////////////////////
 				// Stabiliamo se la struttura corrente 
-				// è razziata
+				// ï¿½ razziata
 				///////////////////////////////////////////
 				
 				foreach ( $structure -> item as $i )
@@ -274,7 +274,7 @@ class Battle_Raid_Model extends Battle_Type_Model
 							);					
 						}
 						
-						// se la struttura è mercato, evento al seller
+						// se la struttura ï¿½ mercato, evento al seller
 						
 						if ( $structure -> structure_type -> type == 'market' )
 						{
@@ -415,7 +415,7 @@ class Battle_Raid_Model extends Battle_Type_Model
 							// evento struttura battlefield
 							
 							$e = new Structure_Event_Model();																
-							$e -> add( 
+							$e -> add_model(
 								$this -> battlefield -> id, 									
 								'__events.itemmugged;' . $raidedquantity . 
 								';__' . $i -> cfgitem -> name  .
