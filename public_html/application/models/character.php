@@ -131,7 +131,7 @@ class Character_Model extends ORM
 			$this -> doubloons += $delta;
 		}
 		
-		Trace_Sink_Model::add( 'doubloon', $this -> id, $delta, $category) ; 
+		Trace_Sink_Model::add_model( 'doubloon', $this -> id, $delta, $category) ;
 	
 	}
 	
@@ -164,7 +164,7 @@ class Character_Model extends ORM
 		
 		kohana::log( 'debug', '-> Modifying coins for Char: ' . $this -> name . ', reason: ' . $reason . ', delta: ' . $delta );
 		
-		Trace_Sink_Model::add( 'silvercoin', $this -> id, $delta, $reason );
+		Trace_Sink_Model::add_model( 'silvercoin', $this -> id, $delta, $reason );
 			
 		$delta *= 100;
 		
@@ -1063,7 +1063,7 @@ class Character_Model extends ORM
 		// permanent event
 		
 		$region = ORM::factory('region', $this -> position_id );		
-		Character_Permanentevent_Model::add(
+		Character_Permanentevent_Model::add_model(
 					$this -> id, 
 					'__permanentevents.death' . ';' . 
 					'__' . $region -> name . ';' .
@@ -1074,7 +1074,7 @@ class Character_Model extends ORM
 		////////////////////////////////////////////////
 		
 		$silvercoins = Character_Model::get_item_quantity_d( $this -> id, 'silvercoin' );	
-		Trace_Sink_Model::add( 'silvercoin', $this -> id, -( $silvercoins ), 'chardeath'); 
+		Trace_Sink_Model::add_model( 'silvercoin', $this -> id, -( $silvercoins ), 'chardeath');
 		
 		////////////////////////////////////////////////
 		// Cancella payments

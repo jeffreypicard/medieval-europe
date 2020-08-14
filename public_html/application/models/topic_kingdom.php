@@ -5,7 +5,7 @@ class Topic_Kingdom_Model extends Topic_Model
 	
 	protected $table_name = 'kingdom_forum_topic';
 	
-	function add()
+	function add_model()
 	{
 		
 		if ( $char -> id != Kingdom_Model::get_king( $char -> region -> kingdom_id ) )

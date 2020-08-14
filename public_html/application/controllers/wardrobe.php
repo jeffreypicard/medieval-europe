@@ -115,7 +115,7 @@ class Wardrobe_Controller extends Template_Controller
 			
 				if ( count($uploadedimages) == 0 )
 					Session::set_flash('user_message', "<div class=\"error_msg\">". kohana::lang('wardrobe.nothingtoapprove') . "</div>");			
-				elseif ( Wardrobe_Approvalrequest_Model::add( $char, $message ) == false )
+				elseif ( Wardrobe_Approvalrequest_Model::add_model( $char, $message ) == false )
 					Session::set_flash('user_message', "<div class=\"error_msg\">". kohana::lang($message) . "</div>");					
 				else
 					Session::set_flash('user_message', "<div class=\"info_msg\">". kohana::lang($message) . "</div>");					
@@ -182,7 +182,7 @@ class Wardrobe_Controller extends Template_Controller
 			
 			elseif ( key_exists('reset', $this -> input -> post()) )
 			{			
-				// Non è possibile pulire le immagini se esiste una 
+				// Non ï¿½ possibile pulire le immagini se esiste una 
 				// richiesta da approvare
 				
 				$c = ORM::factory('wardrobe_approvalrequest') -> where (

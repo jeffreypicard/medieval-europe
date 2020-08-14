@@ -65,7 +65,7 @@ class CA_Initiate_Model extends Character_Action_Model
 		if ( ! parent::check( $par, $message ) )					
 			return false;
 		
-		// Check: qualche parametro non è caricato
+		// Check: qualche parametro non ï¿½ caricato
 		
 		if
 		(
@@ -100,7 +100,7 @@ class CA_Initiate_Model extends Character_Action_Model
 		)
 		{ $message = Kohana::lang("ca_initiate.error-notinsameregionofstructure"); return false; }
 		
-		// Check: il char è scomunicato (non può essere battezzato per 3 mesi)
+		// Check: il char ï¿½ scomunicato (non puï¿½ essere battezzato per 3 mesi)
 		
 		$excommunication = $par[0]-> get_stat( 
 			'excommunication', $par[2] -> structure_type -> church_id ); 
@@ -123,7 +123,7 @@ class CA_Initiate_Model extends Character_Action_Model
 		if ( $fl -> value < self::FAITHLEVELREQUESTED )
 		{ $message = Kohana::lang("global.error-charisnotfaithfulenough", self::FAITHLEVELREQUESTED); return false; }				
 		
-		// Check: il char che esegue l'iniziazione non ha energia o sanietà sufficienti
+		// Check: il char che esegue l'iniziazione non ha energia o sanietï¿½ sufficienti
 		
 		if
 		(
@@ -246,7 +246,7 @@ class CA_Initiate_Model extends Character_Action_Model
 		$structure = StructureFactory_Model::create( null, $data -> param3 );
 				
 		//////////////////////////////////////////////////////////////////
-		// Sottraggo l'energia e la sazietà al char
+		// Sottraggo l'energia e la sazietï¿½ al char
 		///////////////////////////////////////////////////////////////////
 		$charaction -> modify_energy ( - self::DELTA_ENERGY, false, 'initiate' );
 		$charaction -> modify_glut ( - self::DELTA_GLUT );
@@ -263,7 +263,7 @@ class CA_Initiate_Model extends Character_Action_Model
 			$structure ->  modify_stat( 'initiations', +1 );
 		}
 		
-		// Azioni relative a chi ha subìto la funzione
+		// Azioni relative a chi ha subï¿½to la funzione
 		if ( $charaction -> id == $chartarget -> id )
 		{
 			// Setto la religione/chiesa
@@ -296,7 +296,7 @@ class CA_Initiate_Model extends Character_Action_Model
 			
 			// evento permanente di battesimo
 			
-			Character_Permanentevent_Model::add( $chartarget -> id, 
+			Character_Permanentevent_Model::add_model( $chartarget -> id,
 			'__permanentevents.initiation' . ';' .
 			'__' . 'religion.church-' . $structure -> structure_type -> church -> name . ';' .
 			'__' . $structure -> region -> name . ';' .

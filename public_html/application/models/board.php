@@ -4,7 +4,8 @@ class Board_Model extends ORM
 {			
 	
 	protected $table_name = '';
-	
+
+	/*
 	function index()
 	{}
 	
@@ -13,5 +14,6 @@ class Board_Model extends ORM
 	
 	function edit()
 	{}
+	*/
 
 }

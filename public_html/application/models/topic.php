@@ -5,7 +5,7 @@ class Topic_Model extends ORM
 	
 	protected $table_name = '';
 	
-	function add()
+	function add_model()
 	{}
 	
 	function edit()

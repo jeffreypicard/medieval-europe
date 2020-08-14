@@ -4,7 +4,7 @@ class Character_Permanentevent_Model extends ORM
 {
   protected $sorting = array('timestamp' => 'asc');
 
-	public function add( $character_id, $text)
+	public function add_model($character_id, $text)
 	{
 		
 		$a = new Character_Permanentevent_Model();		

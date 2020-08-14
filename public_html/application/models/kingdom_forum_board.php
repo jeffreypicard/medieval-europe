@@ -26,7 +26,7 @@ class Kingdom_Forum_Board_Model extends Board_Model
 		
 	}
 	
-	function add( $char, $data, &$message )
+	function add_model($char, $data, &$message )
 	{
 		//var_dump($data);exit;
 		

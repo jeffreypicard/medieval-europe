@@ -352,7 +352,7 @@ class Character_Controller extends Template_Controller
 
 					// evento permanente
 
-					Character_Permanentevent_Model::add(
+					Character_Permanentevent_Model::add_model(
 					$char -> id,
 					'__permanentevents.birth' . ';' .
 					'__' . $region -> name );

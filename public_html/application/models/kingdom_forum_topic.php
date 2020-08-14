@@ -38,7 +38,7 @@ class Kingdom_Forum_Topic_Model extends Topic_Model
 	}
 	
 	
-	function add( $char, $data, &$message )
+	function add_model($char, $data, &$message )
 	{
 		//var_dump($data);exit;
 		

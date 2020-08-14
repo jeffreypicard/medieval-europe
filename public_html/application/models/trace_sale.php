@@ -10,7 +10,7 @@ class Trace_Sale_Model extends ORM
 	* price purchase price
 	*/
 	
-	function add ( $cfgitem_id, $quantity, $price )
+	function add_model ($cfgitem_id, $quantity, $price )
 	{
 		if ( Kohana::config('medeur.tracesales') )
 		{

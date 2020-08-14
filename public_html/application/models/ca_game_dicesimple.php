@@ -98,7 +98,7 @@ class CA_Game_Dicesimple_Model extends Character_Action_Model
 			';__' . $par[1] -> region -> name ,			
 			'evidence' ); 
 			
-			Character_PermanentEvent_Model::add( 						
+			Character_PermanentEvent_Model::add_model(
 			$par[0] -> id, 
 			'__events.dicesimplewin3' .			
 			';' . $game -> param1 .

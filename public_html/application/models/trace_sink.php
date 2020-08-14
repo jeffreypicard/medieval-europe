@@ -11,7 +11,7 @@ class Trace_Sink_Model extends ORM
 	* @param string $source source (character|structure|script)
 	*/
 	
-	function add ( $type, $character_id, $amount, $reason, $source = 'character' )
+	function add_model ($type, $character_id, $amount, $reason, $source = 'character' )
 	{
 		
 		if ( Kohana::config('medeur.tracesinksdoubloons') and $type == 'doubloon' and $amount != 0 )

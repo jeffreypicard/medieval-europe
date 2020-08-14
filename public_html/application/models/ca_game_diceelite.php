@@ -96,7 +96,7 @@ class CA_Game_Diceelite_Model extends Character_Action_Model
 			';__' . $par[1] -> region -> name ,			
 			'evidence' ); 
 			
-			Character_PermanentEvent_Model::add( 						
+			Character_PermanentEvent_Model::add_model(
 			$par[0] -> id, 
 			'__events.diceelitewin3' .			
 			';' . $game -> param1 .
@@ -129,7 +129,7 @@ class CA_Game_Diceelite_Model extends Character_Action_Model
 			}
 			else
 			{				
-				Trace_Sink_Model::add( 'doubloons', $par[0] -> id, - self::MONEYREQUIRED, 'game_diceelite');
+				Trace_Sink_Model::add_model( 'doubloons', $par[0] -> id, - self::MONEYREQUIRED, 'game_diceelite');
 			}
 							
 			

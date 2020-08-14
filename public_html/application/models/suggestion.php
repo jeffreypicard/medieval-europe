@@ -115,7 +115,7 @@ class Suggestion_Model extends ORM
 	* @return bool
 	*/
 	
-	public function add( $char, $post, &$message)
+	public function add_model($char, $post, &$message)
 	{
 		
 		// personaggio deve avere almeno 90 giorni di gioco

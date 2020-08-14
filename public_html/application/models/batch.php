@@ -138,7 +138,7 @@ class Batch_Model
 
 		kohana::log('info', "-> Total Silver coins given: {$totalcoins}");
 
-		Trace_Sink_Model::add( 'silvercoin', -1, $totalcoins, 'dailyrevenue');
+		Trace_Sink_Model::add_model( 'silvercoin', -1, $totalcoins, 'dailyrevenue');
 
 	}
 

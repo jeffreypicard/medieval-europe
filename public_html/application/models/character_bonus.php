@@ -6,11 +6,11 @@ class character_premiumbonus_Model extends ORM
 
 	/** 
 	* add a bonus
-	* @param character oggetto char a cui il bonus è applicato
-	* @param structure is struttura a cui il bonus è applicato
+	* @param character oggetto char a cui il bonus ï¿½ applicato
+	* @param structure is struttura a cui il bonus ï¿½ applicato
 	* @param bonustype tipo di bonus
 	* @param doubloons dobloni spesi
-	* @delta ha due valenze, se si vuole estendere è il delta altrimenti funziona
+	* @delta ha due valenze, se si vuole estendere ï¿½ il delta altrimenti funziona
 	*        come valore esplicito
 	* @param1 param1
 	* @param2 param2
@@ -18,7 +18,7 @@ class character_premiumbonus_Model extends ORM
 	* @return
 	*/
 	
-	function add( 	
+	function add_model(
 		$character, 
 		$structure_id = null, 
 		$bonustype,

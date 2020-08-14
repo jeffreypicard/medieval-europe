@@ -12,7 +12,7 @@ protected $belongs_to = array( 'character' );
 * @return false
 */
 
-function add( $char, &$message )
+function add_model($char, &$message )
 {
 	$c = ORM::factory('wardrobe_approvalrequest') -> where (
 	array( 

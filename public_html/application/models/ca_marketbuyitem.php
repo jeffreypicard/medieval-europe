@@ -27,7 +27,7 @@ class CA_Marketbuyitem_Model extends Character_Action_Model
 		{ return false; }
 
 		////////////////////////////////////////////////////
-		// check: esiste la struttura nel nodo in cui è l' utente?
+		// check: esiste la struttura nel nodo in cui ï¿½ l' utente?
 		//////////////////////////////////////////////////////
 		
 		if ( $par[0] -> loaded
@@ -64,7 +64,7 @@ class CA_Marketbuyitem_Model extends Character_Action_Model
 		}
 		
 		/////////////////////////////////////////////////////////////////////////////////////
-		// non è possibile comprare i propri item
+		// non ï¿½ possibile comprare i propri item
 		/////////////////////////////////////////////////////////////////////////////////////
 
 		if ( $par[2]->seller_id == $par[1]->id )
@@ -75,7 +75,7 @@ class CA_Marketbuyitem_Model extends Character_Action_Model
 		}
 		
 		/////////////////////////////////////////////////////////////////////////////////////
-		// verificare se è vendita privata
+		// verificare se ï¿½ vendita privata
 		/////////////////////////////////////////////////////////////////////////////////////
 
 		if (!is_null($par[2]->recipient_id) and $par[2]->recipient_id != $par[1]->id )
@@ -110,7 +110,7 @@ class CA_Marketbuyitem_Model extends Character_Action_Model
 		
 		/////////////////////////////////////////////////////////////////////////////////////
 		// check: il char sta trasportando troppo peso?
-		// se l' item è un carretto, niente controllo		
+		// se l' item ï¿½ un carretto, niente controllo		
 		/////////////////////////////////////////////////////////////////////////////////////
 		
 		if ( $par[1] -> get_transportableweight() <= 0 
@@ -160,7 +160,7 @@ class CA_Marketbuyitem_Model extends Character_Action_Model
 		// cancel all private sales after 48 hours
 		
 		// trace
-		Trace_Sale_Model::add( 
+		Trace_Sale_Model::add_model(
 			$par[2] -> cfgitem -> id,
 			$par[3],
 			$this -> totalprice);		
@@ -243,8 +243,8 @@ class CA_Marketbuyitem_Model extends Character_Action_Model
 		
 		$_par[0] = $par[2]; // item
 		$_par[1] = $seller; // venditore
-		$_par[2] = $par[3]; // quantità
-		$_par[3] = $buyingprice; // quantità
+		$_par[2] = $par[3]; // quantitï¿½
+		$_par[3] = $buyingprice; // quantitï¿½
 		$_par[4] = $par[1]; // compratore
 		$_par[5] = null;
 		$_par[6] = null;

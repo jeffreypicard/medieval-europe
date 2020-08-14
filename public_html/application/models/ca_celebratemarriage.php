@@ -493,7 +493,7 @@ class CA_CelebrateMarriage_Model extends Character_Action_Model
 			
 			// evento permanente di matrimonio
 
-			Character_Permanentevent_Model::add( $husband -> id, 
+			Character_Permanentevent_Model::add_model( $husband -> id,
 			'__permanentevents.married' .
 			';' . Character_Model::create_publicprofilelink($wife -> id, $wife -> name) . 
 			';__' . $structure -> structure_type -> name .
@@ -519,7 +519,7 @@ class CA_CelebrateMarriage_Model extends Character_Action_Model
 			';__' . $structure -> region -> name,
 			'normal' );
 			
-			Character_Permanentevent_Model::add( $wife -> id, 
+			Character_Permanentevent_Model::add_model( $wife -> id,
 			'__permanentevents.married' .
 			';' . Character_Model::create_publicprofilelink($husband -> id, $husband -> name) . 
 			';__' . $structure -> structure_type -> name .

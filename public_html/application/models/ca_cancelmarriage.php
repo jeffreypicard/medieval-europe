@@ -409,14 +409,14 @@ class CA_CancelMarriage_Model extends Character_Action_Model
 			
 			// events, permanent
 			
-			Character_Permanentevent_Model::add( $requester -> id, 
+			Character_Permanentevent_Model::add_model( $requester -> id,
 			'__permanentevents.marriedcanceled' .
 			';' . Character_Model::create_publicprofilelink($partner -> id, $partner -> name) . 
 			';__' . $structure -> structure_type -> name .
 			';__' . $structure -> region -> name			
 			);
 			
-			Character_Permanentevent_Model::add( $partner -> id, 
+			Character_Permanentevent_Model::add_model( $partner -> id,
 			'__permanentevents.marriedcanceled' .
 			';' . Character_Model::create_publicprofilelink($requester -> id, $requester -> name) .
 			'__' . 'religion.church-' . $structure -> structure_type -> church -> name . ';' .

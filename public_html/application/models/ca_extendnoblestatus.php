@@ -64,7 +64,7 @@ class CA_Extendnoblestatus_Model extends Character_Action_Model
 		else
 			$param1 = $par[1].'_f' ;
 		
-		character_premiumbonus_Model::add(
+		character_premiumbonus_Model::add_model(
 			$par[0], 
 			null,
 			'basicpackage',

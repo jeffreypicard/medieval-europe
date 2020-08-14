@@ -137,7 +137,7 @@ class Structure_Model extends ORM
 
 		kohana::log( 'debug', '-> Modifying coins for Structure: ' . $this -> id . ', reason: ' . $reason . ', delta: ' . $delta );
 
-		Trace_Sink_Model::add( 'silvercoin', $this -> id, round($delta, 2), $reason, 'structure' );
+		Trace_Sink_Model::add_model( 'silvercoin', $this -> id, round($delta, 2), $reason, 'structure' );
 
 		$orgdelta = $delta;
 		$delta *= 100;
