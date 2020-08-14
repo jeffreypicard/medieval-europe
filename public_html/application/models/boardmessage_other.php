@@ -128,7 +128,7 @@ class Boardmessage_Other_Model extends Boardmessage_Model
 	* Aggiunge post alla boardmessage (metodo usato dal sistema)
 	*/
 	
-	function add( $params, &$message )
+	function add_message($params, &$message )
 	{
 		
 		//var_dump( $params[0] ); exit; 
@@ -351,7 +351,7 @@ class Boardmessage_Other_Model extends Boardmessage_Model
 		}
 		
 		$subject = 'Messaggio: ' . $params[3] -> id . ' segnalato!';
-		$body = 'Il messaggio è stato segnalato da : ' . $params[1] -> name . ', causale: ' . $params[2]['reason'];		
+		$body = 'Il messaggio ï¿½ stato segnalato da : ' . $params[1] -> name . ', causale: ' . $params[2]['reason'];		
 		Utility_Model::alertstaff( $subject, $body );
 
 		$message = kohana::lang('boardmessage.reported-ok');
