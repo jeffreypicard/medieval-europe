@@ -5,6 +5,7 @@ $lang = Array
 'console' => 'Admin console', 
 'main' => 'Console', 
 'giveitems' => 'Give Items', 
+'manage_npcs' => 'Manage NPCs', 
 'targetusername' => 'Character name', 
 'give' => 'Give', 
 'gamemessage' => 'Game Message', 

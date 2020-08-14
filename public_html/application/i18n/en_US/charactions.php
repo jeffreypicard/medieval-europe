@@ -99,6 +99,7 @@ $lang = Array
 'bf_add_defend_ok' => 'You joined defenders faction.', 
 'bf_retire_ok' => 'You left the battle.', 
 'giveitems_ok' => 'Items modified.', 
+'manage_npcs_ok' => 'NPCs modified.', 
 'toplist_doesnt_exist' => 'This toplist is not configured.', 
 'buy_avatar_ok' => 'You have purchased an avatar for your Character.  The staff have received a notification by email and will soon update your profile.', 
 'senditem_costmessage' => 'You are about to send <b>%d %s</b> to <b>%s</b> for a total of <b>%s Kg</b> and a cost of <b>%d coin(s)</b>. Items will be received in <b>%s</b>.', 
