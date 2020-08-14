@@ -40,8 +40,11 @@ class Structure_Model extends ORM
 	*/
 
 
-	public static function factory( $structure_type, $structure_id, $level = 1 )
+	//public static function factory( $structure_type, $structure_id, $level = 1 )
+    public static function factory( $structure_type, $structure_id = NULL)
 	{
+	    //FIXME
+	    $level = 1;
 		$s = null;
 
 		if ( !is_null($structure_id) )
