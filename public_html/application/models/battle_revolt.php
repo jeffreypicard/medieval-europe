@@ -221,7 +221,7 @@ class Battle_Revolt_Model extends Battle_Type_Model
 	* @return costo
 	*/
 
-	function compute_costs( $kingdom )
+	function compute_costs_kingdom($kingdom )
 	{
 	
 		$kingdomregions = count( $kingdom -> regions ); 

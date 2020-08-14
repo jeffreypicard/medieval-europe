@@ -43,7 +43,7 @@ class CA_Declarerevolt_Model extends Character_Action_Model
 		
 		// controlla che il char abbia i soldi necessari
 		
-		$this -> cost = Battle_Revolt_Model::compute_costs( $par[1] -> region -> kingdom ); 
+		$this -> cost = Battle_Revolt_Model::compute_costs_kingdom( $par[1] -> region -> kingdom );
 		if ( ! $par[0]->check_money( $this -> cost ) )
 		{
 			$message = kohana::lang( 'charactions.global_notenoughmoney');

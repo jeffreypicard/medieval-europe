@@ -158,7 +158,7 @@ class CA_Declarewaraction_Model extends Character_Action_Model
 		)
 			$this -> warcost = 0;
 		elseif ( $par[2] == 'raid' or $par[2] == 'conquer_r' )
-			$this -> warcost = Battle_Type_Model::compute_costs();
+			$this -> warcost = Battle_Type_Model::compute_costs_kingdom();
 
 		if ($this -> warcost > 0 )
 		{

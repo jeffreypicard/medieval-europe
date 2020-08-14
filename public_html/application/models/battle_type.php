@@ -89,7 +89,7 @@ class Battle_Type_Model
 		kohana::log('info', "------- Categorization of {$char -> name} -------");
 		$kingdomchangeddate = $char -> get_stats( 'changedkingdom' );
 				
-		// Il char è cittadino del kingdom che attacca e non ha mai cambiato regno
+		// Il char ï¿½ cittadino del kingdom che attacca e non ha mai cambiato regno
 		// oppure se ha cambiato regno verso questo regno, lo ha fatto almeno 30 
 		// gg fa.
 		
@@ -149,14 +149,14 @@ class Battle_Type_Model
 		kohana::log('info', '-> (Attack) Char: ' . $char -> name . ' Dipl. Rel. with Attacking Region: [' . $dr_1['type'] . '] Dipl. Rel. with Defending Region: [' . $dr_2['type'] . ']' );		
 		
 		// CONQUER_REGION, RAID ETC:
-		// Se il mio ruolo è uguale a quello del regno che attacca allora sono un attaccante.
+		// Se il mio ruolo ï¿½ uguale a quello del regno che attacca allora sono un attaccante.
 
 		
 		// guerre del regno del char
 		
 		$runningwars = Kingdom_Model::get_kingdomwars( $char -> region -> kingdom_id, 'running');		
 		
-		// stabiliamo quale è la guerra corrente: è quella in cui sono coinvolti il regno del char e quello attaccato.
+		// stabiliamo quale ï¿½ la guerra corrente: ï¿½ quella in cui sono coinvolti il regno del char e quello attaccato.
 		
 		$currentwar = null;
 		
@@ -202,11 +202,11 @@ class Battle_Type_Model
 		
 		//if ( !is_null ( $kingdomchangeddate ) )
 			//kohana::log('info', '-> Char: ' . $char -> name  . ' Changed kingdom on: ' . date('d-m-Y', $kingdomchangeddate[0] -> value ) );		
-		// Se la relazione diplomatica tra regno del char e il regno che attaccato è ALLY
+		// Se la relazione diplomatica tra regno del char e il regno che attaccato ï¿½ ALLY
 		// e il regno del char ed il regno della regione attaccante sono in guerra
-		// allora la categoria è DEFENDERORALLY.
+		// allora la categoria ï¿½ DEFENDERORALLY.
 		
-		// stabiliamo quale è la guerra corrente: è quella in cui sono coinvolti il regno del char e quello che attacca.
+		// stabiliamo quale ï¿½ la guerra corrente: ï¿½ quella in cui sono coinvolti il regno del char e quello che attacca.
 				
 		foreach ($runningwars as $runningwar)
 			if ( array_key_exists( $attackingregion -> kingdom_id, $runningwar['kingdoms'] ) )
@@ -232,8 +232,8 @@ class Battle_Type_Model
 		)		
 			return 'defenderorally';
 		
-		// Se la battaglia è nativerevolt, verifichiamo SOLO che il cittadino sia alleato
-		// poichè in questo caso non è necessario che i 2 regni non siano in guerra
+		// Se la battaglia ï¿½ nativerevolt, verifichiamo SOLO che il cittadino sia alleato
+		// poichï¿½ in questo caso non ï¿½ necessario che i 2 regni non siano in guerra
 		// dato che i nativi sono del regno INDIPENDENTE.
 		
 		if (			
@@ -267,7 +267,7 @@ class Battle_Type_Model
 		if ( count( $res ) > 0 )
 			return 'mercenary' ;
 			
-		// char è membro di un gruppo mercenario?
+		// char ï¿½ membro di un gruppo mercenario?
 		// da almeno 30 giorni?
 		
 		$res = Database::instance() -> query 
@@ -907,7 +907,7 @@ class Battle_Type_Model
 	* @return costo
 	*/
 
-	function compute_costs()
+	function compute_costs_kingdom()
 	{
 		return 1000;
 	}		

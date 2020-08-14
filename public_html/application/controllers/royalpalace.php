@@ -1499,7 +1499,7 @@ public function assign_region( $structure_id, $vassal_id )
 			}
 		}
 
-		$cost = Battle_Revolt_Model::compute_costs( $structure -> region -> kingdom );
+		$cost = Battle_Revolt_Model::compute_costs_kingdom( $structure -> region -> kingdom );
 		$view -> cost = $cost;
 		$view -> structure = $structure;
 		$view -> char = $char;
@@ -2176,9 +2176,9 @@ function basicresourcereport( $structure_id )
 		kohana::Log('info', kohana::debug( $this -> input -> post() ) );
 
 		if ( $this -> input -> post ('attacktype' ) == 'conquer_r' )
-			$cost = Battle_Conquer_R_Model::compute_costs( $this -> input -> post( 'maxattackers' ) );
+			$cost = Battle_Conquer_R_Model::compute_costs_kingdom( $this -> input -> post( 'maxattackers' ) );
 		if ( $this -> input -> post ('attacktype' ) == 'raid' )
-			$cost = Battle_Raid_Model::compute_costs( $this -> input -> post( 'maxattackers' ) );
+			$cost = Battle_Raid_Model::compute_costs_kingdom( $this -> input -> post( 'maxattackers' ) );
 
 		echo $cost;
 
