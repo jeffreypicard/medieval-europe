@@ -161,7 +161,7 @@ class Trainingground_Controller extends Template_Controller
 		$view -> listarmors = $listarmors;
 		$view -> structure_id = $structure_id;
 		$view -> listweapons = $listweapons;
-		$view -> repeats = $data['repeats'];
+		$view -> repeats = is_null($data) ? "" : $data['repeats'];
 		$view -> character = $character;
 		$view -> weapons = $weapons;
 		$this -> template -> sheets = $sheets;
