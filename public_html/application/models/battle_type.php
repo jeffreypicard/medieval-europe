@@ -907,7 +907,7 @@ class Battle_Type_Model
 	* @return costo
 	*/
 
-	function compute_costs_kingdom()
+	function compute_costs()
 	{
 		return 1000;
 	}		
