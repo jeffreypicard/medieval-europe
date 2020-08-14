@@ -53,13 +53,13 @@ array('class' => 'selected' ));?>
 			
 			// conta il totale item per città
 			$citytotal = 
-				$report[$c->tag][$n->name]['royalpalace'] +  
-				$report[$c->tag][$n->name]['castle'] + 
-				$report[$c->tag][$n->name]['court'] + 
-				$report[$c->tag][$n->name]['barracks'] +
-				$report[$c->tag][$n->name]['academy'] +
-				$report[$c->tag][$n->name]['trainingground']+
-				$report[$c->tag][$n->name]['watchtower'] ;
+				intval($report[$c->tag][$n->name]['royalpalace']) +
+                intval($report[$c->tag][$n->name]['castle']) +
+                intval($report[$c->tag][$n->name]['court']) +
+				intval($report[$c->tag][$n->name]['barracks']) +
+				intval($report[$c->tag][$n->name]['academy']) +
+				intval($report[$c->tag][$n->name]['trainingground'])+
+				intval($report[$c->tag][$n->name]['watchtower']) ;
 			
 			if (  $citytotal > 0 )
 			{
