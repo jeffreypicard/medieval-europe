@@ -40,7 +40,7 @@ class Boardmessage_Europecrier_Model extends Boardmessage_Model
 		
 	}
 	
-	function get_form ()
+	function get_form ($type)
 	{
 		die ('Invalid call to get_form!');
 	}
