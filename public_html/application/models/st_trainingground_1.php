@@ -41,7 +41,7 @@ class ST_Trainingground_1_Model extends Structure_Model
 		$this -> setWikilink('En_US_TheTraining_Grounds');				
 	}
 	
-	public function build_common_links( $structure )
+	public function build_common_links( $structure, $bonus = false )
 	{
 	
 		
@@ -54,7 +54,7 @@ class ST_Trainingground_1_Model extends Structure_Model
 		return $links;
 	}
 	
-	public function build_special_links( $structure )
+	public function build_special_links( $structure, $bonus = false )
 	{
 			
 		$links = parent::build_special_links( $structure );				
@@ -73,7 +73,7 @@ class ST_Trainingground_1_Model extends Structure_Model
 	* @return array $data
 	*/
 	
-	public function trainwithsparring($debug = false, $post)
+	public function trainwithsparring($post, $debug = false)
 	{
 		
 		//var_dump($post);exit;

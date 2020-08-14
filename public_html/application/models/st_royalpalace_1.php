@@ -14,7 +14,7 @@ class ST_Royalpalace_1_Model extends Structure_Model
 		$this -> setWikilink('En_US_royalpalace');
 	}
 		
-	public function build_common_links( $structure )
+	public function build_common_links( $structure, $workerbonus = false )
 	{
 		
 		$links = parent::build_common_links( $structure );
@@ -27,7 +27,7 @@ class ST_Royalpalace_1_Model extends Structure_Model
 		return $links;
 	}
 
-	public function build_special_links( $structure )
+	public function build_special_links( $structure, $workerbonus = false )
 	{
 		// setta i link comuni a tutte le strutture
 		

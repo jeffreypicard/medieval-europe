@@ -18,7 +18,7 @@ class ST_Religion_2_Model extends Structure_Model
 
 	// Funzione che costruisce i links comuni relativi alla struttura
 	// @output: stringa contenente i links relativi a questa struttura
-	public function build_common_links( $structure, $bonus )
+	public function build_common_links( $structure, $bonus = false )
 	{		
 		
 		$links = parent::build_common_links( $structure );

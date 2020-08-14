@@ -15,7 +15,7 @@ class ST_Trainingground_2_Model extends ST_Trainingground_1_Model
 	// Funzione che costruisce i links relativi
 	// @output: stringa contenente i links relativi a questa struttura
 	
-	public function build_common_links( $structure )	
+	public function build_common_links( $structure, $bonus = false )
 	{
 		$links = parent::build_common_links( $structure );
 				

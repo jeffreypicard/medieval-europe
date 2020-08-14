@@ -151,7 +151,7 @@ class Trainingground_Controller extends Template_Controller
 
 			}			
 			
-			$data = ST_TrainingGround_1_Model::trainwithsparring( $debug, $this -> input -> post() );
+			$data = ST_TrainingGround_1_Model::trainwithsparring( $this -> input -> post(), $debug );
 			
 		}
 		
@@ -184,7 +184,7 @@ class Trainingground_Controller extends Template_Controller
 		
 		if ( !$_POST)
 		{
-			// carico la struttura da db dopodichè instanzio il corretto modello			
+			// carico la struttura da db dopodichï¿½ instanzio il corretto modello			
 			
 			$structure = StructureFactory_Model::create( null, $structure_id );
 			

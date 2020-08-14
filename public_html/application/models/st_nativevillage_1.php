@@ -16,7 +16,7 @@ class ST_Nativevillage_1_Model extends Structure_Model
 	// Funzione che costruisce i links comuni relativi alla struttura
 	// @output: stringa contenente i links relativi a questa struttura
 	
-	public function build_common_links( $structure )
+	public function build_common_links( $structure, $bonus = false )
 	{
 		
 
@@ -45,7 +45,7 @@ class ST_Nativevillage_1_Model extends Structure_Model
 
 	// Funzione che costruisce i links speciali relativi alla struttura
 	// @output: stringa contenente i links relativi a questa struttura
-	public function build_special_links( $structure )
+	public function build_special_links( $structure, $bonus = false )
 	{
 		// Azioni speciali accessibili solo al char che governa la struttura
 		$links = parent::build_special_links( $structure );

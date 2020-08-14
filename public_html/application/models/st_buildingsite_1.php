@@ -19,7 +19,7 @@ class ST_Buildingsite_1_Model extends Structure_Model
 	// Funzione che costruisce i links relativi
 	// @output: stringa contenente i links relativi a questa struttura
 
-	public function build_common_links( $structure, $bonus )
+	public function build_common_links( $structure, $bonus = false )
 	{
 		
 		$kp = ORM::factory('kingdomproject') -> where ( 'structure_id', $structure->id ) -> find(); 				

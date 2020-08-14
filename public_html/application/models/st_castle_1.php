@@ -20,7 +20,7 @@ class ST_Castle_1_Model extends Structure_Model
 	// Funzione che costruisce i links relativi
 	// @output: stringa contenente i links relativi a questa struttura
 
-	public function build_common_links( $structure )
+	public function build_common_links( $structure, $bonus = false )
 	{
 
 		$links = parent::build_common_links( $structure );
@@ -37,7 +37,7 @@ class ST_Castle_1_Model extends Structure_Model
 		return $links;
 	}
 
-	public function build_special_links( $structure )
+	public function build_special_links( $structure, $bonus = false )
 	{
 
 		$links = parent::build_special_links( $structure );

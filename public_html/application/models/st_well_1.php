@@ -45,7 +45,7 @@ class ST_Well_1_Model extends Structure_Model
 	
 	// Funzione che costruisce i links speciali del pozzo
 	// @output: stringa contenente i links
-	public function build_special_links( $structure )
+	public function build_special_links( $structure, $bonus = false )
 	{
 		$links = "";
 		return $links;

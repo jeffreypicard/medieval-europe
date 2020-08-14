@@ -17,7 +17,7 @@ class ST_Breeding_Model extends Structure_Model
 	}
 
 	
-	public function build_common_links( $structure, $bonus ) {
+	public function build_common_links( $structure, $bonus = false ) {
 	
 		$links = parent::build_common_links( $structure );
 		

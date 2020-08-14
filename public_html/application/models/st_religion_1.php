@@ -48,7 +48,7 @@ class ST_Religion_1_Model extends Structure_Model
 
 	// Function that builds the special links related to the structure
 	// @output: content string i links relative to that structure
-	public function build_special_links( $structure)
+	public function build_special_links( $structure, $bonus = false)
 	{
 		
 		

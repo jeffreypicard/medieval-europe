@@ -17,7 +17,7 @@ class ST_Market_1_Model extends Structure_Model
 	// Funzione che costruisce i links relativi
 	// @output: stringa contenente i links relativi a questa struttura
 
-	public function build_common_links( $structure )
+	public function build_common_links( $structure, $bonus = false )
 	{
 		$links = parent::build_common_links( $structure );
 		
@@ -31,7 +31,7 @@ class ST_Market_1_Model extends Structure_Model
 		return $links;
 	}
 
-	public function build_special_links( $structure )
+	public function build_special_links( $structure, $bonus = false )
 	{	
 		// setta i link comuni a tutte le strutture		
 		$links = parent::build_special_links( $structure );
@@ -45,7 +45,7 @@ class ST_Market_1_Model extends Structure_Model
 	* @return array items
 	*/
 	
-	function get_items( $structure_id )
+	function get_items()
 	{
 		$db = Database::instance();
 		$items = $db -> query ( "
