@@ -23,7 +23,7 @@ class CA_Assignstructuregrant_Model extends Character_Action_Model
 		if ( Structure_Grant_Model::get_chargrant( $par[0], $par[1], $par[2] ) == true )
 		{ $message = kohana::lang( 'ca_assignstructuregrant.error-grantsalreadyassigned'); return false; }
 		
-		// Non è possibile assergnare grant a sè stessi
+		// Non ï¿½ possibile assergnare grant a sï¿½ stessi
 		if ( $par[1] -> id == $par[0] -> character_id )
 		{ $message = kohana::lang( 'ca_assignstructuregrant.error-cantgranttoself'); return false; }	
 						
@@ -31,7 +31,7 @@ class CA_Assignstructuregrant_Model extends Character_Action_Model
 			Structure_Grant_Model::get_charswithprofile( $par[0], $par[2] ) >= 5 )
 		{ $message = kohana::lang( 'ca_assignstructuregrant.error-grantlimitreached'); return false; }	
 		
-		// se la struttura è di tipo government, il char target deve essere del regno		
+		// se la struttura ï¿½ di tipo government, il char target deve essere del regno		
 		if ( 
 			$par[0] -> structure_type -> subtype == 'government' and 
 			$par[1] -> region -> kingdom_id != $par[0] -> region -> kingdom_id )
@@ -50,9 +50,9 @@ class CA_Assignstructuregrant_Model extends Character_Action_Model
 			'captain_assistant',
 			'guard_assistant',
 			'chancellor' ) ) )
-			Structure_Grant_Model::add( $par[0], $par[1], null, $par[2], (time() + 3 * 365 * 24 * 3600) );
+			Structure_Grant_Model::add_model( $par[0], $par[1], null, $par[2], (time() + 3 * 365 * 24 * 3600) );
 		else
-			Structure_Grant_Model::add( $par[0], $par[1], null, $par[2], (time() + 7 * 24 * 3600) );
+			Structure_Grant_Model::add_model( $par[0], $par[1], null, $par[2], (time() + 7 * 24 * 3600) );
 		
 		$message = kohana::lang('ca_assignstructuregrant.grantassigned_ok');					
 		return true;		

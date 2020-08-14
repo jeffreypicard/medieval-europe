@@ -9,7 +9,7 @@ class CA_Givearmoryaccess_Model extends Character_Action_Model
 	// @input: parametri
 	//  - par[0]: oggetto char che da l' accesso
 	//  - par[1]: oggetto struttura armory
-	//  - par[2]: oggetto char a cui si dà l' accesso	
+	//  - par[2]: oggetto char a cui si dï¿½ l' accesso	
 	
 	protected function check( $par, &$message )
 	{ 
@@ -20,7 +20,7 @@ class CA_Givearmoryaccess_Model extends Character_Action_Model
 		if ( !$par[0] -> loaded or !$par[1] -> loaded or !$par[2] -> loaded) 
 		{ $message = kohana::lang( 'global.operation_not_allowed'); return false; }
 
-		// il char deve essere autorizzato; solo l' owner può dare deleghe		
+		// il char deve essere autorizzato; solo l' owner puï¿½ dare deleghe		
 		if ( $par[0] -> id != $par[1] -> character_id )
 		{ $message = kohana::lang( 'global.operation_not_allowed'); return false; }
 		
@@ -47,7 +47,7 @@ class CA_Givearmoryaccess_Model extends Character_Action_Model
 	public function execute_action ( $par, &$message ) 
 	{
 	
-		Structure_Grant_Model::add( $par[1], $par[2], null, 'captain_assistant', null); 
+		Structure_Grant_Model::add_model( $par[1], $par[2], null, 'captain_assistant', null);
 		$message = kohana::lang('ca_givearmoryaccess.grantgiven_ok', $par[2] -> name ); 
 					
 		return true;		

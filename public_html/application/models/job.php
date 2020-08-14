@@ -19,7 +19,7 @@ class Job_Model extends ORM
 		if ( !$char -> loaded or !$job -> loaded or $job -> status != 'active' )
 		{	$message = kohana::lang('global.operation_not_allowed'); return false; }
 	
-		// chi cancella può essere solo l' employer
+		// chi cancella puï¿½ essere solo l' employer
 		
 		if ( $char -> id != $job -> employer_id	 )
 		{	$message = kohana::lang('global.operation_not_allowed'); return false; }
@@ -74,7 +74,7 @@ class Job_Model extends ORM
 		if ( !$char -> loaded or !$job -> loaded or !in_array( $job -> status, array( 'active', 'canceled' ) ) )
 		{	$message = kohana::lang('global.operation_not_allowed'); return false; }
 	
-		// chi cancella può essere solo l' employer
+		// chi cancella puï¿½ essere solo l' employer
 		if ( $char -> id != $job -> employer_id )
 		{	$message = kohana::lang('global.operation_not_allowed'); return false; }
 	
@@ -129,12 +129,12 @@ class Job_Model extends ORM
 		if ( !$char -> loaded or !$job -> loaded or !in_array( $job -> status, array( 'canceled' ) ) )
 		{	$message = kohana::lang('global.operation_not_allowed'); return false; }
 	
-		// chi ripubblica può essere solo l' employer
+		// chi ripubblica puï¿½ essere solo l' employer
 		
 		if ( $char -> id != $job -> employer_id )
 		{	$message = kohana::lang('global.operation_not_allowed'); return false; }
 	
-		// si può ripubblicare un annuncio solo se non è scaduto
+		// si puï¿½ ripubblicare un annuncio solo se non ï¿½ scaduto
 		
 		if ( $job -> expiredate < time() )
 		{	$message = kohana::lang('jobs.error-jobisexpired'); return false; }
@@ -180,14 +180,14 @@ class Job_Model extends ORM
 			if ( !$structure -> loaded )
 				{	$message = kohana::lang('global.operation_not_allowed'); return false; }
 				
-		// chi accetta può essere solo l' employee
+		// chi accetta puï¿½ essere solo l' employee
 		
 		if ( $employee -> id == $announce -> character_id )
 		{	$message = kohana::lang('global.operation_not_allowed'); return false; }
 		
 		if ( !is_null( $structure ) )
 		{
-			// c'è già un contratto attivo per lo stesso char sulla struttura?
+			// c'ï¿½ giï¿½ un contratto attivo per lo stesso char sulla struttura?
 			
 			$jobs = ORM::factory('job') -> where( 
 				array( 
@@ -200,7 +200,7 @@ class Job_Model extends ORM
 			if ( $jobs -> loaded )		
 			{$message = kohana::lang('jobs.error-jobonstructurealreadyactive', $jobs -> id ); return false;}
 
-			// c'è già un contratto attivo sulla struttura e nello shop non c'è lo sturdyworkbench?
+			// c'ï¿½ giï¿½ un contratto attivo sulla struttura e nello shop non c'ï¿½ lo sturdyworkbench?
 			
 			$activejobsonstructure = ORM::factory('job') -> where( 
 				array( 
@@ -215,7 +215,7 @@ class Job_Model extends ORM
 				if ( $activejobsonstructure > 0 and $structure -> contains_item( 'sturdyworkbench', 1 ) == false )
 				{$message = kohana::lang('jobs.error-maxemployeecapacityreached' ); return false;}
 										
-				// ci sono già attivi 5 contratti sulla struttura e nello shop non c'è lo sturdyworkbench?
+				// ci sono giï¿½ attivi 5 contratti sulla struttura e nello shop non c'ï¿½ lo sturdyworkbench?
 				
 				if ( $activejobsonstructure > 4 and $structure -> contains_item( 'sturdyworkbench', 1 ) == true )
 				{$message = kohana::lang('jobs.error-maxemployeecapacityreached' ); return false;}
@@ -242,9 +242,9 @@ class Job_Model extends ORM
 		$job -> structure_id = (is_null( $structure) ) ? null : $structure -> id;		
 		$job -> save();
 		
-		// dà una grant sulla struttura
+		// dï¿½ una grant sulla struttura
 		if ( !is_null( $structure ) )
-			Structure_Grant_Model::add( 
+			Structure_Grant_Model::add_model(
 				$structure, 
 				$employee, 
 				$job, 
@@ -261,7 +261,7 @@ class Job_Model extends ORM
 			$job -> id,
 			'normal');
 		
-		// evento a chi è assunto
+		// evento a chi ï¿½ assunto
 		
 		Character_Event_Model::addrecord( 			
 			$employee -> id, 
@@ -280,7 +280,7 @@ class Job_Model extends ORM
 	
 	/**
 	* Paga oraria
-	* @param structure oggetto struttura dove il lavoro è fatto
+	* @param structure oggetto struttura dove il lavoro ï¿½ fatto
 	* @param employee oggetto char che esegue il lavoro
 	* @return none
 	*/

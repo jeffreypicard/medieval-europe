@@ -15,7 +15,7 @@ protected $belongs_to = array('structure', 'character' );
 * @return none
 */	
 
-function add( $structure, $granted, $job, $grant, $expiredate )
+function add_model($structure, $granted, $job, $grant, $expiredate )
 {
 
 	$g = new Structure_Grant_Model();
@@ -52,8 +52,8 @@ function add( $structure, $granted, $job, $grant, $expiredate )
 /**
 * Funzione che revoca il profilo per una certa struttura
 * @param structure oggetto struttura
-* @param granted oggetto char a cui è dato il permesso	
-* @param job oggetto job a cui è legato il grant
+* @param granted oggetto char a cui ï¿½ dato il permesso	
+* @param job oggetto job a cui ï¿½ legato il grant
 * @return none
 */	
 	
@@ -140,8 +140,8 @@ function get_chargrants( $structure, $granted )
 		if ( Character_Model::is_marriedto( $granted -> id, $structure -> character_id, $relationtype ) )
 			$grants[] = $relationtype;
 	
-		// in caso di struttura battlefield, ognuno è owner perchè 
-		// l'accesso è filtrato a monte
+		// in caso di struttura battlefield, ognuno ï¿½ owner perchï¿½ 
+		// l'accesso ï¿½ filtrato a monte
 		
 		if ( 
 				$structure -> structure_type -> supertype == 'battlefield' 
