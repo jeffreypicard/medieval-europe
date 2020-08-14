@@ -244,6 +244,12 @@ class Admin_Model
 				'htmlparams' => array( 
 					'class' =>( $action == 'wardrobeapprovalrequests' ) ? 'selected' : '' )
 			),
+			'/admin/manage_npcs/' => array( 
+				'name' => 'Manage NPCs',
+				'htmlparams' => array( 
+					'class' =>( $action == 'manage_npcs' ) ? 'selected' : '' )
+			),
+
 		);
 		
 		return $lnkmenu;	

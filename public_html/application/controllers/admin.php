@@ -583,7 +583,118 @@ class Admin_Controller extends Template_Controller
 		$this -> template -> sheets = $sheets;	
 		$this -> template -> content = $view;	
 	}
+
+	/*
+	 * Manage npcs
+	 */
 	
+	public function manage_npcs()
+	{
+
+		if (!Auth::instance()->logged_in('admin') and !Auth::instance()->logged_in('staff'))
+			url::redirect('/user/login');
+
+		$view = new view( 'admin/manage_npcs');
+		$sheets = array('gamelayout'=>'screen', 'submenu'=>'screen');
+		$subm = new View ('template/submenu');
+		$message = '';
+
+		//$char = Character_Model::get_info(Session::instance()->get('char_id'));
+		$form = array (
+			'quantity' => 1,
+			'npc' => '',
+			'item' => '',
+			'regions' => '' );
+
+		/*
+		$items = ORM::factory('cfgitem') -> select_list('id', 'name');
+		foreach ($items as $key => $value ) {
+			$regions[$key] = kohana::lang($value);
+		}
+		 */
+
+		$npc_names = array(
+			'smallrat' => array( 'name' => 'Small Rat' ),
+			'largerat' => array( 'name' => 'Large Rat' ),
+			'chicken' => array( 'name' => 'Chicken' ),
+			'largedog' => array( 'name' => 'Large Dog' ),
+		);
+
+		//Create map for dropdown menu
+		foreach($npc_names as $key => $value) {
+			$npc_dropdown[$key] = $value['name'];
+		}
+
+		//var_dump($cbitems);exit;
+
+		asort($npc_dropdown);
+		//asort($regions);
+
+		if ($_POST)
+		{
+			var_dump( $_POST );// exit;
+			$post = Validation::factory($this->input->post());
+
+			$n = intval($this->input->post('quantity'));
+			$npctag = $this->input->post('npc');
+			$region_name = $this->input->post('regions');
+			kohana::log('info', "-> Creating NEW NPC {$npctag}, n. {$n}.");
+
+			$names = array();
+
+			$npcs = ORM::factory('character')
+				-> where ('npctag', $npctag )
+				-> find_all();
+
+			$region = ORM::factory('region') -> where (
+					'name', strtolower('regions.' . $region_name)) -> find();
+
+			echo $region->id;
+
+			foreach ($npcs as $npc)
+				$names[$npc->name] = $npc->name;
+
+			for($i = 0; $i < $n; $i++)
+			{
+
+				$name = $npc_names[$npctag]['name'] . ' called ' . mt_rand(1, 99999);
+
+				if (array_key_exists($name, $names)) {
+					$i--;
+					continue;
+				}
+
+				kohana::log('debug', "-> Creating NEW NPC: {$name}");
+
+				$npcclass = NpcFactory_Model::create($npctag);
+				$npcclass->create($name);
+				$npcclass->setRegion_id($region->id);
+				$npcclass->setPosition_id($region->id);
+				$npcclass->save();
+
+				$action_ai = Character_Action_Model::factory('npcai');
+				$action_ai -> character_id = $npcclass -> id;
+				$action_ai -> save();
+				//VAR_DUMP($npcclass);
+				//VAR_DUMP($action_ai);
+			}
+
+			$message = 'NPCs modified successfully!';
+			Session::set_flash('user_message', "<div class=\"info_msg\">". $message . "</div>");
+			$form = arr::overwrite($form, $post -> as_array());
+		}
+
+		$lnkmenu = Admin_Model::get_horizontalmenu('manage_npcs');
+		$subm -> submenu = $lnkmenu;
+		$view -> form = $form;
+		$view -> submenu = $subm;
+		$view -> npcs = $npc_dropdown;
+		//$view -> regions = $regions;
+		$this -> template->sheets = $sheets;
+		$this -> template->content = $view;
+	}
+
+
 	/*
 	 * Assegna oggetti ad un char 
 	*/
@@ -597,7 +708,7 @@ class Admin_Controller extends Template_Controller
 		)		
 			url::redirect('/user/login');				
 		
-		$view = new view( 'admin/giveitems');
+		$view = new view('admin/giveitems');
 		$sheets  = array('gamelayout'=>'screen', 'submenu'=>'screen');
 		$subm    = new View ('template/submenu');
 		
@@ -620,7 +731,7 @@ class Admin_Controller extends Template_Controller
 		{
 			//var_dump( $_POST ); exit; 
 			$post = Validation::factory($this->input->post());
-			
+	
 			$par[0] = ORM::factory( 'character' ) 
 				-> where ( array( 'name' => $this->input->post('to_username' ) )) -> find(); 
 			$par[1] = ORM::factory('cfgitem') 
