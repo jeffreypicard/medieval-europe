@@ -51,7 +51,7 @@ class Church_Model extends ORM
 			if (isset($s['religion_4']))
 				$info['parishchurches'] = count($s['religion_4']);
 
-			if (!is_null($info['structures']['religion_1'])) {
+			if (array_key_exists('religion_1', $info['structures'])) {
                 $headquarter = current($info['structures']['religion_1']);
                 reset($info['structures']['religion_1']);
                 $structure_hq = ORM::factory('structure', $headquarter->id);
