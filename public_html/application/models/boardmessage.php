@@ -12,7 +12,7 @@ class Boardmessage_Model extends ORM
 	* @return instanza della classe corretta.
 	*/
 	
-	static function factory( $category )
+	static function factory( $category, $id = NULL )
 	{
 	
 		switch ( $category ) 
