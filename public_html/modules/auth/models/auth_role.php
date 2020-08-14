@@ -11,7 +11,8 @@ class Auth_Role_Model extends ORM {
 	 * @param  boolean  save the record when validation succeeds
 	 * @return boolean
 	 */
-	public function validate(array & $array, $save = FALSE)
+    public function validate(Validation $array, $save = FALSE)
+	//public function validate(array & $array, $save = FALSE)
 	{
 		$array = Validation::factory($array)
 			->pre_filter('trim')

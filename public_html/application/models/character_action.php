@@ -16,7 +16,7 @@ class Character_Action_Model extends ORM
 	// Funzione che istanzia il giusto modello figlio e ne inizializza il campo action
 	// @input: stringa azione da istanziare
 	
-	public static function factory( $action )
+	public static function factory( $action, $id = NULL )
 	{
 		$model = ("CA_".ucfirst( $action ) . "_Model");
 		$o = new $model;
@@ -28,7 +28,7 @@ class Character_Action_Model extends ORM
 	}
 
 	/**
-	* Funzione che controlla se è possibile effettuare un azione
+	* Funzione che controlla se ï¿½ possibile effettuare un azione
 	* Contiene i controlli comuni a tutte le azioni.
 	* @param array $par parametri vari (non usato)
 	* @param string $message messaggio d'errore ritornato
@@ -40,8 +40,8 @@ class Character_Action_Model extends ORM
 	protected function check( $par, &$message, $callerchar_id = null, $targetchar_id = null )
 	{
 		
-		// Verifica se c'è una azione ancora in corso, verificando l' azione che 
-		// è in stato running. Se il character_id passato è null, prendo quello in sessione.		
+		// Verifica se c'ï¿½ una azione ancora in corso, verificando l' azione che 
+		// ï¿½ in stato running. Se il character_id passato ï¿½ null, prendo quello in sessione.		
 		
 		if ( is_null( $callerchar_id ) )
 			$char = Character_Model::get_info( Session::instance() -> get('char_id') ); 
@@ -50,7 +50,7 @@ class Character_Action_Model extends ORM
 		
 		$this -> character_id = $char -> id;
 		
-		// controllo se l' utente è validato
+		// controllo se l' utente ï¿½ validato
 		
 		if ( $char -> user -> status != 'active' )
 		{
@@ -58,7 +58,7 @@ class Character_Action_Model extends ORM
 			return false;
 		}		
 		
-		// controllo se l' azione è applicabile ad un npc
+		// controllo se l' azione ï¿½ applicabile ad un npc
 		
 		if ($this -> callablebynpc == false and $char -> type == 'npc' )
 		{
@@ -70,7 +70,7 @@ class Character_Action_Model extends ORM
 		{
 
 			$targetchar = ORM::factory('character', $targetchar_id  ); 
-			// controllo se l' azione è applicabile ad un npc
+			// controllo se l' azione ï¿½ applicabile ad un npc
 		
 			if ($this -> appliabletonpc == false and $targetchar -> type == 'npc' )
 			{
@@ -80,8 +80,8 @@ class Character_Action_Model extends ORM
 			
 		}		
 		
-		// Verifica se c'è una azione ancora in corso, verificando l' azione che 
-		// è in stato running. 
+		// Verifica se c'ï¿½ una azione ancora in corso, verificando l' azione che 
+		// ï¿½ in stato running. 
 
 		kohana::log('info', '-> Checking if a pending action exists...');		
 				
@@ -108,7 +108,7 @@ class Character_Action_Model extends ORM
 		// Check: l'azione richiede un determinato equipaggiamento
 		if ( $this -> requiresequipment  )
 		{
-			// Verifico se l'equipaggiamento indossato è corretto
+			// Verifico se l'equipaggiamento indossato ï¿½ corretto
 			if ( ! $this -> check_equipment( $this -> equipment, $char, $equipmentincorrect ) )
 			{
 				
@@ -177,7 +177,7 @@ class Character_Action_Model extends ORM
 		if ( ! $this -> check( $par, $message ) )
 		{ return false; }
 		
-		// se get_timetocomplete è = 0 semplicemente chiamo execute_action
+		// se get_timetocomplete ï¿½ = 0 semplicemente chiamo execute_action
 		// altrimenti appendo l' action
 		
 		try
@@ -199,7 +199,7 @@ class Character_Action_Model extends ORM
 				$ret = $this -> append_action( $par, $message );		
 				
 				kohana::log( 'debug', "-> ------- APPENDED ACTION: " . $this -> action . ' -------' );
-				// aggiorno la cache, solo se la action è non immediata		
+				// aggiorno la cache, solo se la action ï¿½ non immediata		
 				kohana::log( 'debug', "-> Deleting currentpendingaction from cache for char {$this -> character_id}");
 				My_Cache_Model::delete(  '-charinfo_' . $this -> character_id . '_currentpendingaction');				
 			}
@@ -222,13 +222,13 @@ class Character_Action_Model extends ORM
 	
 	/**
 	* Verifica se ci sono azioni pending che sono expired e le completa. 	
-	* La tabella character_actions è stata modificata
+	* La tabella character_actions ï¿½ stata modificata
 	* a INNODB, per gestire la concorrenza su questa tabella
 	* infatti se due utenti effettuassero la stessa query 
 	* prima che lo stato della azione sia cambiato, la stessa
 	* azione potrebbe essere completata n volte.
 	* @param  charflag. se true, completa le azioni del char (caso in cui
-	*         il char è loggato)
+	*         il char ï¿½ loggato)
 	* @return niente
 	*/
 	
@@ -248,7 +248,7 @@ class Character_Action_Model extends ORM
 		if ( $charflag == true and is_null( $char ) )
 			return;
 		
-		// Verifico se c'è un azione running nel db scaduta
+		// Verifico se c'ï¿½ un azione running nel db scaduta
 		
 		$key = substr( md5(mt_rand()), 0, 50 );			
 		$db = Database::instance();						
@@ -305,14 +305,14 @@ class Character_Action_Model extends ORM
 				kohana::log('info', "----- COMPLETED ACTION: char id: [{$row->character_id}] {$row->action} -----");
 								
 					
-				// Se l'azione non è ciclica allora la setto come completata
+				// Se l'azione non ï¿½ ciclica allora la setto come completata
 				
 				if ( $row -> cycle_flag == FALSE )
 				{ 
 					$db -> query( "update character_actions set status = 'completed' where id = " . $row -> id ); 
 					My_Cache_Model::delete(  '-charinfo_' . $row -> character_id . '_currentpendingaction' );
 					
-					// metto il char a dormire se l' azione è blocking, ed evito il loop.
+					// metto il char a dormire se l' azione ï¿½ blocking, ed evito il loop.
 					
 					if ( 
 						$row -> blocking_flag == true and 
@@ -321,7 +321,7 @@ class Character_Action_Model extends ORM
 					
 				}
 								
-				// Se l'azione è ciclica allora blanko la chiave per la prossima complete		
+				// Se l'azione ï¿½ ciclica allora blanko la chiave per la prossima complete		
 				
 				if ( $row -> cycle_flag == TRUE )
 					$db -> query( "update character_actions set keylock = null where id = " . $row -> id ); 
@@ -378,7 +378,7 @@ class Character_Action_Model extends ORM
 	/** 
 	* Annulla l' azione pending
 	* @param  character_id id del char a cui deve essere annullata l' azione pending
-	* @param  force_flag se true, l' azione viene forzata anche se non è stata ordinata
+	* @param  force_flag se true, l' azione viene forzata anche se non ï¿½ stata ordinata
 	*         dal giocatore
 	* @return boolean true = ALL OK, false = error
 	*/
@@ -614,13 +614,13 @@ class Character_Action_Model extends ORM
 	*
 	* $equipment = array multidimensionale organizzato in:
 	* ['role'] = array ['bodypart' = array ['item1', 'item2', item3'] ]
-	* Per ogni ruolo è possibile specificare un array di zone del
+	* Per ogni ruolo ï¿½ possibile specificare un array di zone del
 	* corpo su cui eseguire i controlli e, per ognuna di essa, specificare
 	* una lista di items da verificare.
-	* Inserendo la key 'all' è possibile specificare gli items che devono
+	* Inserendo la key 'all' ï¿½ possibile specificare gli items che devono
 	* indossare tutti i chars che non hanno un ruolo
 	* Il tag '*' significa che va bene qualsiasi tipo di item/vestito
-	* Il check viene superato se nella zona del corpo è presente almeno uno
+	* Il check viene superato se nella zona del corpo ï¿½ presente almeno uno
 	* degli items specificato nella lista.
 	*
 	* @param  array   $equipment     array degli items da controllare
@@ -671,20 +671,20 @@ class Character_Action_Model extends ORM
 		$role = $char -> get_current_role();
 		
 		// Check: il char ha un ruolo
-		// Check: il ruolo è presente nella lista di quelli da controllare
+		// Check: il ruolo ï¿½ presente nella lista di quelli da controllare
 				
 		if ( !is_null($role) and array_key_exists($role->tag, $equipment) )
 		{
 			$equipment_to_check = $equipment[$role->tag];
 		}
-		// Il char non ha un ruolo ma è definito un array
+		// Il char non ha un ruolo ma ï¿½ definito un array
 		// per il check di tutti i personaggi
 		elseif ( array_key_exists('all', $equipment) )
 		{
 			$equipment_to_check = $equipment['all'];
 		}
 		
-		// Check: equipment_to_check non è nulla
+		// Check: equipment_to_check non ï¿½ nulla
 		kohana::log('debug', kohana::debug($equipment_to_check));
 		if ( ! is_null($equipment_to_check) )
 		{
@@ -692,8 +692,8 @@ class Character_Action_Model extends ORM
 			
 			// Se nell'array sono definite le tre zone
 			// del corpo: body, torso e legs
-			// allora devo eseguire dei controlli dedicati perchè
-			// è sufficiente che venga soddisfatta la presenza di items
+			// allora devo eseguire dei controlli dedicati perchï¿½
+			// ï¿½ sufficiente che venga soddisfatta la presenza di items
 			// o vestiti nel body oppure su torso+legs (visto che sono
 			// zone del corpo che si escludono mutuamente)
 			
@@ -712,10 +712,10 @@ class Character_Action_Model extends ORM
 				$array_of_items = $equipment_to_check['body']['items'];
 				$item_equipped = $char -> get_bodypart_item('body');				
 				
-				// Se l'item indossato è nullo ed è previsto che il char
-				// indossi qualsiasi cosa oppure c'è un array definito di
+				// Se l'item indossato ï¿½ nullo ed ï¿½ previsto che il char
+				// indossi qualsiasi cosa oppure c'ï¿½ un array definito di
 				// oggetti e l'item indossato non rientra tra questi, allora
-				// il controllo non è superato
+				// il controllo non ï¿½ superato
 				
 				if 
 				(
@@ -778,8 +778,8 @@ class Character_Action_Model extends ORM
 					
 				}
 
-				// Il controllo è superato solo se:
-				// 1) il check sul body è negativo ma torso e legs vanno bene 
+				// Il controllo ï¿½ superato solo se:
+				// 1) il check sul body ï¿½ negativo ma torso e legs vanno bene 
 				// 2) il body supera direttamente il controllo
 				if
 				( 
@@ -801,7 +801,7 @@ class Character_Action_Model extends ORM
 				kohana::log('debug', '-> Body+Torso+Legs Check True.');
 				
 				// Se arrivo a questo punto significa che il controllo su
-				// body, torso e legs è superato e quindi li rimuovo dall'array
+				// body, torso e legs ï¿½ superato e quindi li rimuovo dall'array
 				// delle zone del corpo da controllare per i rimanenti controlli
 				
 				unset ($equipment_to_check['body']);
@@ -923,13 +923,13 @@ class Character_Action_Model extends ORM
 		$role = $char -> get_current_role();
 		
 		// Check: il char ha un ruolo
-		// Check: il ruolo è presente nella lista di quelli da controllare
+		// Check: il ruolo ï¿½ presente nella lista di quelli da controllare
 				
 		if ( !is_null($role) and array_key_exists($role->tag, $equipment) )
 		{
 			$equipment_to_check = $equipment[$role->tag];
 		}
-		// Il char non ha un ruolo ma è definito un array
+		// Il char non ha un ruolo ma ï¿½ definito un array
 		// per il check di tutti i personaggi
 		elseif ( array_key_exists('all', $equipment) )
 		{
@@ -963,8 +963,8 @@ class Character_Action_Model extends ORM
 			
 			// Solo se nell'array sono definite le tre zone
 			// del corpo: body, torso e legs
-			// allora devo eseguire dei controlli dedicati perchè
-			// è sufficiente che venga soddisfatta la presenza di items
+			// allora devo eseguire dei controlli dedicati perchï¿½
+			// ï¿½ sufficiente che venga soddisfatta la presenza di items
 			// o vestiti nel body oppure su torso+legs (visto che sono
 			// zone del corpo che si escludono mutuamente)
 			

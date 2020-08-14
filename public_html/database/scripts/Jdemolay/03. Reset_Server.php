@@ -3,8 +3,12 @@ define ( 'SYSPATH', 1 );
 include dirname(__FILE__) . '/../../../scripts/libs/KLogger.php';
 include dirname(__FILE__) . "/../../../application/config/database.php";
 
-mysql_connect( 'localhost', $config['default']['connection']['user'], $config['default']['connection']['pass'] ) or die('error: cannot connect to database');
-mysql_select_db( $config['default']['connection']['database'] );
+$mysqli = mysqli_connect( 'localhost', $config['default']['connection']['user'], $config['default']['connection']['pass'] ) or die('error: cannot connect to database');
+
+if ($mysqli == false) {
+	die(mysqli_error($mysqli));
+}
+$mysqli->select_db($config['default']['connection']['database'] );
 $log = new KLogger('reset_server.log', 'debug');
 
 $log->LogDebug('--- start ---');
@@ -12,80 +16,80 @@ $log->LogDebug('Connecting to jdemolay db...');
 
 try {
 	
-	mysql_query("set autocommit = 0");
-	mysql_query("start transaction");
-	mysql_query("begin");
+	$mysqli->query("set autocommit = 0");
+	$mysqli->query("start transaction");
+	$mysqli->query("begin");
 		
 	//Recupero vecchie capitali
 	
 	$log->LogDebug('-> Recovering old capitals...');
 
 	/*
-	$urbino = mysql_query ("SELECT * FROM kingdoms WHERE name like '%urbino%'") or die (mysql_error());
-	if (mysql_num_rows($urbino)==0)
-		#mysql_query("INSERT INTO `kingdoms` (`id`, `name`, `image`, `status`, `title`, `slogan`, `color`, `language1`, `language2`, `lastattacked`, `activityscore`, `forumurl`) VALUES (NULL, 'kingdoms.duchy-urbino', 'duchy-urbino', '', 'global.title_grandduke', '', '#7bc7ff', '', '', NULL, 0.00000, NULL);
-		mysql_query("INSERT INTO `kingdoms` (`name`, `image`, `status`, `title`, `slogan`, `color`, `language1`, `language2`, `lastattacked`, `activityscore`, `forumurl`) VALUES ('kingdoms.duchy-urbino', 'duchy-urbino', '', 'global.title_grandduke', '', '#7bc7ff', '', '', NULL, 0.00000, NULL);
-	") or die ( mysql_error());
+	$urbino = $mysqli->query ("SELECT * FROM kingdoms WHERE name like '%urbino%'") or die (mysqli_error($mysqli));
+	if (mysqli_num_rows($urbino)==0)
+		#$mysqli->query("INSERT INTO `kingdoms` (`id`, `name`, `image`, `status`, `title`, `slogan`, `color`, `language1`, `language2`, `lastattacked`, `activityscore`, `forumurl`) VALUES (NULL, 'kingdoms.duchy-urbino', 'duchy-urbino', '', 'global.title_grandduke', '', '#7bc7ff', '', '', NULL, 0.00000, NULL);
+		$mysqli->query("INSERT INTO `kingdoms` (`name`, `image`, `status`, `title`, `slogan`, `color`, `language1`, `language2`, `lastattacked`, `activityscore`, `forumurl`) VALUES ('kingdoms.duchy-urbino', 'duchy-urbino', '', 'global.title_grandduke', '', '#7bc7ff', '', '', NULL, 0.00000, NULL);
+	") or die ( mysqli_error($mysqli));
 	 */
 
 	$log->LogDebug('-> updating regions...');
 	
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-normandia') where name = 'regions.avranches'") or die( mysql_error());	
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-serbia') where name = 'regions.beograde'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.empire-byzantine') where name = 'regions.konstantinoupolis'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-aquitania') where name = 'regions.bordeaux'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-sassonia') where name = 'regions.bremen'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.county-fiandre') where name = 'regions.brugge'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-castiglia') where name = 'regions.burgos'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-ottoman') where name = 'regions.bursa'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-sardegna') where name = 'regions.cagliari'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-mamluk') where name = 'regions.cairo'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-cyrene') where name = 'regions.derne'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-bulgaria') where name = 'regions.tyrnovo'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-irlanda') where name = 'regions.dublin'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-albania') where name = 'regions.dyrrachion'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-ferrara') where name = 'regions.ferrara'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.republic-firenze') where name = 'regions.firenze'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.republic-genova') where name = 'regions.genoa'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.sultanate-granada') where name = 'regions.granada'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.principality-galles') where name = 'regions.gwynnedd'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-seljuq') where name = 'regions.ikonion'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-jerusalem') where name = 'regions.jerusalem'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.principality-kiev') where name = 'regions.kiev'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-prussia') where name = 'regions.konigsberg'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-polonia') where name = 'regions.krakowskie'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-portogallo') where name = 'regions.lisboa'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-inghilterra') where name = 'regions.london'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-scozia') where name = 'regions.lothian'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-milano') where name = 'regions.lombardia'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-napoli') where name = 'regions.napoli'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-baviera') where name = 'regions.oberbayern'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-sweden') where name = 'regions.ostergot-land'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-sicilia') where name = 'regions.palermo'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-francia') where name = 'regions.ile-de-france'") or die( mysql_error());
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-normandia') where name = 'regions.avranches'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-serbia') where name = 'regions.beograde'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.empire-byzantine') where name = 'regions.konstantinoupolis'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-aquitania') where name = 'regions.bordeaux'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-sassonia') where name = 'regions.bremen'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.county-fiandre') where name = 'regions.brugge'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-castiglia') where name = 'regions.burgos'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-ottoman') where name = 'regions.bursa'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-sardegna') where name = 'regions.cagliari'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-mamluk') where name = 'regions.cairo'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-cyrene') where name = 'regions.derne'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-bulgaria') where name = 'regions.tyrnovo'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-irlanda') where name = 'regions.dublin'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-albania') where name = 'regions.dyrrachion'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-ferrara') where name = 'regions.ferrara'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.republic-firenze') where name = 'regions.firenze'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.republic-genova') where name = 'regions.genoa'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.sultanate-granada') where name = 'regions.granada'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.principality-galles') where name = 'regions.gwynnedd'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-seljuq') where name = 'regions.ikonion'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-jerusalem') where name = 'regions.jerusalem'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.principality-kiev') where name = 'regions.kiev'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-prussia') where name = 'regions.konigsberg'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-polonia') where name = 'regions.krakowskie'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-portogallo') where name = 'regions.lisboa'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-inghilterra') where name = 'regions.london'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-scozia') where name = 'regions.lothian'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-milano') where name = 'regions.lombardia'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-napoli') where name = 'regions.napoli'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-baviera') where name = 'regions.oberbayern'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-sweden') where name = 'regions.ostergot-land'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-sicilia') where name = 'regions.palermo'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-francia') where name = 'regions.ile-de-france'") or die( mysqli_error($mysqli));
 	#$log->LogDebug('-> no error');
-	#mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-ungheria') where name = 'regions.pest'") or die( mysql_error());
+	#$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-ungheria') where name = 'regions.pest'") or die( mysqli_error($mysqli));
 	#$log->LogDebug('-> no error');
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-boemia') where name = 'regions.praha'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.republic-roma') where name = 'regions.roma'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-savoia') where name = 'regions.savoy'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.republic-siena') where name = 'regions.siena'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-danimarca') where name = 'regions.sjaelland'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.principality-valacchia') where name = 'regions.turnu'") or die( mysql_error());
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-boemia') where name = 'regions.praha'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.republic-roma') where name = 'regions.roma'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-savoia') where name = 'regions.savoy'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.republic-siena') where name = 'regions.siena'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-danimarca') where name = 'regions.sjaelland'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.principality-valacchia') where name = 'regions.turnu'") or die( mysqli_error($mysqli));
 	#$log->LogDebug('-> no error');
-	#mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-urbino') where name = 'regions.urbino'") or die( mysql_error());
+	#$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.duchy-urbino') where name = 'regions.urbino'") or die( mysqli_error($mysqli));
 	#$log->LogDebug('-> no error');
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-aragona') where name = 'regions.valencia'") or die( mysql_error());
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.kingdom-aragona') where name = 'regions.valencia'") or die( mysqli_error($mysqli));
 	$log->LogDebug('-> no error');
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.republic-venezia') where name = 'regions.venezia'") or die( mysql_error());
-	mysql_query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.grand-duchy-lithuania') where name = 'regions.vilnius'") or die( mysql_error());
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.republic-venezia') where name = 'regions.venezia'") or die( mysqli_error($mysqli));
+	$mysqli->query("update regions set capital=1, kingdom_id = ( select id from kingdoms where name ='kingdoms.grand-duchy-lithuania') where name = 'regions.vilnius'") or die( mysqli_error($mysqli));
 
 	/*
 	$log->LogDebug('-> Removing unwanted Kingdoms...');
 	
 	// Rimozione vecchi regni mergiati e relative regioni
 	
-	mysql_query("
+	$mysqli->query("
 	update regions 
 	set capital = false, 
 	status = 'disabled',
@@ -115,9 +119,9 @@ try {
 		'kingdoms.principality-galles',
 		'kingdoms.kingdom-scozia',
 		'kingdoms.kingdom-sweden'
-	)); ") or die( mysql_error());
+	)); ") or die( mysqli_error($mysqli));
 	
-	mysql_query("update kingdoms 
+	$mysqli->query("update kingdoms
 	set status = 'deleted'
 	where name in
 	(
@@ -143,11 +147,11 @@ try {
 	'kingdoms.principality-galles',
 	'kingdoms.kingdom-scozia',
 	'kingdoms.kingdom-sweden'
-	);") or die( mysql_error());
+	);") or die( mysqli_error($mysqli));
 	 */
 
 	#set status='disabled', kingdom_id = 37 
-	mysql_query("
+	$mysqli->query("
 	update regions 
 	set kingdom_id = 37 
 	where name in 
@@ -441,89 +445,89 @@ try {
 	'regions.kutahya',
 	'regions.smyrna',
 	'regions.abydos',
-	'regions.bursa')") or die (mysql_error());
+	'regions.bursa')") or die (mysqli_error($mysqli));
 	
 	// Resetto tutte le regioni a indipendenti
 	
 	$log->LogDebug('Resetting independent regions...');
 
-	mysql_query( "update regions set kingdom_id = 37 where capital = false") or die (mysql_error());
+	$mysqli->query( "update regions set kingdom_id = 37 where capital = false") or die (mysqli_error($mysqli));
 
 	$log->LogDebug('Reset Kingdoms...');
 	
 	//restore all kingdoms
 
-	mysql_query( "update kingdoms set slogan='', language1 = '',
-	language2='', lastattacked=null, activityscore=0, forumurl=null") or die (mysql_error()); 
+	$mysqli->query( "update kingdoms set slogan='', language1 = '',
+	language2='', lastattacked=null, activityscore=0, forumurl=null") or die (mysqli_error($mysqli));
 
-	mysql_query( "delete from kingdoms_history") or die (mysql_error()); 
+	$mysqli->query( "delete from kingdoms_history") or die (mysqli_error($mysqli));
 
 	// Rimuovo tutte le strutture
 	
 
-	mysql_query( "SET FOREIGN_KEY_CHECKS = 0;") or die (mysql_error()); 
-	mysql_query( "truncate table structures") or die (mysql_error()); 
-	mysql_query( "SET FOREIGN_KEY_CHECKS = 1;") or die (mysql_error()); 
+	$mysqli->query( "SET FOREIGN_KEY_CHECKS = 0;") or die (mysqli_error($mysqli));
+	$mysqli->query( "truncate table structures") or die (mysqli_error($mysqli));
+	$mysqli->query( "SET FOREIGN_KEY_CHECKS = 1;") or die (mysqli_error($mysqli));
 	$log->LogDebug('-> Fixing diplomacy...');
 	
 	// Fix Capitals
 	
 	$log->LogDebug('Fixing capitals...');
 	
-	$capitals = mysql_query("select * from regions where capital = true") or die(mysql_error());
-	while ( $row = mysql_fetch_assoc( $capitals ) ) 
+	$capitals = $mysqli->query("select * from regions where capital = true") or die(mysqli_error($mysqli));
+	while ( $row = mysqli_fetch_assoc( $capitals ) )
 	{
 			$log->LogDebug("Processing capital : {$row['name']}");
 		
 		// pal. reale
-		mysql_query("insert into structures (
+		$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, null, (select id from structure_types where type = 'royalpalace_1'),
-		{$row['id']}, NULL, 'small')") or die(mysql_error());
+		{$row['id']}, NULL, 'small')") or die(mysqli_error($mysqli));
 		
-		$royalpalaceid = mysql_insert_id();
+		$royalpalaceid = $mysqli->insert_id;
 		
 		// castello
-		mysql_query("insert into structures (
+		$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, {$royalpalaceid}, (select id from structure_types where type = 'castle_1'),
-		{$row['id']}, NULL, 'small')") or die(mysql_error());
+		{$row['id']}, NULL, 'small')") or die(mysqli_error($mysqli));
 		
-		$castleid = mysql_insert_id();
+		$castleid = $mysqli->insert_id;
 		
 		// tribunale
-		mysql_query("insert into structures (
+		$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, {$castleid}, (select id from structure_types where type = 'court_1'),
-		{$row['id']}, NULL, 'small')") or die(mysql_error());
+		{$row['id']}, NULL, 'small')") or die(mysqli_error($mysqli));
 		
 		// barracks
-		mysql_query("insert into structures (
+		$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, {$castleid}, (select id from structure_types where type = 'barracks_1'),
-		{$row['id']}, NULL, 'small')") or die(mysql_error());
+		{$row['id']}, NULL, 'small')") or die(mysqli_error($mysqli));
 		
-		mysql_query("insert into structures (
+		$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, {$castleid}, (select id from structure_types where type = 'tavern_1'),
-		{$row['id']}, NULL, 'small')") or die(mysql_error());
+		{$row['id']}, NULL, 'small')") or die(mysqli_error($mysqli));
 		
-		mysql_query("insert into structures (
+		$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, {$castleid}, (select id from structure_types where type = 'market_1'),
-		{$row['id']}, NULL, 'small')") or die(mysql_error());
+		{$row['id']}, NULL, 'small')") or die(mysqli_error($mysqli));
 
 		# Add training grounds and academy to all kingdoms capitals
 		# @jpicard
-		mysql_query("insert into structures (
+		$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, {$castleid}, (select id from structure_types where type = 'trainingground_1'),
-		{$row['id']}, NULL, 'small')") or die(mysql_error());
+		{$row['id']}, NULL, 'small')") or die(mysqli_error($mysqli));
 
-		mysql_query("insert into structures (
+		$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, {$castleid}, (select id from structure_types where type = 'academy_1'),
-		{$row['id']}, NULL, 'small')") or die(mysql_error());
+		{$row['id']}, NULL, 'small')") or die(mysqli_error($mysqli));
 		
 		$sql = "
 			select rp.id  
@@ -531,178 +535,178 @@ try {
 			where rp.region_id = {$row['id']}
 			and   rp.type in ( 'sea', 'mixed' ) ";
 		
-		$paths = mysql_query($sql) or die (mysql_error());		
-		$regions = mysql_num_rows($paths);
+		$paths = $mysqli->query($sql) or die (mysqli_error($mysqli));
+		$regions = mysqli_num_rows($paths);
 		
 		if ( $regions > 0 ) 			
 		{
 			$log->LogDebug("Adding harbour in region: {$row['name']}");
-			mysql_query("insert into structures (
+			$mysqli->query("insert into structures (
 			id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 			null, null, (select id from structure_types where type = 'harbor_1'),
-			{$row['id']}, NULL, 'small')") or die(mysql_error());
+			{$row['id']}, NULL, 'small')") or die(mysqli_error($mysqli));
 		}
 		
-		mysql_query("insert into structures (
+		$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, null, (select id from structure_types where type = 'dump_1'),
-		{$row['id']}, NULL, 'small')") or die(mysql_error());
+		{$row['id']}, NULL, 'small')") or die(mysqli_error($mysqli));
 		
 	}
 	
 	// Fix Independent Regions
 	$log->LogDebug('Fixing Independent regions...');
 	
-	$independentregions = mysql_query("
+	$independentregions = $mysqli->query("
 	select * from regions 
 	where capital = false and kingdom_id = 37
 	and type = 'land' ");
-	while ( $row = mysql_fetch_assoc( $independentregions ) ) 
+	while ( $row = mysqli_fetch_assoc( $independentregions ) )
 	{
 		
 		
 		
-		mysql_query("insert into structures (
+		$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, null, (select id from structure_types where type = 'nativevillage_1'),
-		{$row['id']}, NULL, 'small')") or die(mysql_error());
+		{$row['id']}, NULL, 'small')") or die(mysqli_error($mysqli));
 		
-		mysql_query("insert into structures (
+		$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, null, (select id from structure_types where type = 'dump_1'),
-		{$row['id']}, NULL, 'small')") or die(mysql_error());
+		{$row['id']}, NULL, 'small')") or die(mysqli_error($mysqli));
 		
 	}
 	
 	// Fix Religious HQ
 	$log->LogDebug('Fixing Religious HQ 1...');
 	
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, null, (select id from structure_types where type = 'religion_1' and church_id = 1),
-		(select id from regions where name = 'regions.roma'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.roma'), NULL, 'small')") or die(mysqli_error($mysqli));
 	
-	$parentstructure_id = mysql_insert_id();
+	$parentstructure_id = $mysqli->insert_id;
 	
 	$log->LogDebug('Fixing Religious HQ 2...');
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_2' and church_id = 1),
-		(select id from regions where name = 'regions.roma'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.roma'), NULL, 'small')") or die(mysqli_error($mysqli));
 	
-	$parentstructure_id = mysql_insert_id();
+	$parentstructure_id = $mysqli->insert_id;
 	
 	$log->LogDebug('Fixing Religious HQ 3...');
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_3' and church_id = 1),
-		(select id from regions where name = 'regions.roma'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.roma'), NULL, 'small')") or die(mysqli_error($mysqli));
 	
-	$parentstructure_id = mysql_insert_id();
+	$parentstructure_id = $mysqli->insert_id;
 	
 	$log->LogDebug('Fixing Religious HQ 4...');
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_4' and church_id = 1),
-		(select id from regions where name = 'regions.roma'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.roma'), NULL, 'small')") or die(mysqli_error($mysqli));
 	
 	
 	/*
 	$log->LogDebug('Fixing Religious HQ 5...');
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, null, (select id from structure_types where type = 'religion_1' and church_id = 3),
-		(select id from regions where name = 'regions.turnu'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.turnu'), NULL, 'small')") or die(mysqli_error($mysqli));
 		
-	$parentstructure_id = mysql_insert_id();
+	$parentstructure_id = $mysqli->insert_id;
 	
 	$log->LogDebug('Fixing Religious HQ 6...');
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_2' and church_id = 3),
-		(select id from regions where name = 'regions.turnu'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.turnu'), NULL, 'small')") or die(mysqli_error($mysqli));
 	
-	$parentstructure_id = mysql_insert_id();
+	$parentstructure_id = $mysqli->insert_id;
 	
 	$log->LogDebug('Fixing Religious HQ 7...');
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_3' and church_id = 3),
-		(select id from regions where name = 'regions.turnu'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.turnu'), NULL, 'small')") or die(mysqli_error($mysqli));
 	
-	$parentstructure_id = mysql_insert_id();
+	$parentstructure_id = $mysqli->insert_id;
 	
 	$log->LogDebug('Fixing Religious HQ 8...');
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_4' and church_id = 3),
-		(select id from regions where name = 'regions.turnu'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.turnu'), NULL, 'small')") or die(mysqli_error($mysqli));
 	 */
 	
 	$log->LogDebug('Fixing Religious HQ 9...');
 
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, null, (select id from structure_types where type = 'religion_1' and church_id = 5),
-		(select id from regions where name = 'regions.cairo'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.cairo'), NULL, 'small')") or die(mysqli_error($mysqli));
 		
-	$parentstructure_id = mysql_insert_id();
+	$parentstructure_id = $mysqli->insert_id;
 	
 	$log->LogDebug('Fixing Religious HQ 10...');
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_2' and church_id = 5),
-		(select id from regions where name = 'regions.cairo'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.cairo'), NULL, 'small')") or die(mysqli_error($mysqli));
 	
-	$parentstructure_id = mysql_insert_id();
+	$parentstructure_id = $mysqli->insert_id;
 	
 	$log->LogDebug('Fixing Religious HQ 11...');
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_3' and church_id = 5),
-		(select id from regions where name = 'regions.cairo'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.cairo'), NULL, 'small')") or die(mysqli_error($mysqli));
 	
-	$parentstructure_id = mysql_insert_id();
+	$parentstructure_id = $mysqli->insert_id;
 	
 	$log->LogDebug('Fixing Religious HQ 12...');
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_4' and church_id = 5),
-		(select id from regions where name = 'regions.cairo'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.cairo'), NULL, 'small')") or die(mysqli_error($mysqli));
 			
 	$log->LogDebug('Fixing Religious HQ 13...');
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, null, (select id from structure_types where type = 'religion_1' and church_id = 6),
-		(select id from regions where name = 'regions.kiev'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.kiev'), NULL, 'small')") or die(mysqli_error($mysqli));
 	
-	$parentstructure_id = mysql_insert_id();
+	$parentstructure_id = $mysqli->insert_id;
 	
 	$log->LogDebug('Fixing Religious HQ 14...');
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_2' and church_id = 6),
-		(select id from regions where name = 'regions.kiev'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.kiev'), NULL, 'small')") or die(mysqli_error($mysqli));
 	
-	$parentstructure_id = mysql_insert_id();
+	$parentstructure_id = $mysqli->insert_id;
 	
 	$log->LogDebug('Fixing Religious HQ 15...');
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_3' and church_id = 6),
-		(select id from regions where name = 'regions.kiev'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.kiev'), NULL, 'small')") or die(mysqli_error($mysqli));
 	
-	$parentstructure_id = mysql_insert_id();
+	$parentstructure_id = $mysqli->insert_id;
 	
 	$log->LogDebug('Fixing Religious HQ 16...');
-	mysql_query("insert into structures (
+	$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 	null, {$parentstructure_id}, (select id from structure_types where type = 'religion_4' and church_id = 6),
-		(select id from regions where name = 'regions.kiev'), NULL, 'small')") or die(mysql_error());
+		(select id from regions where name = 'regions.kiev'), NULL, 'small')") or die(mysqli_error($mysqli));
 	
 	
 	$log -> LogDebug('Adding nativevillages to independent regions...');
-	$rset = mysql_query("
+	$rset = $mysqli->query("
 	select distinct r.id, r.name, s.structure_type_id from regions r, structures s
 	where r.kingdom_id = 37
 	and   s.region_id = r.id 
@@ -710,22 +714,22 @@ try {
 	and   not exists
 	(select * from structures where region_id = r.id and structure_type_id 
 	= (select id from structure_types where type = 'nativevillage_1'));"
-		) or die (mysql_error());	
+		) or die (mysqli_error($mysqli));
 	
-	while ( $row = mysql_fetch_assoc( $rset ) ) 
-		mysql_query("insert into structures (
+	while ( $row = mysqli_fetch_assoc( $rset ) )
+		$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id) values (
 		null, null, (select id from structure_types where type = 'nativevillage_1'),
-		{$row['id']}, NULL)") or die(mysql_error());
+		{$row['id']}, NULL)") or die(mysqli_error($mysqli));
 		
 	// Rimuovo tutte le risorse.
 	
 	$log->LogDebug("-> Wiping resources...");
 	// non cancello fish shoal.
-	mysql_query ("delete from structures where structure_type_id in
+	$mysqli->query ("delete from structures where structure_type_id in
 		( select id from structure_types where parenttype in
-		('fish_shoal', 'forest', 'mine', 'breeding_region'))") or die(mysql_error());
-	mysql_query ("delete from structure_resources") or die(mysql_error());
+		('fish_shoal', 'forest', 'mine', 'breeding_region'))") or die(mysqli_error($mysqli));
+	$mysqli->query ("delete from structure_resources") or die(mysqli_error($mysqli));
 	
 	$log->LogDebug("-> Wiped resources.");
 	
@@ -764,9 +768,9 @@ try {
 	
 	$dimension = array('small', 'medium', 'large');	
 	$log->LogDebug("-> Processing regions...");	
-	$regions = mysql_query("select * from regions");
+	$regions = $mysqli->query("select * from regions");
 	
-	while ( $row = mysql_fetch_assoc( $regions ) ) 
+	while ( $row = mysqli_fetch_assoc( $regions ) )
 	{
 		
 		$log->LogDebug("-> Processing region {$row['name']}...");
@@ -774,12 +778,12 @@ try {
 		$size = $dimension[rand(0,2)];
 		//$log->logDebug("-> Adding resource [{$structure}] size [{$size}] to region: {$row['name']}");
 		
-		mysql_query("insert into structures (
+		$mysqli->query("insert into structures (
 		id, parent_structure_id, structure_type_id, region_id, character_id, size) values (
 		null, null, (select id from structure_types where type = '{$structure}'),
-		{$row['id']}, NULL, '{$size}')") or die(mysql_error());
+		{$row['id']}, NULL, '{$size}')") or die(mysqli_error($mysqli));
 		
-		$structure_id = mysql_insert_id();
+		$structure_id = $mysqli->insert_id;
 		
 		foreach ($resources[$row['type']][$structure] as $_resource => $_dimension)
 		{
@@ -788,7 +792,7 @@ try {
 			$sql = "INSERT INTO `structure_resources` 
 			VALUES (NULL, {$structure_id}, '{$_resource}', {$resourcesize}, {$resourcesize}, unix_timestamp()	)";
 			//$log->LogDebug($sql);
-			mysql_query($sql) or die(mysql_error());
+			$mysqli->query($sql) or die(mysqli_error($mysqli));
 				
 		}
 	
@@ -796,42 +800,42 @@ try {
 	
 	// Fixing diplomacy
 	$log->LogDebug('-> Fixing diplomacy...');	
-	mysql_query("truncate table diplomacy_relations");
-	$kingdomssource = mysql_query("select * from kingdoms_v") or die(mysql_error());
-	$kingdomstarget = mysql_query("select * from kingdoms_v") or die(mysql_error());
-	while ( $row = mysql_fetch_assoc( $kingdomssource )) 
+	$mysqli->query("truncate table diplomacy_relations");
+	$kingdomssource = $mysqli->query("select * from kingdoms_v") or die(mysqli_error($mysqli));
+	$kingdomstarget = $mysqli->query("select * from kingdoms_v") or die(mysqli_error($mysqli));
+	while ( $row = mysqli_fetch_assoc( $kingdomssource ))
 	{
-		while ( $row1 = mysql_fetch_assoc( $kingdomstarget )) 
+		while ( $row1 = mysqli_fetch_assoc( $kingdomstarget ))
 		{
 			$log->LogDebug("-> Fixing diplomacy {$row['name']} {$row1['name']}");	
 			if ($row1['id'] != $row['id'] )	
-				mysql_query("INSERT INTO `diplomacy_relations` (`id`, `sourcekingdom_id`, `targetkingdom_id`, `type`, `description`, `timestamp`, `signedby`) VALUES (NULL, {$row['id']}, {$row1['id']}, 'neutral', NULL, 
-			unix_timestamp() - (15*24*3600), NULL );") or die(mysql_error());
+				$mysqli->query("INSERT INTO `diplomacy_relations` (`id`, `sourcekingdom_id`, `targetkingdom_id`, `type`, `description`, `timestamp`, `signedby`) VALUES (NULL, {$row['id']}, {$row1['id']}, 'neutral', NULL, 
+			unix_timestamp() - (15*24*3600), NULL );") or die(mysqli_error($mysqli));
 		}
-		mysql_data_seek ( $kingdomstarget , 0 );
+		mysqli_data_seek ( $kingdomstarget , 0 );
 	}	
 	$log->LogDebug('-> Fixing taxes...');	
-	mysql_query("truncate table taxes");	
-	mysql_query("truncate table kingdom_taxes");
-	$kingdoms = mysql_query("select * from kingdoms_v") or die(mysql_error());
-	while ( $row = mysql_fetch_assoc( $kingdoms ) ) 
+	$mysqli->query("truncate table taxes");
+	$mysqli->query("truncate table kingdom_taxes");
+	$kingdoms = $mysqli->query("select * from kingdoms_v") or die(mysqli_error($mysqli));
+	while ( $row = mysqli_fetch_assoc( $kingdoms ) )
 	{
-		mysql_query("INSERT INTO `taxes` (`id`, `tag`, `type`, `region_id`, `kingdom_id`, `name`, `description`, `value`) VALUES (NULL, 'kingdom_property', 'kingdom', NULL, {$row['id']}, 'taxes.kingdom_property', 'taxes.kingdom_property_desc', 5);") or die(mysql_error());
+		$mysqli->query("INSERT INTO `taxes` (`id`, `tag`, `type`, `region_id`, `kingdom_id`, `name`, `description`, `value`) VALUES (NULL, 'kingdom_property', 'kingdom', NULL, {$row['id']}, 'taxes.kingdom_property', 'taxes.kingdom_property_desc', 5);") or die(mysqli_error($mysqli));
 		
-		mysql_query("INSERT INTO `taxes` (`id`, `tag`, `type`, `region_id`, `kingdom_id`, `name`, `description`, `value`) VALUES (NULL, 'kingdom_selling', 'kingdom', NULL, {$row['id']}, 'taxes.kingdom_selling', 'taxes.kingdom_selling_desc', 5);") or die(mysql_error());
+		$mysqli->query("INSERT INTO `taxes` (`id`, `tag`, `type`, `region_id`, `kingdom_id`, `name`, `description`, `value`) VALUES (NULL, 'kingdom_selling', 'kingdom', NULL, {$row['id']}, 'taxes.kingdom_selling', 'taxes.kingdom_selling_desc', 5);") or die(mysqli_error($mysqli));
 		
-		mysql_query("INSERT INTO `kingdom_taxes` (`id`, `kingdom_id`, `name`, `hostile`, `neutral`, `friendly`, `allied`, `citizen`) VALUES (NULL, {$row['id']}, 'distributiontax', 5, 5, 5, 5, 5);") or die(mysql_error());
+		$mysqli->query("INSERT INTO `kingdom_taxes` (`id`, `kingdom_id`, `name`, `hostile`, `neutral`, `friendly`, `allied`, `citizen`) VALUES (NULL, {$row['id']}, 'distributiontax', 5, 5, 5, 5, 5);") or die(mysqli_error($mysqli));
 		
 	}
-	$regions = mysql_query("select * from regions") or die(mysql_error());
-	mysql_query("truncate table region_taxes") or die(mysql_error());
+	$regions = $mysqli->query("select * from regions") or die(mysqli_error($mysqli));
+	$mysqli->query("truncate table region_taxes") or die(mysqli_error($mysqli));
 	
-	while ( $row = mysql_fetch_assoc( $regions ) ) 
+	while ( $row = mysqli_fetch_assoc( $regions ) )
 	{
 		
-		mysql_query("INSERT INTO `taxes` (`id`, `tag`, `type`, `region_id`, `kingdom_id`, `name`, `description`, `value`) VALUES (NULL, 'region_selling', 'region', {$row['id']}, NULL, 'taxes.region_selling', 'taxes.region_selling_desc', 5);") or die(mysql_error());
+		$mysqli->query("INSERT INTO `taxes` (`id`, `tag`, `type`, `region_id`, `kingdom_id`, `name`, `description`, `value`) VALUES (NULL, 'region_selling', 'region', {$row['id']}, NULL, 'taxes.region_selling', 'taxes.region_selling_desc', 5);") or die(mysqli_error($mysqli));
 		
-		mysql_query("INSERT INTO `region_taxes` (`id`, `region_id`, `name`, `param1`, `hostile`, `neutral`, `friendly`, `allied`, `citizen`, `timestamp`) VALUES (NULL, {$row['id']}, 'valueaddedtax', NULL, 5, 5, 5, 5, 2, unix_timestamp())") or die(mysql_error());
+		$mysqli->query("INSERT INTO `region_taxes` (`id`, `region_id`, `name`, `param1`, `hostile`, `neutral`, `friendly`, `allied`, `citizen`, `timestamp`) VALUES (NULL, {$row['id']}, 'valueaddedtax', NULL, 5, 5, 5, 5, 2, unix_timestamp())") or die(mysqli_error($mysqli));
 
 	}
 
@@ -845,29 +849,29 @@ try {
 	$log->LogDebug('-> Custom fixes..');
 	
 	//Fix independent regions
-	mysql_query("UPDATE regions SET capital = '0' WHERE name = 'regions.siena';") or die( mysql_error());	
-	mysql_query("UPDATE regions SET capital = '0' WHERE name = 'regions.firenze';") or die( mysql_error());	
-	mysql_query("UPDATE regions SET kingdom_id = '37' WHERE name = 'regions.siena';") or die( mysql_error());	
-	mysql_query("UPDATE regions SET kingdom_id = '37' WHERE name = 'regions.firenze';") or die( mysql_error());	
+	$mysqli->query("UPDATE regions SET capital = '0' WHERE name = 'regions.siena';") or die( mysqli_error($mysqli));
+	$mysqli->query("UPDATE regions SET capital = '0' WHERE name = 'regions.firenze';") or die( mysqli_error($mysqli));
+	$mysqli->query("UPDATE regions SET kingdom_id = '37' WHERE name = 'regions.siena';") or die( mysqli_error($mysqli));
+	$mysqli->query("UPDATE regions SET kingdom_id = '37' WHERE name = 'regions.firenze';") or die( mysqli_error($mysqli));
 
 	//Fix broken kingdoms
-	mysql_query("UPDATE regions SET kingdom_id = '19' WHERE name = 'regions.lothian';") or die(mysql_error());
-	mysql_query("UPDATE regions SET kingdom_id = '28' WHERE name = 'regions.lisboa';") or die(mysql_error());
-	mysql_query("UPDATE regions SET kingdom_id = '18' WHERE name = 'regions.london';") or die(mysql_error());
-	mysql_query("UPDATE regions SET kingdom_id = '34' WHERE name = 'regions.sjaelland';") or die(mysql_error());
-	mysql_query("UPDATE regions SET kingdom_id = '39' WHERE name = 'regions.konigsberg';") or die(mysql_error());
-	mysql_query("UPDATE regions SET kingdom_id = '45' WHERE name = 'regions.bursa';") or die(mysql_error());
-	mysql_query("UPDATE regions SET kingdom_id = '25' WHERE name = 'regions.brugge';") or die(mysql_error());
+	$mysqli->query("UPDATE regions SET kingdom_id = '19' WHERE name = 'regions.lothian';") or die(mysqli_error($mysqli));
+	$mysqli->query("UPDATE regions SET kingdom_id = '28' WHERE name = 'regions.lisboa';") or die(mysqli_error($mysqli));
+	$mysqli->query("UPDATE regions SET kingdom_id = '18' WHERE name = 'regions.london';") or die(mysqli_error($mysqli));
+	$mysqli->query("UPDATE regions SET kingdom_id = '34' WHERE name = 'regions.sjaelland';") or die(mysqli_error($mysqli));
+	$mysqli->query("UPDATE regions SET kingdom_id = '39' WHERE name = 'regions.konigsberg';") or die(mysqli_error($mysqli));
+	$mysqli->query("UPDATE regions SET kingdom_id = '45' WHERE name = 'regions.bursa';") or die(mysqli_error($mysqli));
+	$mysqli->query("UPDATE regions SET kingdom_id = '25' WHERE name = 'regions.brugge';") or die(mysqli_error($mysqli));
 		
 	$log->LogDebug('-> Committing...');
-	mysql_query("commit");
+	$mysqli->query("commit");
 	$log->LogDebug('-> Committed.');
 	
 }	catch (Exception $e)
 {
 		$log ->LogDebug( $e->getMessage() );
 		$log->LogDebug('-> Rollbacking...');
-		mysql_query("rollback");
+		$mysqli->query("rollback");
 		$log->LogDebug('-> Rollbacked');
 }
 ?>

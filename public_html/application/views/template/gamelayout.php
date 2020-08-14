@@ -535,14 +535,13 @@ function forceCompleteAction() {
 							$speedbonus = Character_Model::get_stat_from_cache($character -> id, 'speedbonus');
 							if ($speedbonus -> loaded and $speedbonus -> stat1 > time() )
 							{
-						?>
-						<span class='evidence'>
-							<?= kohana::lang('quests.speedbonus',
+						        echo "<span class='evidence'>";
+							    echo kohana::lang('quests.speedbonus',
 									$speedbonus -> value,
 									Utility_Model::countdown($speedbonus -> stat1));
-							?>
-						</span>
-						<? } ?>
+						        echo "</span>";
+						    }
+						?>
 					</td>
 
 					<td width="20%" class="center">
