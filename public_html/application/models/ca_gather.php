@@ -86,7 +86,7 @@ class CA_Gather_Model extends Character_Action_Model
 		$this->equipment['all']['right_hand']['items'][] = $rt;
 		
 		// Check classe madre (compreso il check_equipment)
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 
 		// Controllo che il char abbia almeno 5 punti di energia
@@ -102,14 +102,14 @@ class CA_Gather_Model extends Character_Action_Model
 		if ($par[0] -> attribute3 == 0)
 		{ $message = kohana::lang( 'ca_gather.error-notimetogather'); return false; }
 		
-		// silkworm: non è possibile raccogliere niente
+		// silkworm: non ï¿½ possibile raccogliere niente
 		if ( $par[0]->structure_type->type == 'breeding_silkworm' )
 		{
 			$message = Kohana::lang("global.operation_not_allowed");
 			return false;
 		}
 		
-		// c'è già una raccolta in atto?
+		// c'ï¿½ giï¿½ una raccolta in atto?
 		$gatherinprogress = ORM::factory('character_action' ) -> 
 			where ( array( 
 				'action' => 'gather',
@@ -166,7 +166,7 @@ class CA_Gather_Model extends Character_Action_Model
 			// Consumo degli items/vestiti indossati
 			Item_Model::consume_equipment( $this->equipment, $char );
 			
-			// Sottraggo l'energia e la sazietà al char
+			// Sottraggo l'energia e la sazietï¿½ al char
 			
 			$char -> modify_energy ( - self::DELTA_ENERGY, false, 'gather' );
 			$char -> modify_glut ( - self::DELTA_GLUT );
@@ -274,7 +274,7 @@ class CA_Gather_Model extends Character_Action_Model
 	* @return info vettore con info:
 	* 	product array di prodotti
 	*   	tipo: tipo prodotto
-	*     quantità: quantità per capo
+	*     quantitï¿½: quantitï¿½ per capo
 	*   time: tempo per sfamare un animale
 	*
 	*/

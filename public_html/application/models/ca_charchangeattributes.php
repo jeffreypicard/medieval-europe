@@ -17,10 +17,10 @@ class CA_Charchangeattributes_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 
-		// è possibile cambiare gli attributi una volta sola e solo entro MAXAGE giorni.
+		// ï¿½ possibile cambiare gli attributi una volta sola e solo entro MAXAGE giorni.
 		
 		if ( $par[0] -> is_newbie($par[0])==false  or !is_null ( $par[0] -> get_stats( 'attributeredistributed' ) ) ) 
 		{	$message = kohana::lang('character.attributesnotchangeable'); return false; }

@@ -8,7 +8,7 @@ class CA_Feed_Model extends Character_Action_Model
 	const TIME_ONE_ANIMAL_SHEEPS = 0.25;  
 	const TIME_ONE_ANIMAL_SILKWORMS = 0.0075;   
 	const TIME_ONE_ANIMAL_BEES = 0.00138;      
-	const DELTA_GLUT          = 5;     // consumo di sazietà	
+	const DELTA_GLUT          = 5;     // consumo di sazietï¿½	
 	const DELTA_ENERGY        = 10;    // Energia necessaria per la semina	
 	const HAY_FOR_COWS        = 1;     // balle di fieno per ogni mucca
 	const WHEATBAGS_FOR_PIGS  = 1;     // balle di fieno per ogni pecora
@@ -63,14 +63,14 @@ class CA_Feed_Model extends Character_Action_Model
 		$char = Character_Model::get_info( Session::instance()->get('char_id') );	
 		
 		// Check classe madre (compreso il check_equipment)
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
 		// check dati
 		if ( ! $par[0] -> loaded )
 		{ $message = kohana::lang('global.operation_not_allowed'); return FALSE; }
 		
-		// La struttura non è un allevamento.
+		// La struttura non ï¿½ un allevamento.
 		if ( ! in_array ($par[0]->structure_type->type , array( 'breeding_silkworm', 'breeding_cow', 'breeding_sheep', 'breeding_pig', 'breeding_bee')) )
 		{ $message = kohana::lang('global.operation_not_allowed'); return FALSE; }
 		
@@ -87,7 +87,7 @@ class CA_Feed_Model extends Character_Action_Model
 		if ($par[0] -> attribute1 == 0)
 		{ $message = kohana::lang( 'ca_feed.error-noanimals'); return false; }
 		
-		// La sazietà degli animali è già al massimo (100)
+		// La sazietï¿½ degli animali ï¿½ giï¿½ al massimo (100)
 		if ($par[0]->attribute2 == 100)
 		{ $message = kohana::lang( 'ca_feed.error-animalsarefed'); return false; }		
 		
@@ -98,7 +98,7 @@ class CA_Feed_Model extends Character_Action_Model
 		if ( $par[0]->get_item_quantity( $info['foodtype'] ) < max(1, round( $info['foodquantity']*$par[0]->attribute1, 0) ) )
 		{ $message = kohana::lang('ca_feed.error-notenoughfood'); return FALSE; }
 		
-		// c'è già una raccolta in atto?
+		// c'ï¿½ giï¿½ una raccolta in atto?
 		
 		$gatherinprogress = ORM::factory('character_action' ) -> 
 			where ( array( 
@@ -201,7 +201,7 @@ class CA_Feed_Model extends Character_Action_Model
 	* @param  breedingtype tipo allevamento
 	* @return info vettore con info:
 	* 	foodtype: tipo cibo (item.tag)
-	*   foodquantity: quantità di cibo per capo
+	*   foodquantity: quantitï¿½ di cibo per capo
 	*   time: tempo per sfamare un animale
 	*
 	*/

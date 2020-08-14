@@ -56,7 +56,7 @@ class CA_Harvest_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		// Check classe madre (compreso il check_equipment)
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 				
 		if ($par[0] -> energy < self::DELTA_ENERGY or	$par[0] -> glut < self::DELTA_GLUT )
@@ -72,7 +72,7 @@ class CA_Harvest_Model extends Character_Action_Model
 
 		$message = kohana::lang('ca_harvest.harvest-ok'); 
 		
-		// c'� già una raccolta in atto?
+		// c'� già una raccolta in atto?
 		
 		$harvestinprogress = ORM::factory('character_action' ) -> 
 			where ( array( 

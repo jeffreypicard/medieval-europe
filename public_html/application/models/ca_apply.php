@@ -17,7 +17,7 @@ class CA_Apply_Model extends Character_Action_Model
 	
 	protected function check( $par, &$message )
 	{ 
-		if ( ! parent::check( $par, $message, $par[1] -> id ) )					
+		if ( ! parent::check_( $par, $message, $par[1] -> id ) )					
 		{ return false; }
 
 		// Istanzio l'oggetto che sto per mangiare
@@ -42,7 +42,7 @@ class CA_Apply_Model extends Character_Action_Model
 					$par[1]->id, $this -> item -> cfgitem -> tag, $par[2] ) == false )
 			{ $message = kohana::lang('charactions.item_notininventory'); return FALSE; }
 
-		// Se l' item � healingpill verifichiamo se il char ha già 30 punti di salute.
+		// Se l' item � healingpill verifichiamo se il char ha già 30 punti di salute.
 		
 		if ($this -> item -> cfgitem -> tag == 'healing_pill' and $par[1] -> health >= 30 )
 		{ $message = kohana::lang('ca_apply.error-alreadyhasenoughhealth'); return FALSE; }

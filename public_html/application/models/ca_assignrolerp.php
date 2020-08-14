@@ -176,7 +176,7 @@ class CA_Assignrolerp_Model extends Character_Action_Model
 	// dell'append della charaction
 	//
 	// @param   par[0]: oggetto char di chi nomina
-	// @param   par[1]: oggetto char di chi è nominato
+	// @param   par[1]: oggetto char di chi ï¿½ nominato
 	// @param   par[2]: tag ruolo
 	// @param   par[3]: regione da cui parte la nomina
 	// @param   par[4]: struttura da cui parte la nomina
@@ -188,7 +188,7 @@ class CA_Assignrolerp_Model extends Character_Action_Model
 	
 	protected function check( $par, &$message )
 	{ 
-		if ( ! parent::check( $par, $message, $par[0] -> id, $par[1] -> id ) )					
+		if ( ! parent::check_( $par, $message, $par[0] -> id, $par[1] -> id ) )					
 		{ return false; }				
 		
 		kohana::log('debug', 'Trying to appoint RP role: ' . $par[2] . '-' . $par[1]->name );
@@ -205,7 +205,7 @@ class CA_Assignrolerp_Model extends Character_Action_Model
 
 		$appointer_role = $par[0] -> get_current_role();
 
-		// Il char può nominare solo alcuni ruoli rp
+		// Il char puï¿½ nominare solo alcuni ruoli rp
 		// in base al proprio ruolo
 		
 		if
@@ -519,7 +519,7 @@ class CA_Assignrolerp_Model extends Character_Action_Model
 		)		
 		{ $message = kohana::lang('ca_assignrole.max-assignment-reached'); return false; }		
 
-		// Controllo che il char non abbia già il ruolo
+		// Controllo che il char non abbia giï¿½ il ruolo
 		
 		$gdrrole = ORM::factory('character_role') -> where
 			( 
@@ -564,7 +564,7 @@ class CA_Assignrolerp_Model extends Character_Action_Model
 		$knt = new Kingdom_Nobletitle_Model;
 		$customtitles = $knt->get_customisedtitles($par[0] -> region -> kingdom ->id);
 		$temprole='';
-		// Verifico se il titolo assegnato è customizzato
+		// Verifico se il titolo assegnato ï¿½ customizzato
 		// Passo al messaggio del town crier il titolo giusto
 		if ( array_key_exists($par[2],$customtitles) )
 		{
@@ -601,7 +601,7 @@ class CA_Assignrolerp_Model extends Character_Action_Model
 			$msg3 = 'structures.assignrprole';
 		}
 		
-		// se il titolo è cancelliere, dò le grant dovute
+		// se il titolo ï¿½ cancelliere, dï¿½ le grant dovute
 		if ( $par[2] == 'chancellor' )
 		{
 			$royalpalace = $par[4] -> region -> get_controllingroyalpalace();

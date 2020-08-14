@@ -25,7 +25,7 @@ class CA_Inspect_Model extends Character_Action_Model
 		
 		$message = "";
 		
-		if ( ! parent::check( $par, $message ))					
+		if ( ! parent::check_( $par, $message ))					
 			return false;
 			
 		// controllo dati

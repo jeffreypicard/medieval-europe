@@ -12,9 +12,9 @@ class CA_Confiscateitem_Model extends Character_Action_Model
 	* con tutte le action che quelli peculiari del dig
 	* @param: par
 	*  par[0] = char che confisca
-	*  par[1] = char che avrà un item confiscato
+	*  par[1] = char che avrï¿½ un item confiscato
 	*  par[2] = item da confiscare	
-	*  par[3] = quantità da confiscare
+	*  par[3] = quantitï¿½ da confiscare
 	*  par[4] = motivo confisca
 	* @return: TRUE = azione disponibile, FALSE = azione non disponibile
 	*
@@ -24,7 +24,7 @@ class CA_Confiscateitem_Model extends Character_Action_Model
 	{ 
 		$message = "";
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 			
 		// controllo dati
@@ -35,7 +35,7 @@ class CA_Confiscateitem_Model extends Character_Action_Model
 			! $par[2] -> loaded )
 		{ $message = kohana::lang('global.operation_not_allowed'); return FALSE; }
 
-		// non è possibile confiscare oggetti di un char canceled, nè di un admin.
+		// non ï¿½ possibile confiscare oggetti di un char canceled, nï¿½ di un admin.
 		
 		if ( $par[1] -> user -> status == 'canceled' or  $par[1] -> user -> status == 'suspended' )
 		{ $message = kohana::lang('ca_confiscateitem.error-useriscanceled'); return FALSE; }	
@@ -43,12 +43,12 @@ class CA_Confiscateitem_Model extends Character_Action_Model
 		if ( Character_Model::has_merole( $par[1], 'admin' ) )
 		{ $message = kohana::lang('global.operation_not_allowed'); return FALSE; }	
 	
-		// check quantità
+		// check quantitï¿½
 		
 		if ( $par[3] < 1 or $par[3] > $par[2] -> quantity )
 		{ $message = kohana::lang('ca_confiscateitem.error-wrongquantity'); return FALSE; }		
 		
-		// non è possibile confiscare alcuni oggetti
+		// non ï¿½ possibile confiscare alcuni oggetti
 		
 		if ( ! $par[2] -> cfgitem -> confiscable )
 		{ $message = kohana::lang('ca_confiscateitem.confiscate_nonconfiscableitem'); return FALSE; }		
@@ -105,7 +105,7 @@ class CA_Confiscateitem_Model extends Character_Action_Model
 	
 	protected function execute_action( $par, &$message ) {
 			
-		// evento al char a cui è stato confiscato l' item				
+		// evento al char a cui ï¿½ stato confiscato l' item				
 		Character_Event_Model::addrecord(
 			$par[1] -> id, 
 			'normal',

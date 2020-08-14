@@ -29,14 +29,14 @@ class CA_Retire_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 	
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 
 		// controllo giorni
 		if ( $par[1] <= 0)
 			{ $message = kohana::lang('charactions.negative_quantity'); return FALSE; }
 		
-		// Il periodo di meditazione è funzione dell' età del personaggio.		
+		// Il periodo di meditazione ï¿½ funzione dell' etï¿½ del personaggio.		
 		// e del possesso di un titolo nobiliare.
 		
 		$maxperiod = min( round( pow($par[0] -> get_age(), 1.2)  / 10 ), 180 ) ;
@@ -62,7 +62,7 @@ class CA_Retire_Model extends Character_Action_Model
 		if ( !is_null( $lastretiretime ) and time() - $lastretiretime -> value 	< self::COOLDOWN )
 		{ $message = kohana::lang('ca_retire.cooldownnotexpired'); return FALSE; }	
 		
-		// Se è malato non può andare in meditazione
+		// Se ï¿½ malato non puï¿½ andare in meditazione
 	
 		if ( $par[0] -> is_sick() )
 		{ $message = kohana::lang('charactions.charissick'); return FALSE; }	

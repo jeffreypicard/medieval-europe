@@ -2,7 +2,7 @@
 
 class CA_Study_Model extends Character_Action_Model
 {
-	// Sazietà richiesta per ogni ora di studio
+	// Sazietï¿½ richiesta per ogni ora di studio
 	const DELTA_GLUT_X_HOUR = 2;
 	
 	// Energia richiesta per ogni ora di studio
@@ -77,11 +77,11 @@ class CA_Study_Model extends Character_Action_Model
 				
 		// Check classe madre (compreso il check_equipment)
 	
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return FALSE; }		
 				
 		// Check: il char non ha sufficiente energia
-		// Check: il char non ha sufficiente sazietà
+		// Check: il char non ha sufficiente sazietï¿½
 		if
 		( 
 			( $par[0] -> energy < self::DELTA_ENERGY_X_HOUR * $par[2] )
@@ -119,7 +119,7 @@ class CA_Study_Model extends Character_Action_Model
 			return false;
 		}
 		
-		// controllo se il char ha già troppi skilsl
+		// controllo se il char ha giï¿½ troppi skilsl
 		if ( 
 			$this -> course -> getCoursetype() == 'skill' 
 			and
@@ -130,7 +130,7 @@ class CA_Study_Model extends Character_Action_Model
 			return false;		
 		}
 		
-		// controllo che non abbia già masterizzato il corso
+		// controllo che non abbia giï¿½ masterizzato il corso
 		
 		if ( 
 			$this -> course -> getCoursetype() == 'attribute' 
@@ -273,7 +273,7 @@ class CA_Study_Model extends Character_Action_Model
 		$_par[0] = $data -> param2; 
 		GameEvent_Model::process_event( $character, 'study', $_par );	
 		
-		// Se il corso è completato, si aumenta la caratteristica
+		// Se il corso ï¿½ completato, si aumenta la caratteristica
 		
 		if ( $studiedhours + $data -> param1 >= $this -> course -> getNeededHours($character) )		
 		{
@@ -289,7 +289,7 @@ class CA_Study_Model extends Character_Action_Model
 			$this -> course -> addStudyHours( $character, $data -> param1 );
 		}
 		
-		// riduci energia e sazietà.
+		// riduci energia e sazietï¿½.
 		
 		$character -> modify_energy( - self::DELTA_ENERGY_X_HOUR * $data -> param1, false, 'study' );
 		$character -> modify_glut( - self::DELTA_GLUT_X_HOUR * $data -> param1 );

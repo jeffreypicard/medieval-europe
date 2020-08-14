@@ -4,11 +4,11 @@
 class CA_Seed_Model extends Character_Action_Model
 {
 	// Costanti
-	const DELTA_GLUT = 7; 					// consumo di sazietà	
+	const DELTA_GLUT = 7; 					// consumo di sazietï¿½	
 	const DELTA_ENERGY = 8;         // Energia necessaria per la semina		
 	const TIME_TO_GROW = 36000 ;    // Tempo necessario per la crescita
 
-	protected $cancel_flag = true;     // se true, la azione è cancellabile dal pg.	
+	protected $cancel_flag = true;     // se true, la azione ï¿½ cancellabile dal pg.	
 	protected $immediate_action = false;	
 	protected $basetime       = 2;   // 2 ore
 	protected $attribute      = 'str';  // attributo forza
@@ -59,7 +59,7 @@ class CA_Seed_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		// Check classe madre (compreso il check_equipment)
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +90,7 @@ class CA_Seed_Model extends Character_Action_Model
 		{ $message = kohana::lang('ca_seed.error-fieldmustbeuncultivated'); return FALSE; }
 
 		
-		// c'è già una semina in atto?
+		// c'ï¿½ giï¿½ una semina in atto?
 		
 		$seedinprogress = ORM::factory('character_action' ) -> 
 			where ( array( 
@@ -206,7 +206,7 @@ class CA_Seed_Model extends Character_Action_Model
 		$terrain->attribute3 = (self::TIME_TO_GROW / kohana::config('medeur.serverspeed')) + time();
 		$terrain->save();
 
-		// Sottraggo l'energia e 1 punto di sazietà al char
+		// Sottraggo l'energia e 1 punto di sazietï¿½ al char
 
 		$char -> modify_energy ( - self::DELTA_ENERGY, false, 'seed' );
 		$char -> modify_glut ( - self::DELTA_GLUT );

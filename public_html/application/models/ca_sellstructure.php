@@ -21,7 +21,7 @@ class CA_Sellstructure_Model extends Character_Action_Model
 		// Metodo ereditato dal modello Character_Action. Controllo che non ci siano
 		// altre azioni in corso				
 	
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return FALSE; }		
 			
 		if ( $par[0] -> locked == true )

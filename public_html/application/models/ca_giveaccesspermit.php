@@ -12,7 +12,7 @@ class CA_Giveaccesspermit_Model extends Character_Action_Model
 	
 	protected function check( $par, &$message )
 	{ 
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;		
 		// check input				
 		
@@ -22,7 +22,7 @@ class CA_Giveaccesspermit_Model extends Character_Action_Model
 		if ( ! $this -> targetchar -> loaded or !$this -> targetchar -> loaded )
 		{ $message = kohana::lang( 'global.operation_not_allowed'); return false; }		
 		
-		// è cittadino?
+		// ï¿½ cittadino?
 		
 		if ( $this -> targetchar -> region -> kingdom_id == $par[1] -> region -> kingdom_id )
 		{ $message = kohana::lang( 'ca_giveaccesspermit.error-charisacitizen', $this -> targetchar -> name ); return false; }

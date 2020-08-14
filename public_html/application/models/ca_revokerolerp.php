@@ -141,12 +141,12 @@ class CA_Revokerolerp_Model extends Character_Action_Model
 	
 	protected function check( $par, &$message )
 	{ 
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
 		// Controllo che la struttura da dove
 		// viene la revoca corrisponda a quella da
-		// cui è stata fatta la nomina
+		// cui ï¿½ stata fatta la nomina
 		if ($par[0]->structure_id != $par[1]->id)
 		{ $message = 'global.operation_not_allowed'; return false; }
 				

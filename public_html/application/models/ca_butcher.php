@@ -106,7 +106,7 @@ class CA_Butcher_Model extends Character_Action_Model
 		$this->equipment['all']['right_hand']['items'][] = $rt;
 		
 		// Check classe madre (compreso il check_equipment)
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 
 		// Controllo che il char abbia l' energia necessaria
@@ -130,7 +130,7 @@ class CA_Butcher_Model extends Character_Action_Model
 		if ( $par[0] -> get_storableweight() <= 0 )
 			{ $message = kohana::lang('charactions.structure_fullinventory'); return FALSE; }		
 
-		// c'è già una raccolta in atto?
+		// c'ï¿½ giï¿½ una raccolta in atto?
 		
 		$butcherinprogress = ORM::factory('character_action' ) -> 
 			where ( array( 
@@ -193,7 +193,7 @@ class CA_Butcher_Model extends Character_Action_Model
 			
 			$char = ORM::factory('character', $data->character_id );
 			
-			// Sottraggo l'energia e la sazietà al char		
+			// Sottraggo l'energia e la sazietï¿½ al char		
 			$char->modify_energy ( -self::DELTA_ENERGY, false, 'butchering' );
 			$char->modify_glut ( -self::DELTA_GLUT );
 			$char->save();
@@ -261,7 +261,7 @@ class CA_Butcher_Model extends Character_Action_Model
 	* @return info vettore con info:
 	* 	product array di prodotti
 	*   	tipo: tipo prodotto
-	*     quantità: quantità per capo
+	*     quantitï¿½: quantitï¿½ per capo
 	*   time: tempo per sfamare un animale
 	*
 	*/

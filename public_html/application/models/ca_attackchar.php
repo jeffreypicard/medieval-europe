@@ -13,7 +13,7 @@ class CA_Attackchar_Model extends Character_Action_Model
 	// @output: TRUE = azione disponibile, FALSE = azione non disponibile
 	//          $messages contiene gli errori in caso di FALSE
 	// par[0] = id Char che attacca
-	// par[1] = id Char che è attaccato
+	// par[1] = id Char che ï¿½ attaccato
 	
 	protected function check( $par, &$message )
 	{ 
@@ -22,7 +22,7 @@ class CA_Attackchar_Model extends Character_Action_Model
 		
 		
 		// controlli base
-		if ( ! parent::check( $par, $message, $par[0] -> id, $par[1] -> id ) )					
+		if ( ! parent::check_( $par, $message, $par[0] -> id, $par[1] -> id ) )					
 		{ return false; }
 		
 		if ( $par[1] -> status == 'dead' )

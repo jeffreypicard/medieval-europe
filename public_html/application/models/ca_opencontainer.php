@@ -60,22 +60,22 @@ class CA_Opencontainer_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		// Check classe madre (compreso il check_equipment)
-		if ( ! parent::check( $par, $message ) )	
+		if ( ! parent::check_( $par, $message ) )	
 		{ return false; }
 		
 		// Istanzio la easter egg
 		$container = ORM::factory('item', $par[0]);
 		
-		// Check: l'item non è nell'inventario del char
+		// Check: l'item non ï¿½ nell'inventario del char
 		if ( $container->character_id != $par[1]->id )
 		{ $message = Kohana::lang("ca_opencontainer.item-not-inventory"); return false; }
 		
-		// Check: l'item non è un easteregg
+		// Check: l'item non ï¿½ un easteregg
 		if ( $container->cfgitem->tag != "easteregg" )
 		{ $message = Kohana::lang("ca_opencontainer.item-wrong"); return false; }
 				
 		// Check: il char non ha l'energia sufficiente
-		// Check: il char non ha la saizetà sufficiente
+		// Check: il char non ha la saizetï¿½ sufficiente
 		if
 		(
 			$par[1]->energy < (self::DELTA_ENERGY) or
@@ -126,7 +126,7 @@ class CA_Opencontainer_Model extends Character_Action_Model
 		// Consumo degli items/vestiti indossati
 		Item_Model::consume_equipment( $this->equipment, $char );	
 		
-		// Sottraggo l'energia e la sazietà al char
+		// Sottraggo l'energia e la sazietï¿½ al char
 		$char->modify_energy( -self::DELTA_ENERGY );
 		$char->modify_glut( -self::DELTA_GLUT );
 		$char->save();	

@@ -133,9 +133,9 @@ class CA_Startkingdomproject_Model extends Character_Action_Model
 	// par[0] : oggetto char che effettua l' azione
 	// par[1] : oggetto cfgkingdomproject
 	// par[2] : tipo struttura
-	// par[3] : regione dove la struttura che lancia il progetto è situata
+	// par[3] : regione dove la struttura che lancia il progetto ï¿½ situata
 	// par[4] : regione dove la struttura deve essere costruita 
-	// par[5] : struttura da cui è lanciato il progetto
+	// par[5] : struttura da cui ï¿½ lanciato il progetto
 	// @output: TRUE = azione disponibile, FALSE = azione non disponibile
 	//          $messages contiene gli errori in caso di FALSE
 	
@@ -146,7 +146,7 @@ class CA_Startkingdomproject_Model extends Character_Action_Model
 		
 		// Metodo ereditato dal modello Character_Action. Controllo che non ci siano
 		// altre azioni in corso			
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return FALSE; }		
 				
 		// controllo dati
@@ -198,8 +198,8 @@ class CA_Startkingdomproject_Model extends Character_Action_Model
 				
 		$s = StructureFactory_Model::create('buildingsite_1', null);		
 		
-		// Se la struttura da costruire è una chiesa, 
-		// allora è necessario settare la struttura padre	
+		// Se la struttura da costruire ï¿½ una chiesa, 
+		// allora ï¿½ necessario settare la struttura padre	
 		// e togliere i fp.
 		
 		if ( $par[2] -> subtype == 'church' )
@@ -212,7 +212,7 @@ class CA_Startkingdomproject_Model extends Character_Action_Model
 		$s -> parent_structure_id = $par[5] -> id;		
 		$s -> region_id = $par[4] -> id;		
 		
-		// Chi lancia il progetto è owner della struttura.
+		// Chi lancia il progetto ï¿½ owner della struttura.
 		$s -> character_id = $par[0] -> id;		
 		
 		// memorizziamo il tipo di struttura

@@ -59,14 +59,14 @@ class CA_Dig_Model extends Character_Action_Model
 	{ 
 		$message = "";
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 
-		// Check: la regione è indipendente (l'accesso alla risorsa è interdetto)
+		// Check: la regione ï¿½ indipendente (l'accesso alla risorsa ï¿½ interdetto)
 		if ( $par[0] -> region -> is_independent() )
 		{ $message = Kohana::lang("charactions.regionisindependent"); return false; }
 	
-		// Check: la relazione tra il regno del char e quella del regno della regione è ostile o neutrale
+		// Check: la relazione tra il regno del char e quella del regno della regione ï¿½ ostile o neutrale
 		$rd = Diplomacy_Relation_Model::get_diplomacy_relation( $par[0] -> region -> kingdom_id, $par[1] -> region -> kingdom_id );
 		
 		if
@@ -80,8 +80,8 @@ class CA_Dig_Model extends Character_Action_Model
 			return false;				
 		}
 
-		// Check: il moltiplicatore non è nel range 1-3
-		// Check: il moltiplicatore è > 1 e il char non ha il relativo bonus		
+		// Check: il moltiplicatore non ï¿½ nel range 1-3
+		// Check: il moltiplicatore ï¿½ > 1 e il char non ha il relativo bonus		
 		$queuebonus = false;
 		if ( Character_Model::get_premiumbonus( $par[1] -> id, 'workerpackage') !== false )			
 			$queuebonus = true;
@@ -138,7 +138,7 @@ class CA_Dig_Model extends Character_Action_Model
 		$items = $this -> computeproduction( $par );
 		//var_dump( $items); exit;
 		$param2 = '';		
-		// toglie la quantità alle risorse
+		// toglie la quantitï¿½ alle risorse
 		foreach ( $items as $key => $value )
 		{
 			foreach ( $par[0] -> structure_resource as $resource )
@@ -190,7 +190,7 @@ class CA_Dig_Model extends Character_Action_Model
 	}
 	
 	/*
-	* Prevede quante unità estrarra in base alle caratteristiche
+	* Prevede quante unitï¿½ estrarra in base alle caratteristiche
 	* del char e ad altri parametri
 	*/
 	
@@ -222,7 +222,7 @@ class CA_Dig_Model extends Character_Action_Model
 		// Consumo degli items/vestiti obbligatori indossati
 		Item_Model::consume_equipment( $this->equipment, $char, $data -> param3 );
 		
-		// Sottraggo l'energia e la sazietà al char
+		// Sottraggo l'energia e la sazietï¿½ al char
 		
 		$char -> modify_energy ( - self::DELTA_ENERGY * $data->param3, false, 'extractresources');
 		$char -> modify_glut ( - self::DELTA_GLUT * $data->param3);	

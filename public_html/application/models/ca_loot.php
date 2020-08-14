@@ -17,10 +17,10 @@ class CA_Loot_Model extends Character_Action_Model
 	{ 
 		$message = "";
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return FALSE; }		
 				
-		// check: il char è nella stessa location del char derubato?
+		// check: il char ï¿½ nella stessa location del char derubato?
 		
 		if ( 
 			$par[1] -> loaded == false 
@@ -28,11 +28,11 @@ class CA_Loot_Model extends Character_Action_Model
 			($par[0] -> position_id != $par[1] -> position_id ) )
 		{ $message = kohana::lang('global.operation_not_allowed'); return FALSE; }
 		
-		// c'è qualche item da prendere?
+		// c'ï¿½ qualche item da prendere?
 		if ( count( $par[2] ) == 0 )
 		{ $message = kohana::lang('ca_loot.error-noitemstoloot'); return FALSE; }		
 		
-		// check: il char è svenuto?		
+		// check: il char ï¿½ svenuto?		
 				
 		if ( Character_Model::is_recovering( $par[1] -> id ) != true )
 		{ $message = kohana::lang('ca_loot.error-targetcharisnotrecovering'); return FALSE; }
@@ -42,7 +42,7 @@ class CA_Loot_Model extends Character_Action_Model
 		if ( $currentaction['param1'] == 'duel' )
 		{ $message = kohana::lang('ca_loot.error-lootnotpossiblewhendueling'); return FALSE; }
 				
-		// calcolo il peso totale degli item, il char può trasportare cosi tanti oggetti?
+		// calcolo il peso totale degli item, il char puï¿½ trasportare cosi tanti oggetti?
 		
 		$totalweight = 0;
 		foreach ( $par[2] as $item ) 	
@@ -67,8 +67,8 @@ class CA_Loot_Model extends Character_Action_Model
 				$item -> quantity . ' itemlooted quantity: ' . $itemtoloot -> quantity );
 			
 			// In caso di parallelismo nel loot gli item 
-			// selezionati prima potrebbero non esserci più o presenti
-			// ma in minore quantità... In questo caso saltiamo l' item
+			// selezionati prima potrebbero non esserci piï¿½ o presenti
+			// ma in minore quantitï¿½... In questo caso saltiamo l' item
 			
 			if ( $item -> loaded == false or $item -> quantity < $itemtoloot -> quantity )
 			{ 	$message = kohana::lang('ca_loot.error-quantityproblem',
@@ -101,8 +101,8 @@ class CA_Loot_Model extends Character_Action_Model
 				$item -> quantity . ' itemlooted quantity: ' . $itemtoloot -> quantity );
 			
 			// In caso di parallelismo nel loot gli item 
-			// selezionati prima potrebbero non esserci più o presenti
-			// ma in minore quantità... In questo caso saltiamo l' item
+			// selezionati prima potrebbero non esserci piï¿½ o presenti
+			// ma in minore quantitï¿½... In questo caso saltiamo l' item
 			
 			if ( $item -> loaded == false or $item -> quantity < $itemtoloot -> quantity )
 			{

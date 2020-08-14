@@ -54,7 +54,7 @@ class CA_Searchplant_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		// Check classe madre (compreso il check_equipment)
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
 		// Controllo che la regione sia conquistata
@@ -80,7 +80,7 @@ class CA_Searchplant_Model extends Character_Action_Model
 		if ( Character_Model::get_premiumbonus( $par[1] -> id, 'workerpackage') !== false )			
 			$queuebonus = true;
 			
-		// Controllo, se il moltiplicatore è > 1, il char deve avere il bonus
+		// Controllo, se il moltiplicatore ï¿½ > 1, il char deve avere il bonus
 		if ( !in_array ( $par[2], array( 1, 2, 3 )) or ($par[2] > 1 and ! $queuebonus ) )
 				{ $message = Kohana::lang("global.operation_not_allowed"); return false; }
 		
@@ -90,7 +90,7 @@ class CA_Searchplant_Model extends Character_Action_Model
 			$par[1] -> glut < (self::DELTA_GLUT * $par[2]) )
 		{   $message = Kohana::lang("charactions.notenoughenergyglut"); return false; }
 		
-		// controlliamo, se il parametro coda è > 1 quanti item estrarrebbe il char. Se ce ne sono di meno nella 
+		// controlliamo, se il parametro coda ï¿½ > 1 quanti item estrarrebbe il char. Se ce ne sono di meno nella 
 		// risorsa -> errore
 		// ? Non capisco l' else... riscrivere
 		
@@ -131,7 +131,7 @@ class CA_Searchplant_Model extends Character_Action_Model
 		$items = $this -> computeproduction( $par );
 		$param2 = '';
 		
-		// toglie la quantità alle risorse e appende l' azione.
+		// toglie la quantitï¿½ alle risorse e appende l' azione.
 		
 		foreach ( $items as $key => $value )
 		{
@@ -160,10 +160,10 @@ class CA_Searchplant_Model extends Character_Action_Model
 	}
 	
 	/*
-	* Prevede quante unità estrarre in base alle caratteristiche
+	* Prevede quante unitï¿½ estrarre in base alle caratteristiche
 	* del char e ad altri parametri
 	* @param $par parametri passati 
-	* @return vettore item e quantità da estrarre
+	* @return vettore item e quantitï¿½ da estrarre
 	*/
 	
 	private function computeproduction( $par )
@@ -197,7 +197,7 @@ class CA_Searchplant_Model extends Character_Action_Model
 		Item_Model::consume_equipment( $this->equipment, $char, $data->param3 );	
 		
 		//////////////////////////////////////////////////////////////////
-		// Sottraggo l'energia e la sazietà al char
+		// Sottraggo l'energia e la sazietï¿½ al char
 		//////////////////////////////////////////////////////////////////
 		
 		$char->modify_energy ( - self::DELTA_ENERGY * $data->param3, false, 'searchplant');

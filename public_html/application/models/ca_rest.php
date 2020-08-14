@@ -21,13 +21,13 @@ class CA_Rest_Model extends Character_Action_Model
 	{ 
 		$message = "";
 		$relationtype = "";
-		if ( ! parent::check( $par, $message, $par[0] -> id ) )					
+		if ( ! parent::check_( $par, $message, $par[0] -> id ) )					
 			return false;		
 		
 		if ( $par[0]->glut == 0 )
 		{$message = 'ca_rest.cantrestifhungry';return false;}
 		
-		// se il char è riposato, warning
+		// se il char ï¿½ riposato, warning
 		
 		if ( $par[0] -> energy == 50 )
 		{
@@ -35,7 +35,7 @@ class CA_Rest_Model extends Character_Action_Model
 			return false;		
 		}
 		
-		// solo una persona può riposare nella struttura
+		// solo una persona puï¿½ riposare nella struttura
 		
 		if ( $par[2] == false ) 
 		{
@@ -67,7 +67,7 @@ class CA_Rest_Model extends Character_Action_Model
 		
 			if ( $playerssleepingcount > 0 )
 			{$message = 'ca_rest.error-cantrestbedisnotfree';return false;}
-			// check: se la sazietà è a 0, il char non puo' riposare
+			// check: se la sazietï¿½ ï¿½ a 0, il char non puo' riposare
 		}
 
 
@@ -146,7 +146,7 @@ class CA_Rest_Model extends Character_Action_Model
 		$character = ORM::factory("character", Session::instance()->get('char_id'));
 		
 		// calcola l' energia da ridare in funzione del tempo riposato
-		// energia = Fattore di riposo memorizzato quando si è iniziata 
+		// energia = Fattore di riposo memorizzato quando si ï¿½ iniziata 
 		// l' azione * frazioni di ore trascorse
 		
 		$restedhours = (time() - $this -> starttime ) / 3600 ;				

@@ -8,16 +8,16 @@ class CA_Drop_Model extends Character_Action_Model
 	// @input: parametri
 	//  - par[0]: oggetto struttura dove si vuole droppare l' item 
 	//  - par[1]: item da droppare
-	//  - par[2]: quantità
+	//  - par[2]: quantitï¿½
 	//  - par[3]: oggetto char che fa l' azione
 	
 	protected function check( $par, &$message )
 	{ 
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 	
-		// check: la struttura esiste ed il char è proprietario?
+		// check: la struttura esiste ed il char ï¿½ proprietario?
 		// eccezione per il battlefield
 		
 		if ( $par[0] -> structure_type -> supertype != 'battlefield' and (!$par[0]->loaded ) )
@@ -32,12 +32,12 @@ class CA_Drop_Model extends Character_Action_Model
 			return false;
 		}
 		
-		//check: il char effettivamente ha gli item nella quantità specificata?
+		//check: il char effettivamente ha gli item nella quantitï¿½ specificata?
 		//var_dump($par[1]); exit;
 		if ( $par[2] > $par[1] -> quantity or $par[1] -> character_id != $par[3] -> id )
 		{ $message = kohana::lang( 'structures.generic_itemsnotowned'); return false; }
 				
-		// check: il peso degli item supera la capacità di immagazzinamento della struttura?
+		// check: il peso degli item supera la capacitï¿½ di immagazzinamento della struttura?
 		
 		$itemsweight = $par[1] -> cfgitem -> weight * $par[2];
 		$storableweight = $par[0] -> get_storableweight( $par[0] );
@@ -48,11 +48,11 @@ class CA_Drop_Model extends Character_Action_Model
 			return false;		
 		}
 		
-		// se l' oggetto è locked,  non si può lasciare in una struttura.
+		// se l' oggetto ï¿½ locked,  non si puï¿½ lasciare in una struttura.
 		//var_dump($par[0]-> structure_type); exit;
 		if ( $par[1] -> locked and $par[0] -> structure_type -> subtype != 'player' )			
 		{ $message = kohana::lang('charactions.marketsellitem_itemislocked'); return FALSE; }		
-		// si può droppare l' oggetto?
+		// si puï¿½ droppare l' oggetto?
 		
 		if ( $par[1] -> cfgitem -> droppable == false )
 		{

@@ -56,10 +56,10 @@ class CA_Watcharea_Model extends Character_Action_Model
 	{ 
 		$message = "";
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 		
-		// Si può indagare solo nella regione della struttura chiamante e 
+		// Si puï¿½ indagare solo nella regione della struttura chiamante e 
 		// nelle adiacenti
 		
 		if ( 

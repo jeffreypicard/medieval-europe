@@ -60,7 +60,7 @@ class CA_Recuperateiron_Model extends Character_Action_Model
 	{ 
 		$message = "";
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 
 		// Check: La Forgia esiste?
@@ -78,7 +78,7 @@ class CA_Recuperateiron_Model extends Character_Action_Model
 			return false;
 		}
 		
-		// La forgia è in una fucina?
+		// La forgia ï¿½ in una fucina?
 
 		if (is_null( $furnace -> structure_id ))
 		{ $message = Kohana::lang("ca_recuperateiron.error-furnacenotinstructure"); return false; }
@@ -244,7 +244,7 @@ class CA_Recuperateiron_Model extends Character_Action_Model
 		// Consumo degli items/vestiti obbligatori indossati
 		Item_Model::consume_equipment( $this->equipment, $char );
 		
-		// Sottraggo l'energia e la sazietà al char
+		// Sottraggo l'energia e la sazietï¿½ al char
 		
 		$char -> modify_energy ( - self::DELTA_ENERGY, false, 'recuperateiron' );
 		$char -> modify_glut ( - self::DELTA_GLUT );

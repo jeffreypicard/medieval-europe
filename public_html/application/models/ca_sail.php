@@ -56,7 +56,7 @@ class CA_Sail_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		// Check classe madre (compreso il check_equipment)
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
 		$char = Character_Model::get_info( Session::instance()->get('char_id') );
@@ -69,7 +69,7 @@ class CA_Sail_Model extends Character_Action_Model
 		if (! $region_path->loaded)
 		{ $message = kohana::lang('ca_sail.no-paths-avaible'); return FALSE; }
 
-		// Se il path è esistente estraggo le informazioni
+		// Se il path ï¿½ esistente estraggo le informazioni
 		$this -> _par['weightinexcess'] = 	$char -> get_weightinexcess(); 
 		$this -> _par['bonuses'] = 	$bonuses;
 		$this -> _par['hasshoes'] = $char -> get_bodypart_item ("feet"); 
@@ -90,7 +90,7 @@ class CA_Sail_Model extends Character_Action_Model
 		{ $message = kohana::lang( 'charactions.global_notenoughmoney'); return FALSE; }
 	
 		// Se mi trovo sulla terraferma e sono diretto in mare controllo
-		// che la città abbia effettivamente un porto
+		// che la cittï¿½ abbia effettivamente un porto
 		
 		$current_region = ORM::factory('region', $char -> position_id );
 		$current_region_harbor = $current_region -> get_structure( 'harbor' ); 
@@ -100,13 +100,13 @@ class CA_Sail_Model extends Character_Action_Model
 		{ $message = kohana::lang('charactions.sail_no_porto'); return FALSE; }
 
 		// Se mi trovo in mare controllo e sono diretto sulla terra
-		// che la città abbia effettivamente un porto
+		// che la cittï¿½ abbia effettivamente un porto
 		
 		if ( ($current_region->type == "sea" && $par[0]->type == "land") && is_null ( $dest_region_harbor ) )
 		{ $message = kohana::lang('ca_sail.destination-has-no-harbor'); return FALSE; }
 		
 		/////////////////////////////////////////////////////
-		// Controllo che se movetobattlefield è true, nella 
+		// Controllo che se movetobattlefield ï¿½ true, nella 
 		// regione ci sia un battlefield!
 		/////////////////////////////////////////////////////
 		
@@ -118,7 +118,7 @@ class CA_Sail_Model extends Character_Action_Model
 		}
 		
 		/////////////////////////////////////////////////////////////////////////////////////
-		// Verifica la relazione diplomatica. Se è ostile e non è già nel regno non si può
+		// Verifica la relazione diplomatica. Se ï¿½ ostile e non ï¿½ giï¿½ nel regno non si puï¿½
 		// muovere a meno che abbia un permesso di accesso individuale. 
 		// E' possibile sempre muoversi nel battlefield e verso il mare
 		/////////////////////////////////////////////////////////////////////////////////////
@@ -138,7 +138,7 @@ class CA_Sail_Model extends Character_Action_Model
 		}
 		
 		/////////////////////////////////////////////////////
-		// controlla se il char non può lasciare il regno
+		// controlla se il char non puï¿½ lasciare il regno
 		// ordine di restraint
 		/////////////////////////////////////////////////////
 		
@@ -183,7 +183,7 @@ class CA_Sail_Model extends Character_Action_Model
 		
 		$this -> param3 = $par[1];
 		
-		// se è in un battlefield, lo tolgo automaticamente
+		// se ï¿½ in un battlefield, lo tolgo automaticamente
 		// dallo schieramento e marco che parte dal battlefield
 		
 		$frombattlefield = false;
@@ -305,7 +305,7 @@ class CA_Sail_Model extends Character_Action_Model
 		
 		$char = Character_Model::get_info( Session::instance()->get('char_id') );		
 		
-		// Se l'azione è già oltre i 10 minuti non si può cancellare.
+		// Se l'azione ï¿½ giï¿½ oltre i 10 minuti non si puï¿½ cancellare.
 		
 		if ( (time() - $this -> starttime) > (10*60) )
 		{
@@ -314,7 +314,7 @@ class CA_Sail_Model extends Character_Action_Model
 		}
 		
 		// se proveniva da un battlefield e cancella,
-		// lo rimetto nel battlefield. Se non c'è il battlefield, 
+		// lo rimetto nel battlefield. Se non c'ï¿½ il battlefield, 
 		// annullo la cancellazione.
 		
 		$region = ORM::factory('region', $this -> param1);		

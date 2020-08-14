@@ -124,7 +124,7 @@ class CA_Craft_Model extends Character_Action_Model
 		$this->equipment['all']['right_hand']['items'][] = $rt;
 
 		// Check classe madre (compreso il check_equipment)
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 
 		// Check: cfgitem non caricato
@@ -197,7 +197,7 @@ class CA_Craft_Model extends Character_Action_Model
 		}
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////
-		// se l' inventario della struttura � piena, non si può craftare		
+		// se l' inventario della struttura � piena, non si può craftare		
 		/////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		if ( $par[2] -> get_storableweight() < 0 )

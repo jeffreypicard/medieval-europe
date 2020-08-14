@@ -16,7 +16,7 @@ class CA_Donatecoins_Model extends Character_Action_Model
 	
 	protected function check( $par, &$message )
 	{ 
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )
 		{ return false; }
 		
 		// Controllo parametri		
@@ -28,12 +28,12 @@ class CA_Donatecoins_Model extends Character_Action_Model
 		if (! $par[0] -> check_money( self::DONATIONCOINS ) )		
 		{ $message = kohana::lang('charactions.global_notenoughmoney'); return FALSE; }
 
-		// solo un fedele può donare
+		// solo un fedele puï¿½ donare
 		
 		if ( is_null( $par[0] -> church_id ) or $par[0] -> church_id != $par[1] -> structure_type -> church_id )
 		{ $message = kohana::lang('ca_donatecoins.onlyfollowerscandonate'); return FALSE; }
 
-		// se si ha un ruolo nella chiesa, non si può donare
+		// se si ha un ruolo nella chiesa, non si puï¿½ donare
 		$role = $par[0] -> get_current_role();
 		
 		if ( !is_null( $role ) and $role -> get_roletype() == 'religious' )
@@ -71,7 +71,7 @@ class CA_Donatecoins_Model extends Character_Action_Model
 		// distribuisco i soldi alla gerarchia (5 li brucio)		
 		
 		//$coins = Item_Model::factory( null, 'silvercoin' );		
-		// dà i soldi alla struttura livello 4
+		// dï¿½ i soldi alla struttura livello 4
 		//$coins -> additem( 'structure', $par[1] -> id, 4 );	
 		
 		$par[1] -> modify_coins( 4, 'donatecoins' ); 

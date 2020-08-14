@@ -54,7 +54,7 @@ class CA_Shovel_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		// Check classe madre (compreso il check_equipment)
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
 		// Controllo che la regione sia conquistata
@@ -78,7 +78,7 @@ class CA_Shovel_Model extends Character_Action_Model
 			return false;				
 		}
 		
-		// Controllo, se il moltiplicatore è > 1, il char deve avere il bonus
+		// Controllo, se il moltiplicatore ï¿½ > 1, il char deve avere il bonus
 		if ( !in_array ( $par[2], array( 1, 2, 3 )) or ($par[2] > 1 and ! $queuebonus ) )
 				{ $message = Kohana::lang("global.operation_not_allowed"); return false; }
 		
@@ -124,7 +124,7 @@ class CA_Shovel_Model extends Character_Action_Model
 		
 		$items = $this -> computeproduction( $par );
 		$param2 = '';		
-		// toglie la quantità alle risorse
+		// toglie la quantitï¿½ alle risorse
 		foreach ( $items as $key => $value )
 		{
 			foreach ( $par[0] -> structure_resource as $resource )
@@ -152,7 +152,7 @@ class CA_Shovel_Model extends Character_Action_Model
 	}
 	
 	/*
-	* Prevede quante unità estrarra in base alle caratteristiche
+	* Prevede quante unitï¿½ estrarra in base alle caratteristiche
 	* del char e ad altri parametri
 	*/
 	
@@ -199,7 +199,7 @@ class CA_Shovel_Model extends Character_Action_Model
 		// Consumo degli items/vestiti indossati
 		Item_Model::consume_equipment( $this->equipment, $char, $data->param3 );	
 		
-		// Sottraggo l'energia e la sazietà al char
+		// Sottraggo l'energia e la sazietï¿½ al char
 		$char->modify_energy ( - self::DELTA_ENERGY * $data->param3, false, 'extractresources');
 		$char->modify_glut ( - self::DELTA_GLUT * $data->param3);
 		$char->save();	

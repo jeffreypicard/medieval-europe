@@ -18,7 +18,7 @@ class CA_Deletelaw_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
 		// il chiamante deve
@@ -33,7 +33,7 @@ class CA_Deletelaw_Model extends Character_Action_Model
 			return false;
 		}
 		
-		// se la legge non esiste o è associata ad un nodo diverso dalla struttura -> errore
+		// se la legge non esiste o ï¿½ associata ad un nodo diverso dalla struttura -> errore
 		if ( !$par[2]->loaded or $par[2] -> kingdom_id != $par[1] -> region -> kingdom -> id )
 		{
 			$message = kohana::lang( 'global.operation_not_allowed');

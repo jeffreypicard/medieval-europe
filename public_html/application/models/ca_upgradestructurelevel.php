@@ -24,15 +24,15 @@ class CA_Upgradestructurelevel_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 		
-		// La struttura è upgradabile?
+		// La struttura ï¿½ upgradabile?
 		
 		if ($par[1] -> getIsupgradable() == false )
 		{ $message = kohana::lang('structures.error-structureisnotupgradable'); return FALSE; }		
 		
-		// La struttura è già al massimo livello?
+		// La struttura ï¿½ giï¿½ al massimo livello?
 		
 		if ($par[1]-> getCurrentlevel() == $par[1]-> getMaxlevel() )
 		{ $message = kohana::lang('structures.error-structureisalreadyatmaxlevel'); return FALSE; }		

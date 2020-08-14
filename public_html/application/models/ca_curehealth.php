@@ -136,7 +136,7 @@ class CA_Curehealth_Model extends Character_Action_Model
 		$has_dogma_bonus = Church_Model::has_dogma_bonus($par[0] -> church_id, 'curehealthextended');	
 				
 		// Check: controls parent model (check_equipment)
-		if ( ! parent::check( $par, $message, $par[0] -> id, $par[1] -> id ) )					
+		if ( ! parent::check_( $par, $message, $par[0] -> id, $par[1] -> id ) )					
 			return false;
 		
 		// Check: the char that cures does not have a religious role

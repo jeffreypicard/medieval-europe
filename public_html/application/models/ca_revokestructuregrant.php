@@ -12,7 +12,7 @@ class CA_Revokestructuregrant_Model extends Character_Action_Model
 	
 	protected function check( $par, &$message )
 	{ 
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;		
 		// check input				
 		

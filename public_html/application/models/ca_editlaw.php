@@ -20,18 +20,18 @@ class CA_Editlaw_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
 		
-		// se la legge non esiste o è associata ad un nodo diverso dalla struttura -> errore
+		// se la legge non esiste o ï¿½ associata ad un nodo diverso dalla struttura -> errore
 		if ( !$par[2] -> loaded or $par[0] -> region -> kingdom -> id != $par[2] -> kingdom_id )
 		{
 			$message = kohana::lang( 'global.operation_not_allowed');
 			return false;				
 		}
 		
-		// se 24 ore sono passate non è più possibile editarla
+		// se 24 ore sono passate non ï¿½ piï¿½ possibile editarla
 		
 		if ( time() > ($par[2] -> timestamp + ( 3 * 24 * 3600 ) ) )
 		{

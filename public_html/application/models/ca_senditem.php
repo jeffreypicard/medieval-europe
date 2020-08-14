@@ -28,7 +28,7 @@ class CA_Senditem_Model extends Character_Action_Model
 	
 	protected function check( $par, &$message )
 	{ 
-		if ( ! parent::check( $par, $message, $par[0] -> id, $par[1] -> id ) )					
+		if ( ! parent::check_( $par, $message, $par[0] -> id, $par[1] -> id ) )					
 			{ return false; }
 		
 		$info = Item_Model::computesenddata( $par[2], $par[3] -> id, $par[0], $par[1] -> name , 'send' );
@@ -51,7 +51,7 @@ class CA_Senditem_Model extends Character_Action_Model
 	{
 	
 		///////////////////////////////////////////////////////////		
-		// Aggiungiamo la quantità dell' oggetto ad un fantomatico 
+		// Aggiungiamo la quantitï¿½ dell' oggetto ad un fantomatico 
 		// char -1
 		///////////////////////////////////////////////////////////		
 		
@@ -62,8 +62,8 @@ class CA_Senditem_Model extends Character_Action_Model
 		$item -> sendorder = $sendorder . ';' . $par[1]->id;		
 		$item -> save();
 				
-		// togliamo la quantità di risorse specificata al momento del send
-		// se non sono silvercoin, altrimenti è incluso nel costo...
+		// togliamo la quantitï¿½ di risorse specificata al momento del send
+		// se non sono silvercoin, altrimenti ï¿½ incluso nel costo...
 
 		if ( $par[3] -> cfgitem -> tag == 'silvercoin' )
 			$par[0] -> modify_coins( - ( $this -> info['cost'] + $par[2] ), 'senditems' );  
@@ -130,7 +130,7 @@ class CA_Senditem_Model extends Character_Action_Model
 					) ) -> find(); 
 		
 		// verifichiamo se il char esiste...
-		// se il char nel frattempo muore, l' item è perso per sempre
+		// se il char nel frattempo muore, l' item ï¿½ perso per sempre
 		
 		if ( $item -> loaded )
 		{

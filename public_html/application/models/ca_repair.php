@@ -56,7 +56,7 @@ class CA_Repair_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		// Check classe madre (compreso il check_equipment)
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
 		// check dati
@@ -95,12 +95,12 @@ class CA_Repair_Model extends Character_Action_Model
 		if ( Character_Model::get_premiumbonus( $par[1] -> id, 'workerpackage') !== false )			
 			$queuebonus = true;
 				
-		// Controllo, se il moltiplicatore è > 1, il char deve avere il bonus
+		// Controllo, se il moltiplicatore ï¿½ > 1, il char deve avere il bonus
 		
 		if ( !in_array ( $par[2], array( 1, 2, 3 )) or ($par[2] > 1 and ! $queuebonus ) )
 			{ $message = Kohana::lang("global.operation_not_allowed"); return false; }							
 				
-		// il char è nella stessa regione della struttura?		
+		// il char ï¿½ nella stessa regione della struttura?		
 				
 		if ( $par[1] -> position_id != $par[0] -> region_id )
 		{	$message = kohana::lang('global.operation_not_allowed'); return false; }		
@@ -160,7 +160,7 @@ class CA_Repair_Model extends Character_Action_Model
 		// Consumo degli items/vestiti indossati
 		Item_Model::consume_equipment( $this->equipment, $character, $data->param2 );	
 		
-		// incrementa la qualità della struttura
+		// incrementa la qualitï¿½ della struttura
 		// cap a 100%
 		if ( $structure -> loaded )
 		{
@@ -172,19 +172,19 @@ class CA_Repair_Model extends Character_Action_Model
 		else
 			return;		
 		
-		// incremente il livello di fede solo se il char è della stessa religione
+		// incremente il livello di fede solo se il char ï¿½ della stessa religione
 		if ( $structure -> structure_type -> church_id == $character -> church_id )
 			$character -> modify_faithlevel( $data -> param2 * 2 );
 		
-		// aumenta il numero di AFP solo se il char è della stessa religione
+		// aumenta il numero di AFP solo se il char ï¿½ della stessa religione
 		if ( $structure -> structure_type -> church_id == $character -> church_id )
 			$character -> modify_stat( 'fpcontribution', $data -> param2 * 5, $character -> church_id );			
 				
-		// diminuisce il livello di fede solo se il char è di diversa religione	
+		// diminuisce il livello di fede solo se il char ï¿½ di diversa religione	
 		if ( $structure -> structure_type -> church_id != $character -> church_id and $character -> church -> name != 'nochurch' )
 			$character -> modify_faithlevel( $data -> param2 * -10 );
 		
-		// decremente il numero di AFP per ogni danneggiamento se il char è di diversa religione
+		// decremente il numero di AFP per ogni danneggiamento se il char ï¿½ di diversa religione
 		if ( $structure -> structure_type -> church_id != $character -> church_id )
 			$character -> modify_stat( 'fpcontribution', $data -> param2 * -15, $character -> church_id );			
 		

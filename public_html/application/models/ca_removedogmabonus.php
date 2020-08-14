@@ -50,7 +50,7 @@ class CA_Removedogmabonus_Model extends Character_Action_Model
 	{ 
 		$message = "";
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 		
 		// Controllo struttura caricata

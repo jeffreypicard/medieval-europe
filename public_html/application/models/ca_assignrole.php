@@ -145,7 +145,7 @@ class CA_Assignrole_Model extends Character_Action_Model
 		
 		kohana::log('debug', '-> Trying to appoint: ' . $par[2] . '-' . $par[1] -> name );
 		
-		if ( parent::check( $par, $message, $par[0] -> id, $par[1] -> id ) == false )					
+		if ( parent::check_( $par, $message, $par[0] -> id, $par[1] -> id ) == false )					
 		{ return false; }				
 				
 		////////////////////////////////////////////

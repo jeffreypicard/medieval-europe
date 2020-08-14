@@ -65,7 +65,7 @@ class CA_Declarewaraction_Model extends Character_Action_Model
 				time() + $nexttime
 		);
 
-		if ( ! parent::check( $par, $message ) )
+		if ( ! parent::check_( $par, $message ) )
 		{ return false; }
 
 		////////////////////////////////

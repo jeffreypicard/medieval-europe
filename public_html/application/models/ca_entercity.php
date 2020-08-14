@@ -11,11 +11,11 @@ class CA_Entercity_Model extends Character_Action_Model
 	
 	protected function check( $par, &$message )
 	{ 
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
 		// E' possibile entrare in cittÃ  solo se le azioni diplomatiche lo consentono.		
-		// check se il rapporto tra il regno e il regno del char è ostile
+		// check se il rapporto tra il regno e il regno del char ï¿½ ostile
 		
 		$dr = Diplomacy_Relation_Model::get_diplomacy_relation( 
 			$par[1] -> region -> kingdom_id, 
@@ -33,21 +33,21 @@ class CA_Entercity_Model extends Character_Action_Model
 		}
 		
 		
-		// Se il kingdom B è in guerra, il char non puÃ² muoversi se
-		// è alleato di almeno un regno che sta attaccando
+		// Se il kingdom B ï¿½ in guerra, il char non puÃ² muoversi se
+		// ï¿½ alleato di almeno un regno che sta attaccando
 		
 		$data = null;
 		$isonwar = $par[1] -> region -> kingdom -> is_fighting( $par[1] -> region -> kingdom_id, $data);		
 		
 		if ( $isonwar !== false )		{
-			// per ogni battaglia, verifichiamo se il char è alleato di un regno
+			// per ogni battaglia, verifichiamo se il char ï¿½ alleato di un regno
 			// che sta attaccando il regno B
 			foreach ( $data['battles'] as $battle )
 			{
 			
 				$attackingregion = ORM::factory('region', $battle -> source_region_id );
 				// consideriamo solo le battaglie in cui il regno verso cui ci si 
-				// sta muovendo è attaccato
+				// sta muovendo ï¿½ attaccato
 				if ( $attackingregion -> kingdom_id != $par[1] -> region -> kingdom_id )
 				{
 					

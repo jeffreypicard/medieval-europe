@@ -133,7 +133,7 @@ class CA_Cancelkingdomproject_Model extends Character_Action_Model
 	public function __construct()
 	{		
 		parent::__construct();
-		// questa azione non é bloccante per altre azioni del char.
+		// questa azione non ï¿½ bloccante per altre azioni del char.
 		$this->blocking_flag = false;		
 		return $this;
 	}
@@ -152,7 +152,7 @@ class CA_Cancelkingdomproject_Model extends Character_Action_Model
 	{ 
 		$message = "";
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 		
 		// controllo dati

@@ -31,7 +31,7 @@ class CA_Move_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		// Check classe madre (compreso il check_equipment)
-		if ( ! parent::check( $par, $message, $par[2] -> id ) )					
+		if ( ! parent::check_( $par, $message, $par[2] -> id ) )					
 		{ return false; }
 		
 		$bonuses = Character_Model::get_premiumbonuses( $par[2] -> id ); ;
@@ -49,17 +49,17 @@ class CA_Move_Model extends Character_Action_Model
 		
 		kohana::log('info', "Char {$par[2] -> name} is moving from {$currentregion -> name} to {$par[0] -> name}.");		
 		
-		// Controllo che il char non sia già nella stessa locazione
+		// Controllo che il char non sia giï¿½ nella stessa locazione
 	
 		if ( $par[0] -> id == $par[2] -> position_id )
 		{ $message = kohana::lang('ca_move.already-in-location'); return FALSE; }
 		
-		// se il path è fasttravel e il char non ha il bonus travel, errore
+		// se il path ï¿½ fasttravel e il char non ha il bonus travel, errore
 		
 		if ( $region_path['data'] -> type == 'fastland' and Character_Model::get_premiumbonus( $par[2] -> id, 'travelerpackage' ) === false )
 		{ $message = kohana::lang('global.operation_not_allowed'); return FALSE; }
 		
-		// se il path è fasttravel ma una ragione attraversata è ostile, errore		
+		// se il path ï¿½ fasttravel ma una ragione attraversata ï¿½ ostile, errore		
 		
 		if ( 
 			$region_path['data'] -> type == 'fastland' and 
@@ -67,7 +67,7 @@ class CA_Move_Model extends Character_Action_Model
 		{ $message = kohana::lang('ca_move.error-pathisnotcrossable'); return FALSE; }
 		
 		
-		// se il peso in eccesso è del x% errore
+		// se il peso in eccesso ï¿½ del x% errore
 		
 		$weightineccess = $par[2] -> get_weightinexcess(); 
 		$encumbrance = $par[2] -> get_encumbrance();
@@ -109,7 +109,7 @@ class CA_Move_Model extends Character_Action_Model
 		{ $message = kohana::lang('ca_move.path-not-on-land'); return FALSE; }
 		
 		/////////////////////////////////////////////////////
-		// Controllo che se movetobattlefield è true, nella 
+		// Controllo che se movetobattlefield ï¿½ true, nella 
 		// regione ci sia un battlefield!
 		/////////////////////////////////////////////////////
 		
@@ -121,7 +121,7 @@ class CA_Move_Model extends Character_Action_Model
 		}
 		
 		/////////////////////////////////////////////////////
-		// controlla se il char non può lasciare il regno
+		// controlla se il char non puï¿½ lasciare il regno
 		// ordine di restraint
 		/////////////////////////////////////////////////////
 		
@@ -166,7 +166,7 @@ class CA_Move_Model extends Character_Action_Model
 		
 		$this -> param3 = $par[1];
 		
-		// se è in un battlefield, lo tolgo automaticamente
+		// se ï¿½ in un battlefield, lo tolgo automaticamente
 		// dallo schieramento e marco che parte dal battlefield
 		
 		$frombattlefield = false;
@@ -313,12 +313,12 @@ class CA_Move_Model extends Character_Action_Model
 			}
 		}			
 		
-		// Sottraggo l'energia e la sazietà al char 		
+		// Sottraggo l'energia e la sazietï¿½ al char 		
 		$char->modify_energy ( - $travelinfo['energy'], false, 'move' );
 		$char->modify_glut ( - $travelinfo['glut'] );
 		
 		////////////////////////////////////////////////
-		// se lo stato è fighting, vuol dire che il char
+		// se lo stato ï¿½ fighting, vuol dire che il char
 		// era nel battlefield. Se viaggia bisogna togli
 		// erlo dallo schieramento e resettare lo stato
 		////////////////////////////////////////////////
@@ -401,7 +401,7 @@ class CA_Move_Model extends Character_Action_Model
 		
 		$char = Character_Model::get_info( Session::instance()->get('char_id') );		
 		
-		// Se l'azione è già oltre i 10 minuti non si può cancellare.
+		// Se l'azione ï¿½ giï¿½ oltre i 10 minuti non si puï¿½ cancellare.
 		
 		if ( (time() - $this -> starttime) > (10*60) )
 		{
@@ -410,7 +410,7 @@ class CA_Move_Model extends Character_Action_Model
 		}
 		
 		// se proveniva da un battlefield e cancella,
-		// lo rimetto nel battlefield. Se non c'è il battlefield, 
+		// lo rimetto nel battlefield. Se non c'ï¿½ il battlefield, 
 		// annullo la cancellazione.
 		
 		$region = ORM::factory('region', $this -> param1);		

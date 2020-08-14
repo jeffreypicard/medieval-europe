@@ -13,7 +13,7 @@ class CA_Lendarmoryitem_Model extends Character_Action_Model
 	
 	protected function check( $par, &$message )
 	{
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;		
 		
 		// check input		
@@ -59,7 +59,7 @@ class CA_Lendarmoryitem_Model extends Character_Action_Model
 			$o -> save();
 			
 			
-			// se il giocatore è nella stessa regione, la consegna è istantanea, 
+			// se il giocatore ï¿½ nella stessa regione, la consegna ï¿½ istantanea, 
 			// altrimenti schedula un' azione di send.
 			
 			if ( $par[2] -> position_id == $par[1] -> region_id )

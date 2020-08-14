@@ -24,7 +24,7 @@ class CA_Imprison_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
 		/////////////////////////////////////////////////////
@@ -262,7 +262,7 @@ class CA_Imprison_Model extends Character_Action_Model
 			$char -> modify_location( $data -> param2 );		
 			$char -> save();
 			
-			// modifico stat per settare che è in prigione.
+			// modifico stat per settare che ï¿½ in prigione.
 			
 			Character_Model::modify_stat_d(
 				$char -> id,

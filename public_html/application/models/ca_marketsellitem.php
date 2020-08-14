@@ -22,7 +22,7 @@ class CA_Marketsellitem_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
 		$par[3] = intval( $par[3] );
@@ -61,7 +61,7 @@ class CA_Marketsellitem_Model extends Character_Action_Model
 			
 		}
 		
-		// check: esiste la struttura nel nodo in cui è l' utente?
+		// check: esiste la struttura nel nodo in cui ï¿½ l' utente?
 		if ( $par[0] and 
 			$par[0] -> region_id == $par[1]->position_id and 			
 			$par[0] -> structure_type -> parenttype == 'market' ) 
@@ -72,7 +72,7 @@ class CA_Marketsellitem_Model extends Character_Action_Model
 			return false;
 		}
 		
-		//check: il prezzo è > 0?
+		//check: il prezzo ï¿½ > 0?
 		
 		if ( $par[4] <= 0 )
 		{
@@ -80,7 +80,7 @@ class CA_Marketsellitem_Model extends Character_Action_Model
 			return false;				
 		}
 		//print kohana::debug( $par[3]) ; exit();
-		//check: la quantità da vendere deve essere <= alla disponibilità
+		//check: la quantitï¿½ da vendere deve essere <= alla disponibilitï¿½
 		if ( $par[3] > $par[2]->quantity )
 		{
 			$message = kohana::lang( 'charactions.itemsquantitynotowned');
@@ -94,7 +94,7 @@ class CA_Marketsellitem_Model extends Character_Action_Model
 			return false;				
 		}
 		
-		// se l' item è locked non può essere venduto.
+		// se l' item ï¿½ locked non puï¿½ essere venduto.
 		
 		if ( $par[2] -> locked )
 		{
@@ -103,7 +103,7 @@ class CA_Marketsellitem_Model extends Character_Action_Model
 		}
 		
 		// check sui valori imputati; la moltiplicazione del numero di oggetti e il prezzo
-		// non può superare 1 milione.
+		// non puï¿½ superare 1 milione.
 		if ( $par[3] * $par[4] > 1000000 )
 		{
 			$message = kohana::lang( 'structures.maxsellingpricereached');
@@ -165,7 +165,7 @@ class CA_Marketsellitem_Model extends Character_Action_Model
 		
 		$_par[0] = $par[2]; // item
 		$_par[1] = $par[1]; // venditore
-		$_par[2] = $par[3]; // quantità
+		$_par[2] = $par[3]; // quantitï¿½
 		$_par[3] = $par[4]; // prezzoq
 		$_par[4] = null;
 		$_par[5] = null;

@@ -58,15 +58,15 @@ class CA_Upgradestructureinventory_Model extends Character_Action_Model
 	{ 
 		$message = kohana::lang( 'structures.upgradeinventory_ok' ); 
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 
-		// Limite su capacità
+		// Limite su capacitï¿½
 	
 		if ( $par[0] -> getStorage() >= self::STORAGELIMIT ) 
 		{ $message = kohana::lang('structures.maxstoragelimitexceeded'); return FALSE; }
 					
-		// Controllo energia e sazietà
+		// Controllo energia e sazietï¿½
 		
 		if ($par[1]->energy < self::DELTA_ENERGY or $par[1]->glut < self::DELTA_GLUT )
 		{ $message = kohana::lang('charactions.notenoughenergyglut'); return FALSE; }
@@ -130,7 +130,7 @@ class CA_Upgradestructureinventory_Model extends Character_Action_Model
 	public function complete_action( $data )
 	{
 		$char = ORM::factory( 'character', $data->character_id  );
-		// Sottraggo l'energia e la sazietà al char
+		// Sottraggo l'energia e la sazietï¿½ al char
 		$char->modify_energy ( - self::DELTA_ENERGY, false, 'workonstructure' );
 		$char->modify_glut ( - self::DELTA_GLUT );
 		$char->save();	

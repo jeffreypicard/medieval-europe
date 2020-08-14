@@ -25,7 +25,7 @@ class CA_Buystructure_Model extends Character_Action_Model
 		// Metodo ereditato dal modello Character_Action. Controllo che non ci siano
 		// altre azioni in corso				
 	
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return FALSE; }	
 		
 		$structureinstance = StructureFactory_Model::create( $par[0] );
@@ -33,7 +33,7 @@ class CA_Buystructure_Model extends Character_Action_Model
 		$this -> price = $structureinstance -> getPrice( $par[1], $par[2]);
 		$this -> baseprice =  $structureinstance -> getBaseprice();
 		
-		// Se è una regione indipendente, non è possibile
+		// Se ï¿½ una regione indipendente, non ï¿½ possibile
 		// comprare strutture
 		
 		if ( $par[2] -> kingdom -> image == 'kingdom-independent')
@@ -42,7 +42,7 @@ class CA_Buystructure_Model extends Character_Action_Model
 			return false;
 		}
 			
-		// la struttura si può comprare?
+		// la struttura si puï¿½ comprare?
 		
 		if ( $structureinstance -> getIsbuyable() == false )
 		{
@@ -59,7 +59,7 @@ class CA_Buystructure_Model extends Character_Action_Model
 			return false;
 		}
 		
-		// se il char è ostile, non può comprare proprietà
+		// se il char ï¿½ ostile, non puï¿½ comprare proprietï¿½
 		
 		$dr = Diplomacy_Relation_Model::get_diplomacy_relation( 
 			$par[2] -> kingdom_id, $par[1] -> region -> kingdom_id ); 
@@ -91,7 +91,7 @@ class CA_Buystructure_Model extends Character_Action_Model
 		{
 			$ownedshops = $par[1] -> count_my_structures( 'shop' );
 			
-			// se ha già un numero di negozi > di quelli permessi errore.
+			// se ha giï¿½ un numero di negozi > di quelli permessi errore.
 			
 			if ($ownedshops > Kohana::config('medeur.maxshops'))
 			{
@@ -120,7 +120,7 @@ class CA_Buystructure_Model extends Character_Action_Model
 			}
 		}
 		
-		// verifica se il char ha già case in questo nodo
+		// verifica se il char ha giï¿½ case in questo nodo
 		
 		if ( $structureinstance -> structure_type -> parenttype == 'house' )
 		{

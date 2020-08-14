@@ -60,7 +60,7 @@ class CA_Workonproject_Model extends Character_Action_Model
 	
 		// Check classe madre (compreso il check_equipment)
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 	
 		$db = Database::instance();		
@@ -114,8 +114,8 @@ class CA_Workonproject_Model extends Character_Action_Model
 		}
 		
 		
-		// se la struttura presente è religiosa e esistono già nella regione
-		// strutture (completate) di altre chiese, non è possibile procedere alla
+		// se la struttura presente ï¿½ religiosa e esistono giï¿½ nella regione
+		// strutture (completate) di altre chiese, non ï¿½ possibile procedere alla
 		// costruzione
 		
 		$structuretype = ORM::factory('structure_type', $par[1] -> attribute1 );

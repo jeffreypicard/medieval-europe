@@ -11,7 +11,7 @@ class CA_Takefromground_Model extends Character_Action_Model
 	// @input: array di parametri	
 	// par[0] : oggetto personaggio che prende l' item
 	// par[1] : itemid
-	// par[2] : quantità
+	// par[2] : quantitï¿½
 	// @output: TRUE = azione disponibile, FALSE = azione non disponibile
 	//          $messages contiene gli errori in caso di FALSE
 	
@@ -20,10 +20,10 @@ class CA_Takefromground_Model extends Character_Action_Model
 		
 		$message = "";
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return FALSE; }		
 		
-		// check: l'oggetto esiste nella regione dove è il char?
+		// check: l'oggetto esiste nella regione dove ï¿½ il char?
 		
 		$this -> item = ORM::factory('item')
 			-> where ( array(

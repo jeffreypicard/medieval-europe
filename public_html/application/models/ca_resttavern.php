@@ -18,7 +18,7 @@ class CA_Resttavern_Model extends Character_Action_Model
 	// @input: par[0] = char, 
 	// par[1] = hours
 	// par[2] = structure
-	// par[3] = se true, il rest è free.
+	// par[3] = se true, il rest ï¿½ free.
 	// par[4] = prezzo pagato per punto percentuale
 	// par[5] = percentuale da recuperare
 	// par[6] = prezzo base
@@ -32,7 +32,7 @@ class CA_Resttavern_Model extends Character_Action_Model
 		
 		kohana::log('debug', "-> I have to recuperate up to {$this->percentage}%. Price is {$par[4]} * %");
 		
-		if ( ! parent::check( $par, $message, $par[0] -> id ) ) return false;
+		if ( ! parent::check_( $par, $message, $par[0] -> id ) ) return false;
 		
 		// controllo dati
 		if ( !$par[0] -> loaded or !$par[2] -> loaded )
@@ -87,7 +87,7 @@ class CA_Resttavern_Model extends Character_Action_Model
 			return false;				
 		}
 
-		// check: se la sazietà è a 0, il char non puo' riposare
+		// check: se la sazietï¿½ ï¿½ a 0, il char non puo' riposare
 		
 		kohana::log('info', 'Checking if glut is 0...');
 		
@@ -106,7 +106,7 @@ class CA_Resttavern_Model extends Character_Action_Model
 		
 		kohana::log('info', '-> appending action...');
 		
-		// se il prezzo non è free, applica tasse
+		// se il prezzo non ï¿½ free, applica tasse
 		
 		if ( $par[3] == false )
 		{			
@@ -204,7 +204,7 @@ class CA_Resttavern_Model extends Character_Action_Model
 	{	
 	
 		// Calcola l' energia da ridare in funzione del tempo riposato		
-		// Energia = Fattore di riposo memorizzato quando si è iniziata 
+		// Energia = Fattore di riposo memorizzato quando si ï¿½ iniziata 
 		// l' azione * frazioni di ore trascorse
 		
 		

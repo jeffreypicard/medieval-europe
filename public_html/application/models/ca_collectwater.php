@@ -59,7 +59,7 @@ class CA_collectwater_Model extends Character_Action_Model
 	{ 
 		$message = "";
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 			
 		// Controllo che la regione sia conquistata
@@ -85,7 +85,7 @@ class CA_collectwater_Model extends Character_Action_Model
 		if ( Character_Model::get_premiumbonus( $par[1] -> id, 'workerpackage') !== false )			
 			$queuebonus = true;
 		
-		// Controllo, se il moltiplicatore è > 1, il char deve avere il bonus
+		// Controllo, se il moltiplicatore ï¿½ > 1, il char deve avere il bonus
 		if ( !in_array ( $par[2], array( 1, 2, 3 )) or ($par[2] > 1 and ! $queuebonus ) )
 				{ $message = Kohana::lang("global.operation_not_allowed"); return false; }
 		
@@ -159,7 +159,7 @@ class CA_collectwater_Model extends Character_Action_Model
 		$char = ORM::factory('character') -> find( $data->character_id );
 		
 		///////////////////////////////////////////////////////////////////
-		// Sottraggo l'energia e la sazietà al char
+		// Sottraggo l'energia e la sazietï¿½ al char
 		///////////////////////////////////////////////////////////////////
 		
 		$char -> modify_energy ( - self::DELTA_ENERGY * $data -> param3, false, 'collectwater');

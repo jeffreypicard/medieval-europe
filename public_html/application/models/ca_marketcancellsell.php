@@ -19,10 +19,10 @@ class CA_Marketcancellsell_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
-		// check: esiste la struttura nel nodo in cui è l' utente?
+		// check: esiste la struttura nel nodo in cui ï¿½ l' utente?
 		if ( $par[0] and 
 			$par[0] -> region_id == $par[1]->position_id and 			
 			$par[0] -> structure_type -> supertype == 'market' ) 
@@ -34,14 +34,14 @@ class CA_Marketcancellsell_Model extends Character_Action_Model
 		}
 					
 		
-		// non è possibile ritirare item non propri
+		// non ï¿½ possibile ritirare item non propri
 		if ( $par[2]->seller_id != $par[1]->id )
 		{
 			$message = kohana::lang( 'charactions.marketbuyitem_cannotbuyownitems');
 			return false;								
 		}
 		
-		// la quantità deve essere > 0 e < del totale
+		// la quantitï¿½ deve essere > 0 e < del totale
 		if ( $par[3] < 0 or $par[3] > $par[2] -> quantity )
 		{
 			$message = kohana::lang( 'global.operation_not_allowed');
@@ -51,7 +51,7 @@ class CA_Marketcancellsell_Model extends Character_Action_Model
 		
 		/////////////////////////////////////////////////////////////////////////////////////
 		// check: il char sta trasportando troppo peso?
-		// se l' item è un carretto, niente controllo		
+		// se l' item ï¿½ un carretto, niente controllo		
 		/////////////////////////////////////////////////////////////////////////////////////	
 		
 		if ( $par[1] -> get_transportableweight() <= 0 and $par[2] -> cfgitem -> subcategory != 'cart' )

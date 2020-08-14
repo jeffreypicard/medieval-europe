@@ -10,7 +10,7 @@ class CA_Cancelrestrain_Model extends Character_Action_Model
 	public function __construct()
 	{		
 		parent::__construct();
-		// questa azione non é bloccante per altre azioni del char.
+		// questa azione non ï¿½ bloccante per altre azioni del char.
 		$this->blocking_flag = false;		
 		return $this;
 	}
@@ -31,7 +31,7 @@ class CA_Cancelrestrain_Model extends Character_Action_Model
 	{ 
 		$message = "";
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 
 		// controllo che il char abbia il ruolo adatto	
@@ -49,7 +49,7 @@ class CA_Cancelrestrain_Model extends Character_Action_Model
 			$par[2] -> character_id != $par[1] -> id )
 		{ $message = kohana::lang('global.operation_not_allowed'); return FALSE; }
 
-		// la motivazione è mandatoria.
+		// la motivazione ï¿½ mandatoria.
 		
 		if ( strlen( $par[3] ) == 0 )
 		{ $message = kohana::lang('ca_cancelrestrain.cancelreasonismissing' ) ; return FALSE; }				

@@ -21,14 +21,14 @@ class CA_Changecity_Model extends Character_Action_Model
 	{ 
 		$message = "";
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 		
 		// Controllo parametri
 		if ( !$par[0]->loaded or !$par[1]->loaded )
 			{ $message = kohana::lang('global.operation_not_allowed'); return FALSE; }
 		
-		// controllo se c'è la diplomazia ostile tra i regni
+		// controllo se c'ï¿½ la diplomazia ostile tra i regni
 		$dr = Diplomacy_Relation_Model::get_diplomacy_relation( 
 			$par[1] -> kingdom_id, 
 			$par[0] -> region -> kingdom_id );
@@ -40,23 +40,23 @@ class CA_Changecity_Model extends Character_Action_Model
 			return false;				
 		}
 		
-		// non ci si può trasferire nella città dove si è residenti.
+		// non ci si puï¿½ trasferire nella cittï¿½ dove si ï¿½ residenti.
 		if ( $par[1]->id == $par[0]->region_id )
 			{ $message = sprintf( 
 				kohana::lang('charactions.change_city_samecity'), kohana::lang($par[1]->name))				
 				; return FALSE; }		
 		
-		// Per trasferirsi bisogna essere nella città di arrivo
+		// Per trasferirsi bisogna essere nella cittï¿½ di arrivo
 		if ( $par[1]->id != $par[0]->position_id )
 			{ $message = sprintf( 
 				kohana::lang('charactions.change_city_mustbeintargetcity'), kohana::lang($par[1]->name))				
 				; return FALSE; }		
 		
-		// Non è possibile trasferirsi in una regione indipendente
+		// Non ï¿½ possibile trasferirsi in una regione indipendente
 		if ( $par[1] -> is_independent() ) 
 		{	$message = kohana::lang('charactions.change_city_destregionisindependent', kohana::lang($par[1]->name)); return false; }	
 		
-		// Non è possibile trasferirsi in una regione piena
+		// Non ï¿½ possibile trasferirsi in una regione piena
 		if ( $par[1] -> is_full() )		
 		{	$message = kohana::lang('charactions.change_city_destregionisfull', kohana::lang($par[1]->name)); return false; }	
 		
@@ -88,7 +88,7 @@ class CA_Changecity_Model extends Character_Action_Model
 		$par[0]->region_id = $par[1]->id;
 		$par[0]->region -> kingdom -> id = $par[1]->kingdom_id;
 					
-		// memorizzo quando ha cambiato la città, ma anche quando ha cambiato il regno.
+		// memorizzo quando ha cambiato la cittï¿½, ma anche quando ha cambiato il regno.
 		
 		$par[0] -> modify_stat( 
 			'changedregion', 

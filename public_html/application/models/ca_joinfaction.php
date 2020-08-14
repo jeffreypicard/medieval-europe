@@ -17,7 +17,7 @@ class CA_Joinfaction_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
 		if ( $par[1] -> region_id <> $par[0] -> position_id) 
@@ -28,7 +28,7 @@ class CA_Joinfaction_Model extends Character_Action_Model
 		$attackedregion = ORM::factory('region', $battle -> dest_region_id );		
 		$battletype = Battle_TypeFactory_Model::create( $battle -> type );				
 		
-		// è già schierato?
+		// ï¿½ giï¿½ schierato?
 		
 		$participant = ORM::factory('battle_participant') 
 			-> where ( 
@@ -56,8 +56,8 @@ class CA_Joinfaction_Model extends Character_Action_Model
 		{ $message = kohana::lang('ca_joinfaction.error-battleiscompleted'); return false; }
 		
 		////////////////////////////////////////////////////
-		// non è possibile joinare la battaglia se l'orario
-		// della battaglia è già passato
+		// non ï¿½ possibile joinare la battaglia se l'orario
+		// della battaglia ï¿½ giï¿½ passato
 		////////////////////////////////////////////////////
 		
 		$battleround = ORM::factory('character_action') 
@@ -73,7 +73,7 @@ class CA_Joinfaction_Model extends Character_Action_Model
 		{ $message = kohana::lang('ca_joinfaction.error-youcantjoinnow'); return false; }		
 		
 		////////////////////////////////////////////////////
-		// il char deve avere una certà età di gioco
+		// il char deve avere una certï¿½ etï¿½ di gioco
 		////////////////////////////////////////////////////
 		
 		if ( $par[0] -> get_age() < kohana::config('medeur.mindaystofight') )
@@ -82,7 +82,7 @@ class CA_Joinfaction_Model extends Character_Action_Model
 		
 		////////////////////////////////////////////////////
 		// Native Revolt
-		// se la battaglia è nativerevolt non ci si può schierare come attaccante
+		// se la battaglia ï¿½ nativerevolt non ci si puï¿½ schierare come attaccante
 		////////////////////////////////////////////////////
 		
 		if ( $battle -> type == 'nativerevolt' and $par[2] == 'attack' )
@@ -100,7 +100,7 @@ class CA_Joinfaction_Model extends Character_Action_Model
 		
 		////////////////////////////////////////////////////
 		// Revolt
-		// se la battaglia è una rivolta, il char deve essere del regno
+		// se la battaglia ï¿½ una rivolta, il char deve essere del regno
 		////////////////////////////////////////////////////
 		
 		if ( 
@@ -148,7 +148,7 @@ class CA_Joinfaction_Model extends Character_Action_Model
 			return false; 
 		}		
 		
-		// il Re non può schierarsi con i rivoltosi		
+		// il Re non puï¿½ schierarsi con i rivoltosi		
 		
 		$role = $par[0] -> get_current_role();
 		if ( $battle -> type == 'revolt' and !is_null( $role) and $role -> tag == 'king' and $par[2] == 'attack' )
@@ -157,7 +157,7 @@ class CA_Joinfaction_Model extends Character_Action_Model
 			return false;
 		}	
 			
-		// L' organizzatore della rivolta non può supportare il Re.
+		// L' organizzatore della rivolta non puï¿½ supportare il Re.
 		
 		if ( $battle -> type == 'revolt' and $par[0]->id == $battle->source_character_id and $par[2] == 'defend' )
 		{
@@ -168,7 +168,7 @@ class CA_Joinfaction_Model extends Character_Action_Model
 		////////////////////////////////////////////////////
 		// Conquer Region
 		// DIFESA
-		// Solo se si è:
+		// Solo se si ï¿½:
 		// . Cittadini del regno che attacca (da almeno un mese)
 		// . Alleati degli attaccanti (da almeno un mese)		
 		////////////////////////////////////////////////////
@@ -206,7 +206,7 @@ class CA_Joinfaction_Model extends Character_Action_Model
 	public function execute_action ( $par, &$message ) 
 	{
 			
-		// il giocatore è già schierato?
+		// il giocatore ï¿½ giï¿½ schierato?
 		
 		Database::instance() -> query (
 		"delete from 

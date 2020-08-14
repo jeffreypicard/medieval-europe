@@ -39,7 +39,7 @@ class CA_Restrain_Model extends Character_Action_Model
 		
 		//var_dump ($par[3]); exit; 
 		
-		if ( ! parent::check( $par, $message, $par[0] -> id, $par[1] -> id ) )					
+		if ( ! parent::check_( $par, $message, $par[0] -> id, $par[1] -> id ) )					
 			return false;
 
 		///////////////////////////////////////////////////////////////////////

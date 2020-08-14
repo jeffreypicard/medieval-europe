@@ -51,7 +51,7 @@ class CA_Adddogmabonus_Model extends Character_Action_Model
 	{ 
 		$message = "";
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 
 		// Check: struttura caricata
@@ -80,21 +80,21 @@ class CA_Adddogmabonus_Model extends Character_Action_Model
 			$message = Kohana::lang("global.error-notenoughfp", $par[3]); return false;
 		}
 		
-		// Check: il bonus non è giÃ  presente nella chiesa
+		// Check: il bonus non ï¿½ giÃ  presente nella chiesa
 		if ( Church_Model::has_dogma_bonus( $par[0]->structure_type->church_id, $par[2]->bonus) )
 		{
 			$message = Kohana::lang("ca_adddogmabonus.error-bonus-already-taken", $par[3]); return false;
 		}
 		
-		// Check: il bonus è Curse Infidels
-		// Check: la chiesa è la stessa della maledizione
+		// Check: il bonus ï¿½ Curse Infidels
+		// Check: la chiesa ï¿½ la stessa della maledizione
 		// (Non posso prendere un malus contro la mia stessa chiesa)
 		if ($par[2]->bonus == 'curseinfidels_'.$par[1]->church->name)
 		{
 			$message = Kohana::lang("ca_adddogmabonus.error-no-same-church"); return false;
 		}
 		
-		// Check: è stato giÃ  raggiunto il numero massimo dei bonus
+		// Check: ï¿½ stato giÃ  raggiunto il numero massimo dei bonus
 		if ( Church_Model::count_dogma_bonus( $par[0]->structure_type->church_id ) >= self::MAX_DOGMA_BONUSES )
 		{
 			$message = Kohana::lang("ca_adddogmabonus.error-max-bonus-reached", $par[3]); return false;

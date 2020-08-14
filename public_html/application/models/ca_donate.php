@@ -9,14 +9,14 @@ class CA_Donate_Model extends Character_Action_Model
 	// @input: parametri
 	//  - par[0]: struttura a cui si vuole donare gli item
 	//  - par[1]: item
-	//  - par[2]: quantità
+	//  - par[2]: quantitï¿½
 	//  - par[3]: char che fa l' azione
 	
 	protected function check( $par, &$message )
 	{ 
 		if ( Character_Model::is_imprisoned( $par[3] -> id ) == false 
 			and 
-			! parent::check( $par, $message ) )					
+			! parent::check_( $par, $message ) )					
 			return false;
 		
 		// check input
@@ -27,20 +27,20 @@ class CA_Donate_Model extends Character_Action_Model
 		if ( intval( $par[2] ) <= 0 ) 
 		{	$message = kohana::lang( 'charactions.negative_quantity'); return false; }
 		
-		// l' oggetto è locked?
+		// l' oggetto ï¿½ locked?
 		
 		if ( $par[1] -> locked )
 		{ $message = kohana::lang('charactions.marketsellitem_itemislocked'); return FALSE; }				
 				
-		// il giocatore è nella stessa regione della struttura?		
+		// il giocatore ï¿½ nella stessa regione della struttura?		
 		if ( $par[0] -> region_id != $par[3] -> position_id )
 		{ $message = kohana::lang( 'global.operation_not_allowed'); return false; }
 		
-		//check: il char effettivamente ha gli item nella quantità specificata?		
+		//check: il char effettivamente ha gli item nella quantitï¿½ specificata?		
 		if ( $par[2] > $par[1] -> quantity or $par[1] -> character_id != $par[3] -> id )
 		{ $message = kohana::lang( 'structures.generic_itemsnotowned'); return false; }
 		
-		// si può donare/trashare l' oggetto?
+		// si puï¿½ donare/trashare l' oggetto?
 		
 		if ( $par[0] -> structure_type -> type != 'dump' and $par[1] -> cfgitem -> canbedonated == false )
 		{	$message = kohana::lang('structures.generic_itemsnotdroppable'); return false;}
@@ -48,16 +48,16 @@ class CA_Donate_Model extends Character_Action_Model
 		if ( $par[0] -> structure_type -> type == 'dump' and $par[1] -> cfgitem -> trashable == false )
 		{	$message = kohana::lang('structures.generic_itemsnotdroppable'); return false;}
 				
-		// check: il peso degli item supera la capacità di immagazzinamento della struttura?
+		// check: il peso degli item supera la capacitï¿½ di immagazzinamento della struttura?
 		$itemsweight = $par[1] -> get_totalweight( $par[2] ); 
 		$storableweight = $par[0] -> get_storableweight( $par[0] );
 		
-		// check: si può donare SOLO a strutture pubbliche
+		// check: si puï¿½ donare SOLO a strutture pubbliche
 		if ( !in_array( $par[0] -> structure_type -> subtype, array ('government', 'church') ) and 
 		!in_array( $par[0] -> structure_type -> supertype , array( 'dump', 'buildingsite' ) ) )
 		{	$message = kohana::lang('global.operation_not_allowed'); return false;}
 		
-		// se imprigionato, si può donare solo alla prigione
+		// se imprigionato, si puï¿½ donare solo alla prigione
 		if ( Character_Model::is_imprisoned( $par[3] -> id ) and $par[0] -> structure_type -> supertype != 'barracks' )
 		{ $message = kohana::lang('ca_donate.error-imprisonedcandonateonlytoprison'); return false;	}
 		
@@ -74,7 +74,7 @@ class CA_Donate_Model extends Character_Action_Model
 		
 		///////////////////////////////////////////////////////////////////
 		// aggiunge l' item sulla struttura.
-		// se la struttura target è il dump, e 
+		// se la struttura target ï¿½ il dump, e 
 		// l' oggetto ha il flag destroy on trash, 
 		// non aggiungerlo e distruggilo definitivamente
 		//////////////////////////////////////////////////////////////////////

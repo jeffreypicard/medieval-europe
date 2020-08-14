@@ -10,7 +10,7 @@ class CA_Take_Model extends Character_Action_Model
 	// @input: array di parametri	
 	// par[0] : oggetto structure
 	// par[1] : oggetto item
-	// par[2] : quantità
+	// par[2] : quantitï¿½
 	// par[3] : oggetto char
 	// @output: TRUE = azione disponibile, FALSE = azione non disponibile
 	//          $messages contiene gli errori in caso di FALSE
@@ -22,18 +22,18 @@ class CA_Take_Model extends Character_Action_Model
 		
 		$message = "";
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return FALSE; }		
 				
 		
-		// check: la struttura esiste ed il char è proprietario?
+		// check: la struttura esiste ed il char ï¿½ proprietario?
 		if ( $par[0] -> structure_type -> supertype != 'battlefield' and (!$par[0]->loaded ) )
 		{
 			$message = kohana::lang('global.operation_not_allowed'); 
 			return false;
 		}
 				
-		// check: l' oggetto è nella struttura, la quantità è corretta?		
+		// check: l' oggetto ï¿½ nella struttura, la quantitï¿½ ï¿½ corretta?		
 		if ( ! $par[1] -> loaded or
 					 $par[1] -> structure_id != $par[0] -> id or
 					 $par[1] -> quantity < $par[2] )		
@@ -50,7 +50,7 @@ class CA_Take_Model extends Character_Action_Model
 			return false;
 		}
 		
-		// check: controllo sulla quantità
+		// check: controllo sulla quantitï¿½
 		if ( $par[2] <= 0 )
 		{
 			$message = kohana::lang( 'charactions.negative_quantity');
@@ -59,7 +59,7 @@ class CA_Take_Model extends Character_Action_Model
 		
 		/////////////////////////////////////////////////////////////////////////////////////
 		// check: il char sta trasportando troppo peso?
-		// se l' item è un carretto, niente controllo		
+		// se l' item ï¿½ un carretto, niente controllo		
 		/////////////////////////////////////////////////////////////////////////////////////
 		
 		if ( $par[3] -> get_transportableweight() <= 0 and $par[1] -> cfgitem -> subcategory != 'cart' )

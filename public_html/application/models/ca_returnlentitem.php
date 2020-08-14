@@ -12,7 +12,7 @@ class CA_Returnlentitem_Model extends Character_Action_Model
 	
 	protected function check( $par, &$message )
 	{ 
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;		
 		
 		// check input		
@@ -20,7 +20,7 @@ class CA_Returnlentitem_Model extends Character_Action_Model
 		if ( !$par[0] -> loaded or !$par[1] -> loaded )
 		{ $message = kohana::lang( 'global.operation_not_allowed'); return false; }
 		
-		// controllo se l' item è prestato
+		// controllo se l' item ï¿½ prestato
 		$this -> lend = ORM::factory('structure_lentitem', $par[1] -> lend_id );
 		
 		//var_dump($this->lend); exit;
@@ -28,7 +28,7 @@ class CA_Returnlentitem_Model extends Character_Action_Model
 		if ( ! $this -> lend -> loaded )
 		{ $message = kohana::lang( 'ca_returnlentitem.error-itemisnotlent'); return false; }				
 		
-		// controllo se il char è nella stessa locazione della armeria (se l' armeria non è potenziata)
+		// controllo se il char ï¿½ nella stessa locazione della armeria (se l' armeria non ï¿½ potenziata)
 		$bonus = $this -> lend -> structure -> get_premiumbonus('armory');
 		if ( is_null( $bonus ) and $par[0] -> position_id != $this -> lend -> structure -> region_id )
 		{ $message = kohana::lang( 'ca_returnlentitem.error-charisnotinarmoryregion'); return false; }		

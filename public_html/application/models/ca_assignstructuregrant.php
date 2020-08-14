@@ -12,7 +12,7 @@ class CA_Assignstructuregrant_Model extends Character_Action_Model
 	
 	protected function check( $par, &$message )
 	{ 
-		if ( ! parent::check( $par, $message , null, $par[1] -> id) )					
+		if ( ! parent::check_( $par, $message , null, $par[1] -> id) )					
 			return false;		
 
 		// Check dati

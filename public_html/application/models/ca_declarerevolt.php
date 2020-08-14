@@ -20,7 +20,7 @@ class CA_Declarerevolt_Model extends Character_Action_Model
 	{ 		
 				
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 				
 		
@@ -33,7 +33,7 @@ class CA_Declarerevolt_Model extends Character_Action_Model
 		}	
 		
 		/////////////////////////////////////////////////////////////
-		// Se il regno è in guerra, non si può dichiarare rivolta
+		// Se il regno ï¿½ in guerra, non si puï¿½ dichiarare rivolta
 		/////////////////////////////////////////////////////////////
 		
 		$kingdomrunningwars = Kingdom_Model::get_kingdomwars( $par[0] -> region -> kingdom_id, 'running');
@@ -50,7 +50,7 @@ class CA_Declarerevolt_Model extends Character_Action_Model
 			return false;
 		}		
 		
-		// il char può dichiarare una rivolta solo verso il suo regno
+		// il char puï¿½ dichiarare una rivolta solo verso il suo regno
 		if ( $par[1] -> region -> kingdom_id != $par[0] -> region -> kingdom_id )
 		{
 			$message = kohana::lang( 'ca_declarerevolt.error-cannotdeclarerevolttootherkingdom');

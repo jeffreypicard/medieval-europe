@@ -37,7 +37,7 @@ class Character_Action_Model extends ORM
 	* @return boolean
 	*/
 	
-	protected function check( $par, &$message, $callerchar_id = null, $targetchar_id = null )
+	protected function check_( $par, &$message, $callerchar_id = null, $targetchar_id = null )
 	{
 		
 		// Verifica se c'� una azione ancora in corso, verificando l' azione che 

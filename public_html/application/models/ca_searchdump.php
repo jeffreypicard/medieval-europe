@@ -51,7 +51,7 @@ class CA_Searchdump_Model extends Character_Action_Model
 		kohana::log('debug', '-> Calling ca_searchdump check.');
 		
 		// Check classe madre (compreso il check_equipment)
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 			
 		if ( ! $par[0] -> loaded or ! $par[1] -> loaded )

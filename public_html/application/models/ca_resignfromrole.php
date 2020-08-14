@@ -17,7 +17,7 @@ class CA_Resignfromrole_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
 		// il chiamante deve avere un ruolo		
@@ -28,7 +28,7 @@ class CA_Resignfromrole_Model extends Character_Action_Model
 			return false;
 		}
 		
-		// Se il regno è in guerra, nessuno si può dimettere
+		// Se il regno ï¿½ in guerra, nessuno si puï¿½ dimettere
 		$data = null;
 		$iskingdomfighting = Kingdom_Model::is_fighting( $par[0] -> region -> kingdom_id, $data ) ;		
 		if ( $iskingdomfighting == true and $role -> get_roletype() != 'religious' )

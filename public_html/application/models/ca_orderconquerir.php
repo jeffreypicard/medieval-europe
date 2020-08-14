@@ -20,7 +20,7 @@ class CA_Orderconquerir_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		
 		// controllo parametri		
@@ -40,7 +40,7 @@ class CA_Orderconquerir_Model extends Character_Action_Model
 			or ! Character_Model::has_item( $par[0]->id, 'waxseal', 1 )) 
 		{ $message = kohana::lang('charactions.paperpieceandwaxsealneeded'); return FALSE; }
 		
-		// Il regno è in guerra?
+		// Il regno ï¿½ in guerra?
 		$data = null;				
 		$iskingdomfighting = Kingdom_Model::is_fighting( $par[0] -> region -> kingdom_id, $data ) ;		
 		if ( $iskingdomfighting == true )

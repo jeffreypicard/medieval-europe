@@ -13,7 +13,7 @@ class CA_Givearmoryaccess_Model extends Character_Action_Model
 	
 	protected function check( $par, &$message )
 	{ 
-		if ( ! parent::check( $par, $message, $par[0] -> id, $par[2] -> id ) )					
+		if ( ! parent::check_( $par, $message, $par[0] -> id, $par[2] -> id ) )					
 			return false;		
 		
 		// check input				

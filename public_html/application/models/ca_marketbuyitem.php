@@ -23,7 +23,7 @@ class CA_Marketbuyitem_Model extends Character_Action_Model
 	
 	
 		
-		if ( ! parent::check( $par, $message, $par[1] -> id ) )					
+		if ( ! parent::check_( $par, $message, $par[1] -> id ) )					
 		{ return false; }
 
 		////////////////////////////////////////////////////

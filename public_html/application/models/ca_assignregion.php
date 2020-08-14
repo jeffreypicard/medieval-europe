@@ -11,14 +11,14 @@ class CA_Assignregion_Model extends Character_Action_Model
 	// par[0]: oggetto char di chi assegna la regione (re)
 	// par[1]: oggetto regione da assegnare
 	// par[2]: oggetto char del vassallo che ha il controllo della regione
-	// par[3]: oggetto char del vassallo che avrà il controllo della regione
+	// par[3]: oggetto char del vassallo che avrï¿½ il controllo della regione
 	// @output: TRUE = azione disponibile, FALSE = azione non disponibile
 	//          $message contiene il messaggio di ritorno	
 	
 	protected function check( $par, &$message )
 	{ 
 		
-		if ( ! parent::check( $par, $message, $par[0] -> id, $par[3] -> id ) )					
+		if ( ! parent::check_( $par, $message, $par[0] -> id, $par[3] -> id ) )					
 		{ return false; }
 		
 		// controllo parametri manipolabili. il vassallo che ha il controllo della regione potrebbe non esistere,
@@ -36,7 +36,7 @@ class CA_Assignregion_Model extends Character_Action_Model
 		if ( is_null( $role ) or $role -> tag != 'vassal' )		
 		{$message = kohana::lang( 'global.operation_not_allowed');return false;}
 		
-		// controllo che la regione non sia già controllata dal vassallo
+		// controllo che la regione non sia giï¿½ controllata dal vassallo
 		if ( $par[2] -> id == $par[3] -> id )
 		{$message = kohana::lang( 'ca_assignregion.regionalreadycontrolled', $par[3] -> name);return false;}
 
@@ -44,12 +44,12 @@ class CA_Assignregion_Model extends Character_Action_Model
 		if ( $par[1] -> kingdom -> id != $par[0] -> region -> kingdom -> id )
 		{$message = kohana::lang( 'ca_assignregion.regionnotownedbykingdom');return false;}		
 
-		// Se la regione ha un castello, non è assegnabile.
+		// Se la regione ha un castello, non ï¿½ assegnabile.
 		$castle = $par[1] -> get_structure('castle'); 
 		if ( !is_null( $castle ) )
 		{$message = kohana::lang( 'ca_assignregion.regionnotassignable');return false;}		
 
-		// se il regno è in guerra, non si possono assegnare regioni
+		// se il regno ï¿½ in guerra, non si possono assegnare regioni
 		$data = null;
 		$iskingdomfighting = $par[0] -> region -> kingdom -> is_fighting( $par[0] -> region -> kingdom_id, $data );
 		if ( $iskingdomfighting == true )

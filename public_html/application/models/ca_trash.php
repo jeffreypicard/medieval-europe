@@ -8,11 +8,11 @@ class CA_Trash_Model extends Character_Action_Model
 	// @input: parametri
 	//  - par[0]: id struttura a cui si vuole buttare gli item
 	//  - par[1]: id item da buttare
-	//  - par[2]: quantità
+	//  - par[2]: quantitï¿½
 	
 	protected function check( $par, &$message )
 	{ 
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 		
 		// check input
@@ -22,7 +22,7 @@ class CA_Trash_Model extends Character_Action_Model
 			return false;
 		}
 		
-		// check: esiste la struttura nel nodo in cui è l' utente?
+		// check: esiste la struttura nel nodo in cui ï¿½ l' utente?
 		$structure = StructureFactory_Model::create( null, $par[0]);			
 		
 		if ( ! $structure->loaded or $structure -> structure_type -> type != 'dump' )	
@@ -31,7 +31,7 @@ class CA_Trash_Model extends Character_Action_Model
 			return false;
 		}
 		
-		//check: il char effettivamente ha gli item nella quantità specificata?
+		//check: il char effettivamente ha gli item nella quantitï¿½ specificata?
 		$o = ORM::factory( "item" )
 			->where( array ( 'character_id' => Session::instance()->get('char_id'), 
 											 'id' => $par[1],
@@ -44,7 +44,7 @@ class CA_Trash_Model extends Character_Action_Model
 			return false;
 		}
 		
-		// si può buttare l' oggetto?
+		// si puï¿½ buttare l' oggetto?
 		if ( $o -> cfgitem -> trashable == false )
 		{
 			//print kohana::debug(  ORM::factory( "item", $item )->character_id ); exit();

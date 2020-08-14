@@ -24,7 +24,7 @@ class CA_Arrest_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		
-		if ( ! parent::check( $par, $message, $par[0] -> id, $par[1] -> id ) )					
+		if ( ! parent::check_( $par, $message, $par[0] -> id, $par[1] -> id ) )					
 		{ return false; }
 		
 		/////////////////////////////////////////////////////
@@ -48,8 +48,8 @@ class CA_Arrest_Model extends Character_Action_Model
 			and   c.tag = 'scroll_arrestwarrant'			
 			and   i.param3 = " . $par[1] -> id ) -> as_array();
 		
-		// se c'è n'è almeno uno che fa riferimento ad una procedura aperta, il controllo
-		// è passato.
+		// se c'ï¿½ n'ï¿½ almeno uno che fa riferimento ad una procedura aperta, il controllo
+		// ï¿½ passato.
 		
 		$validaw = false;		
 		foreach ( $rset as $r )
@@ -79,7 +79,7 @@ class CA_Arrest_Model extends Character_Action_Model
 		{ $message = kohana::lang('ca_arrest.notenoughpower' ); return FALSE; }
 		
 		//////////////////////////////////////////////////////////////////////
-		// Il regno del giocatore è in guerra con il regno di chi tenta di
+		// Il regno del giocatore ï¿½ in guerra con il regno di chi tenta di
 		// arrestarlo?
 		//////////////////////////////////////////////////////////////////////
 		
@@ -112,7 +112,7 @@ class CA_Arrest_Model extends Character_Action_Model
 		{ $message = kohana::lang('global.operation_not_allowed'); return FALSE; }		
 		
 		//////////////////////////////////////////////////////////////////////
-		// Se il regno è in rivolta non si puÃ² arrestare
+		// Se il regno ï¿½ in rivolta non si puÃ² arrestare
 		//////////////////////////////////////////////////////////////////////		
 		
 		$runningbattles = Kingdom_Model::get_runningbattles( $par[1] -> region -> kingdom_id );		
@@ -193,7 +193,7 @@ class CA_Arrest_Model extends Character_Action_Model
 		$a -> status = 'running';
 		$a -> param1 = $this -> currentregion -> id ;
 		$a -> param2 = $court -> region -> id ;
-		// parametro per differenziare chi è arrestato
+		// parametro per differenziare chi ï¿½ arrestato
 		
 		$a -> param4 = false;				
 		$a -> character_id = $par[0] -> id; 
@@ -202,7 +202,7 @@ class CA_Arrest_Model extends Character_Action_Model
 		
 		$par[0] -> save();
 		
-		// azione bloccante per chi è arrestato
+		// azione bloccante per chi ï¿½ arrestato
 		$a = Character_Action_Model::factory("arrest");		
 		$a -> starttime = $starttime;
 		$a -> endtime = $endtime;
@@ -210,7 +210,7 @@ class CA_Arrest_Model extends Character_Action_Model
 		$a -> param1 = $this -> currentregion -> id ;
 		$a -> param2 = $court -> region -> id ;
 		
-		// parametro per differenziare chi è arrestato		
+		// parametro per differenziare chi ï¿½ arrestato		
 		$a -> param4 = true;		
 		$a -> character_id = $par[1] -> id; 
 		$a -> save();
@@ -276,7 +276,7 @@ class CA_Arrest_Model extends Character_Action_Model
 		$char -> modify_location( $data -> param2 );		
 		$char -> save();
 		
-		// se param3 è true, appendo un ordine di restrizione per 2 giorni
+		// se param3 ï¿½ true, appendo un ordine di restrizione per 2 giorni
 		
 		if ( $data -> param4 == true )
 		{
@@ -291,7 +291,7 @@ class CA_Arrest_Model extends Character_Action_Model
 			$a -> endtime = $a -> starttime + ( 168 * 3600 ); 
 			$a -> save();
 			
-			// lo avviso che è bloccato
+			// lo avviso che ï¿½ bloccato
 			
 			
 			Character_Event_Model::addrecord( 

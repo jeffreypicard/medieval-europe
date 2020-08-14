@@ -19,7 +19,7 @@ class CA_Editannouncement_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }		
 		
 		$role = $par[0] -> get_current_role();		
@@ -29,12 +29,12 @@ class CA_Editannouncement_Model extends Character_Action_Model
 		if ( $role -> tag != 'vassal' and $role -> tag != 'king' )
 		{	$message = kohana::lang('global.operation_not_allowed') ; return false; }
 		
-		// il re può editare solo se dello stesso regno
+		// il re puï¿½ editare solo se dello stesso regno
 		if ( $role -> tag == 'king' and $role -> region -> kingdom -> id != $par[0] -> region -> kingdom -> id )
 		{	$message = kohana::lang('global.operation_not_allowed'); return false; }	
 		
 		
-		// il vassallo può editare solo se controlla la regione ed il tipo di annuncio è region
+		// il vassallo puï¿½ editare solo se controlla la regione ed il tipo di annuncio ï¿½ region
 		$controllingvassal = $par[1] -> region -> get_controllingvassal(); 
 		
 		if ( $role -> tag == 'vassal' and ( $par[1] -> type != 'region' or $par[0] -> id != $controllingvassal -> id ) )

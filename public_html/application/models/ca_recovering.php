@@ -4,7 +4,7 @@ class CA_Recovering_Model extends Character_Action_Model
 {
 	// Costanti
 	const DELTA_ENERGY = 0;        // Energia necessaria per la semina
-	const DELTA_GLUT = 0; 		   // consumo di sazietà	
+	const DELTA_GLUT = 0; 		   // consumo di sazietï¿½	
 	const FACTOR = 0.4;            // production value
 	const RECOVEREDHEALTH = 30;
 	const RECOVEREDENERGY = 8;
@@ -17,7 +17,7 @@ class CA_Recovering_Model extends Character_Action_Model
 	protected $enabledifrestrained = true;
 
 	
-	protected $cancel_flag = false; // se true, la azione è cancellabile dal pg.	
+	protected $cancel_flag = false; // se true, la azione ï¿½ cancellabile dal pg.	
 	protected $immediate_action = false;	
 	
 	// Effettua tutti i controlli relativi al seed, sia quelli condivisi
@@ -32,7 +32,7 @@ class CA_Recovering_Model extends Character_Action_Model
 	
 	protected function check( $par, &$message )
 	{ 
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return FALSE; }
 		
 		return true;
@@ -142,7 +142,7 @@ class CA_Recovering_Model extends Character_Action_Model
 					'__character.create_char' . $attributelost, 'evidence'); 
 			}
 		
-			// Lancio per ferite sanguinanti. Le probabilità vanno
+			// Lancio per ferite sanguinanti. Le probabilitï¿½ vanno
 			// da 0 a 16% a seconda della costituzione.
 			
 			if ($data -> param2 == true)			

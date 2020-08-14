@@ -35,7 +35,7 @@ class CA_Modifydiplomacystatus_Model extends Character_Action_Model
 	
 	// @input: 
 	// $par[0] = oggetto char che invoca l' azione
-	// $par[1] = oggetto structure da cui è invocata l' azione
+	// $par[1] = oggetto structure da cui ï¿½ invocata l' azione
 	// $par[2] = diplomacy status info
 	// $par[3] = nuovo stato
 	// $par[4] = accept|refuse
@@ -48,14 +48,14 @@ class CA_Modifydiplomacystatus_Model extends Character_Action_Model
 		
 		$message = "";
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 			return false;
 		
-		// controllo: il nuovo stato è diverso da quello precedente?
+		// controllo: il nuovo stato ï¿½ diverso da quello precedente?
 		
 		if ( $par[3] == $par[2] -> type  )
 		{ $message = kohana::lang('diplomacy.error-statusmustbedifferent'); return FALSE; }									
-		// controllo: se non è una conferma, se c'è già una proposta inviata, errore
+		// controllo: se non ï¿½ una conferma, se c'ï¿½ giï¿½ una proposta inviata, errore
 		
 		$proposal = ORM::factory('diplomacy_proposal')
 				-> where ( array (
@@ -80,7 +80,7 @@ class CA_Modifydiplomacystatus_Model extends Character_Action_Model
 		) 
 		{ $message = kohana::lang('charactions.paperpieceandwaxsealneeded'); return FALSE; }						
 		
-		// Non più di due Alleati.
+		// Non piï¿½ di due Alleati.
 		
 		$alliedkingdoms = 0;
 		$diplomacyrelations = Configuration_Model::get_cfg_diplomacyrelations();
@@ -122,7 +122,7 @@ class CA_Modifydiplomacystatus_Model extends Character_Action_Model
 		
 		$kingdomrunningwars = Kingdom_Model::get_kingdomwars( $par[0] -> region -> kingdom_id, 'running' );
 		
-		// Se il kingdom sorgente è in guerra non è possibile cambiare relazioni diplomatiche
+		// Se il kingdom sorgente ï¿½ in guerra non ï¿½ possibile cambiare relazioni diplomatiche
 		
 		if ( 
 			count( $kingdomrunningwars ) > 0 						
@@ -154,7 +154,7 @@ class CA_Modifydiplomacystatus_Model extends Character_Action_Model
 		
 		$requirement = $this -> diplomacytransactionrequirement[$par[2] -> type][$par[3]];
 		
-		// se la modalità è diretta o è una conferma, setta stato diplomatico.
+		// se la modalitï¿½ ï¿½ diretta o ï¿½ una conferma, setta stato diplomatico.
 		
 		if ($requirement == 'direct' or ($par[5] == true and $par[4] == 'accept'))
 		{
@@ -173,7 +173,7 @@ class CA_Modifydiplomacystatus_Model extends Character_Action_Model
 			$dr2 -> type = $par[3];
 			$dr2 -> timestamp = time();
 			
-			// se il re destinatario è assente il trattato è firmato unilateralmente dal re sorgente.
+			// se il re destinatario ï¿½ assente il trattato ï¿½ firmato unilateralmente dal re sorgente.
 			if (!is_null($targetking))
 				$dr2 -> signedby = $targetking -> id;		
 			else
@@ -199,7 +199,7 @@ class CA_Modifydiplomacystatus_Model extends Character_Action_Model
 			
 			$runningwars = Kingdom_Model::get_kingdomwars( $sourcekingdom -> id, $status = 'running' );
 			
-			// Se la proposta è != allied e il regno proponente è 
+			// Se la proposta ï¿½ != allied e il regno proponente ï¿½ 
 			// ingaggiato in una guerra il regno esce dalla guerra.
 			
 			if ( $proposal -> diplomacyproposal != 'allied' )
@@ -230,7 +230,7 @@ class CA_Modifydiplomacystatus_Model extends Character_Action_Model
 			}
 				
 			
-			// Se la proposta è di alleanza, e il regno proponente è
+			// Se la proposta ï¿½ di alleanza, e il regno proponente ï¿½
 			// ingaggiato in una guerra, il regno che accetta l 'alleanza
 			// entra direttamente in guerra.
 				

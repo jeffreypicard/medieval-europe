@@ -15,7 +15,7 @@ class CA_Publishsentence_Model extends Character_Action_Model
 	
 	protected function check( $par, &$message )
 	{ 
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 		// controllo parametri
 		
@@ -33,7 +33,7 @@ class CA_Publishsentence_Model extends Character_Action_Model
 		if ( $targetchar->id == $par[0]->id )
 		{ $message = kohana::lang('global.selfaction_notpossible'); return FALSE; }		
 		
-		// I Re non possono essere imprigionati. Gli altri sì.
+		// I Re non possono essere imprigionati. Gli altri sï¿½.
 		
 		$role = $targetchar->get_current_role();
 		

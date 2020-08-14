@@ -20,7 +20,7 @@ class CA_Wear_Model extends Character_Action_Model
 	protected function check( $par, &$message )
 	{ 
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }
 
 		// Istanzio l'oggetto che sto per indossare
@@ -53,7 +53,7 @@ class CA_Wear_Model extends Character_Action_Model
 		if ( !is_null( $this->item -> cfgitem -> linked_role) )
 		{
 			
-			// se l'oggetto è di chiesa e il linked ROLE = ALL
+			// se l'oggetto ï¿½ di chiesa e il linked ROLE = ALL
 			// puÃ² essere indossato da tutti i ruoli meno il prete.			
 			
 			$role = $par[1] -> get_current_role();
@@ -65,7 +65,7 @@ class CA_Wear_Model extends Character_Action_Model
 			{ $message = kohana::lang('charactions.item_wrongrole'); return FALSE; }
 			
 			
-			// Se è impostato un ruolo e il char non ne ha uno restituisco errore
+			// Se ï¿½ impostato un ruolo e il char non ne ha uno restituisco errore
 			
 			if ( is_null( $role ) )
 			{ $message = kohana::lang('charactions.item_wrongrole'); return FALSE; }
@@ -116,7 +116,7 @@ class CA_Wear_Model extends Character_Action_Model
 		$iteminrighthand = $par[1]->get_bodypart_item('right_hand');
 		$iteminlefthand = $par[1]->get_bodypart_item('left_hand');
 		
-		// Se l'oggetto che andrÃ² ad indossare è un'arma large
+		// Se l'oggetto che andrÃ² ad indossare ï¿½ un'arma large
 		// allora dovrÃ² rimuovere gli oggetti presenti in entrambe le mani
 		
 		$removeleft=$removeright=false;
@@ -187,7 +187,7 @@ class CA_Wear_Model extends Character_Action_Model
 		if ( $this -> item -> quantity > 1 )
 		{		
 			
-			// se l' item è nella struttura e la quantity è > 1, scorporalo
+			// se l' item ï¿½ nella struttura e la quantity ï¿½ > 1, scorporalo
 			// lo clono e lo rimuovo dal container.
 			
 			$newitem = $this -> item -> cloneitem();

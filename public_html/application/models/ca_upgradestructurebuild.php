@@ -61,7 +61,7 @@ class CA_Upgradestructurebuild_Model extends Character_Action_Model
 	{ 
 		// Check classe madre (compreso il check_equipment)
 		
-		if ( ! parent::check( $par, $message ) )					
+		if ( ! parent::check_( $par, $message ) )					
 		{ return false; }	
 		
 		if ( $par[2] <= 0 )
