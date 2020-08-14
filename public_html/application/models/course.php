@@ -240,7 +240,7 @@ class Course_Model
 		return $availablehours;		
 	}
 	
-	public function completeCourse() {
+	public function completeCourse($char) {
 		die('Method completeCourse not ovverriden!');
 	}
 		
