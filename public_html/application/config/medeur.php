@@ -98,7 +98,7 @@ $config['deleteforumaccount'] = TRUE;
 * Use memcache?
 */
 
-$config['memcache'] = TRUE;
+$config['memcache'] = FALSE;
 
 /*
 * Empty the Dump?
