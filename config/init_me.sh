@@ -7,6 +7,7 @@ if [ -f "/home/vagrant/medieval-europe/.init_ran" ]; then
 fi
 
 mkdir -p /home/vagrant/medieval-europe/public_html/upload
+mkdir -p /home/vagrant/medieval-europe/public_html/application/logs
 
 cd /home/vagrant/medieval-europe/public_html/application/libraries/vendors/PHPMailer
 composer require league/oauth2-google
