@@ -25,7 +25,6 @@ features:
     - mariadb: false
     - ohmyzsh: false
     - webdriver: false
-    - apache: true
 
 # ports:
 #     - send: 50000
