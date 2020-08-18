@@ -11,11 +11,11 @@ keys:
 
 folders:
     - map: ~/dev/medieval-europe
-      to: /home/vagrant/code
+      to: /home/vagrant/medieval-europe
 
 sites:
     - map: homestead.test
-      to: /home/vagrant/code/public_html
+      to: /home/vagrant/medieval-europe/public_html
       type: apache
 
 databases:

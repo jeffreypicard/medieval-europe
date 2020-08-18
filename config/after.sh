@@ -28,13 +28,16 @@ sudo service postgresql stop
 
 sudo a2dissite homestead.test.conf
 sudo a2dissite homestead.test-ssl.conf
-sudo cp /home/vagrant/code/config/homestead.test.conf /etc/apache2/sites-available/homestead.test.conf
-sudo cp /home/vagrant/code/config/homestead.test-ssl.conf /etc/apache2/sites-available/homestead.test-ssl.conf
+sudo cp /home/vagrant/medieval-europe/config/homestead.test.conf /etc/apache2/sites-available/homestead.test.conf
+sudo cp /home/vagrant/medieval-europe/config/homestead.test-ssl.conf /etc/apache2/sites-available/homestead.test-ssl.conf
 sudo a2ensite homestead.test.conf
 sudo a2ensite homestead.test-ssl.conf
 
-sudo cp /home/vagrant/code/config/php7.ini /etc/php/7.4/apache2/php.ini
-
-sudo service apache2 restart
 sudo service php7.4-fpm stop
 sudo apt install libapache2-mod-php7.4 libapache2-mod-php
+
+sudo cp /home/vagrant/medieval-europe/config/php7.ini /etc/php/7.4/apache2/php.ini
+
+sudo service apache2 restart
+
+bash /home/vagrant/medieval-europe/config/init_me.sh
