@@ -1,3 +1,5 @@
 html::meta('asdf', 'qwer') -> <meta name='asdf' content='qwer' />
 html::stylesheet("https://asdf.com/qwer.css", FALSE) -> <link rel="stylesheet" type="text/css" href="https://asdf.com/qwer.css" />
 html::stylesheet("/media/blah/file", FALSE) -> <link rel="stylesheet" type="text/css" href="{{ asset('public/media/blah/file.css') }}" />
+html::script('https://asdf.com/qwer.js', FALSE); -> <script src="https://asdf.com/qwer.js"></script>
+html::script('media/js/common.js', FALSE); -> <script src="{{ asset('media/js/common.js') }}"></script>

@@ -22,9 +22,9 @@
 	<!-- Bootstrap -->
 	<!-- Latest compiled and minified CSS -->
 
-	<?= <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui" /> ?>
-	<?= <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min" /> ?>
-	<?= <link rel="stylesheet" type="text/css" href="{{ asset('media/css/affil	iates') }}" /> ?>
+	<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui" />
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('media/css/affiliates.css') }}" />
 
 	<?= html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js', FALSE); ?>
 	<?= html::script('https://code.jquery.com/ui/1.12.0/jquery-ui.min.js', FALSE); ?>

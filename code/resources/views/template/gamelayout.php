@@ -24,22 +24,23 @@
 	<meta name='keywords' content='medieval, historical, browser game, rpg content=strategy'  />
 	<meta name='robots' content='all' />
 
+
+	<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('media/js/jquery/plugins/jquery.countdown/jquery.countdown.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('media/js/tooltipster-master/dist/css/tooltipster.bundle.min.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('media/js/tooltipster-master/dist/css/tooltipster-sideTip-borderless.min.css') }}" />
+
+	<link rel="stylesheet" type="text/css" href="{{ asset('media/css/gamelayout.css?v=2.9.5') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('media/css/character.css?v=2.9.5') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('media/css/submenu.css?v=2.9.5') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('media/css/pagination.css?v=2.9.5') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('media/css/structure.css?v=2.9.5') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('media/css/battlereport.css?v=2.9.5') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('media/css/map.css?v=2.9.5') }}" />
+
     <?php
-	$version = "2.9.5.1";
-	// fogli di stile
-
-	echo <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css" />
-	echo <link rel="stylesheet" type="text/css" href="{{ asset('media/js/jquery/plugins/jquery.countdown/jquery.countdown.css') }}" />
-	echo <link rel="stylesheet" type="text/css" href="{{ asset('media/js/tooltipster-master/dist/css/tooltipster.bundle.min.css') }}" />
-	echo <link rel="stylesheet" type="text/css" href="{{ asset('media/js/tooltipster-master/dist/css/tooltipster-sideTip-borderless.min.css') }}" />
-
-	echo <link rel="stylesheet" type="text/css" href="{{ asset('media/css/gamelayout.css?v=2.9.5') }}" />
-	echo <link rel="stylesheet" type="text/css" href="{{ asset('media/css/character.css?v=2.9.5') }}" />
-	echo <link rel="stylesheet" type="text/css" href="{{ asset('media/css/submenu.css?v=2.9.5') }}" />
-	echo <link rel="stylesheet" type="text/css" href="{{ asset('media/css/pagination.css?v=2.9.5') }}" />
-	echo <link rel="stylesheet" type="text/css" href="{{ asset('media/css/structure.css?v=2.9.5') }}" />
-	echo <link rel="stylesheet" type="text/css" href="{{ asset('media/css/battlereport.css?v=2.9.5') }}" />
-	echo <link rel="stylesheet" type="text/css" href="{{ asset('media/css/map.css?v=2.9.5') }}" />
+    $version = "2.9.5.1";
+    // fogli di stile
 	// Scripts
 	echo html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js', FALSE);
 	echo html::script('https://code.jquery.com/ui/1.12.0/jquery-ui.min.js', FALSE);
