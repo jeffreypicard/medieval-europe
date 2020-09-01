@@ -33,7 +33,7 @@ sudo cp /home/vagrant/medieval-europe/config/homestead.test-ssl.conf /etc/apache
 sudo a2ensite homestead.test.conf
 sudo a2ensite homestead.test-ssl.conf
 
-sudo service php7.4-fpm stop
+#sudo service php7.4-fpm stop
 sudo apt install libapache2-mod-php7.4 libapache2-mod-php
 
 sudo cp /home/vagrant/medieval-europe/config/php7.ini /etc/php/7.4/apache2/php.ini

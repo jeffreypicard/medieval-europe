@@ -1,0 +1,7 @@
+<?php
+
+return [
+'written_ok' => 'Hai compilato un mandato d&#8217;arresto.',
+'invalidcrimeprocedure' => 'La procedura di incriminazione &egrave; in corso, completata o cancellata, non puoi effettuare questa azione.',
+
+];
