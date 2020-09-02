@@ -1,3 +1,10 @@
+== General Notes ==
+
+Any of the html::* calls will be in <?php ?> section, when switching these to the html tags as seen in the conversions
+section below, you'll have to remove the <?php ?> or <? ?> tags around them. Same with echo statments. I.e. in
+"echo html::script(...)" the echo needs to be removed.
+
+== Conversions ==
 html::meta('asdf', 'qwer') -> <meta name='asdf' content='qwer' />
 html::stylesheet("https://asdf.com/qwer.css", FALSE) -> <link rel="stylesheet" type="text/css" href="https://asdf.com/qwer.css" />
 html::stylesheet("/media/blah/file", FALSE) -> <link rel="stylesheet" type="text/css" href="{{ asset('public/media/blah/file.css') }}" />
