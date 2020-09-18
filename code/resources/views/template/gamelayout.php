@@ -38,20 +38,23 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('media/css/battlereport.css?v=2.9.5') }}" />
 	<link rel="stylesheet" type="text/css" href="{{ asset('media/css/map.css?v=2.9.5') }}" />
 
-    <?php
+
     $version = "2.9.5.1";
     // fogli di stile
 	// Scripts
-	echo html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js', FALSE);
-	echo html::script('https://code.jquery.com/ui/1.12.0/jquery-ui.min.js', FALSE);
-	echo html::script("media/js/tooltipster-master/dist/js/tooltipster.bundle.min.js", FALSE);
-	echo html::script('media/js/jquery/plugins/cookie/js.cookie.js', FALSE);
-	echo html::script('media/js/common.js', FALSE);
-	?>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+	<script src="{{ asset('media/js/tooltipster-master/dist/js/tooltipster.bundle.min.js') }}"></script>
+	<script src="{{ asset('media/js/jquery/plugins/cookie/js.cookie.js') }}"></script>
+	<script src="{{ asset('media/js/common.js') }}"></script>
+
+
 	<!-- Countdown: workaround per visualizzare il countdown nella title bar -->
 	<script type="text/javascript">$.noRequestAnimationFrame = true;</script>
-	<?	echo html::script('media/js/jquery/plugins/jquery.countdown/jquery.plugin.min.js', FALSE);
-	echo html::script('media/js/jquery/plugins/jquery.countdown/jquery.countdown.min.js', FALSE);			?>
+	
+	<script src="{{ asset('media/js/jquery/plugins/jquery.countdown/jquery.plugin.min.js') }}"></script>
+	<script src="{{ asset('media/js/jquery/plugins/jquery.countdown/jquery.countdown.min.js') }}"></script>
+	
 	<!-- Fine Countdown -->
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 

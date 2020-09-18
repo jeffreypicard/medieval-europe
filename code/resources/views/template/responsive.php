@@ -32,10 +32,8 @@
 <?= $content ; ?>
 
 </div>
-<?
-	// Scripts
-	echo html::script('media/js/jquery/jquery-2.1.4.min.js', FALSE);
-	echo html::script('media/js/bootstrap/js/bootstrap.min.js', FALSE);
-?>
+	<!-- Scripts -->
+	<script src="{{ asset('media/js/jquery/jquery-2.1.4.min.js') }}"></script>
+	<script src="{{ asset('media/js/bootstrap/js/bootstrap.min.js') }}"></script>
 </body>
 </html>
