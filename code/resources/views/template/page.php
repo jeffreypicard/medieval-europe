@@ -11,8 +11,9 @@
 	<meta name='keywords' content='pbbg, medieval, dark ages, rpg, game, webgame, free, browser, free mmorpg games, free multiplayer games, free online mmorpg, free online rpg games, games for multiplayer, mmorpg free, multiplayer rpg games, play multiplayer games, rpg online games, top mmorpg, strategy games, multiplayer games, online strategy games, free online multiplayer strategy game, game medieval, medieval war, historic, Kingdom' />
 	<meta name='robots' content='all' />
 	<?php echo <link rel="stylesheet" type="text/css" href="{{ asset('media/css/page.css?rel=v2.8.6.1') }}" /> ?>
-	<?php echo html::script('media/js/jquery.clock.js', FALSE)?>
-	<?php echo html::script('media/js/jquery.countdown.js', FALSE)?>
+	
+	<script src="{{ asset('media/js/jquery.clock.js') }}"></script>
+	<script src="{{ asset('media/js/jquery.countdown.js') }}"></script>
 
 	<script type="text/javascript">
 	$(document).ready(function()

@@ -180,8 +180,8 @@
 
 </div> <!-- container-->
 
-<?= html::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', FALSE); ?>
-<?= html::script('https://code.jquery.com/ui/1.11.4/jquery-ui.min.js', FALSE); ?>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
 <?php kohana::log('info', '-> End of homepage.blade.php...'); ?>
 </body>

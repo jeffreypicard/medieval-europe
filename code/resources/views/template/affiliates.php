@@ -26,12 +26,11 @@
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min" />
 	<link rel="stylesheet" type="text/css" href="{{ asset('media/css/affiliates.css') }}" />
 
-	<?= html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js', FALSE); ?>
-	<?= html::script('https://code.jquery.com/ui/1.12.0/jquery-ui.min.js', FALSE); ?>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
 
-
-	<?= html::script('https://code.jquery.com/jquery-2.1.4.min.js', FALSE); ?>
-	<?= html::script('https://code.jquery.com/ui/1.11.4/jquery-ui.min.js', FALSE); ?>
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
 	<script type="text/javascript">
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -72,8 +71,8 @@
 
 </div> <!-- container-->
 
-<?= html::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', FALSE); ?>
-<?= html::script('https://code.jquery.com/ui/1.11.4/jquery-ui.min.js', FALSE); ?>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
 </body>
 </html>

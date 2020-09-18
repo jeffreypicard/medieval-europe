@@ -34,9 +34,8 @@
 	<!-- Font -->
 	<link href="https://fonts.googleapis.com/css?family=Metamorphous" rel="stylesheet">
 
-	<?
-
-	//TODO: Rivedere
+<?
+	<!-- TODO: Rivedere -->
 
 	/*
 	foreach ($sheets as $key => $val)
@@ -45,20 +44,21 @@
 
 	echo <link rel="stylesheet" type="text/css" href="{{ asset('media/newlayout/css/newlayout.css') }}" />
 	echo <link rel="stylesheet" type="text/css" href="{{ asset('media/newlayout/css/character.css') }}" />
+?>
 
-
-	// Scripts
-
-	echo html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js', FALSE);
-	echo html::script('https://code.jquery.com/ui/1.12.0/jquery-ui.min.js', FALSE);
-	echo html::script('media/js/tooltipster-master/dist/js/tooltipster.bundle.min.js', FALSE);
-	echo html::script('media/js/jquery/plugins/cookie/js.cookie.js', FALSE);	echo html::script('media/js/common.js', FALSE);
-	?>
-
+	<!-- Scripts -->
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+	<script src="{{ asset('media/js/tooltipster-master/dist/js/tooltipster.bundle.min.js') }}"></script>
+	<script src="{{ asset('media/js/jquery/plugins/cookie/js.cookie.js') }}"></script>
+	<script src="{{ asset('media/js/common.js') }}"></script>
+	
 	<!-- Countdown: workaround per visualizzare il countdown nella title bar -->
 	<script type="text/javascript">$.noRequestAnimationFrame = true;</script>
-
-	<?	echo html::script('media/js/jquery/plugins/jquery.countdown/jquery.plugin.min.js', FALSE);		echo html::script('media/js/jquery/plugins/jquery.countdown/jquery.countdown.min.js', FALSE);			?>
+	
+	<script src="{{ asset('media/js/jquery/plugins/jquery.countdown/jquery.plugin.min.js') }}"></script>
+	<script src="{{ asset('media/js/jquery/plugins/jquery.countdown/jquery.countdown.min.js') }}"></script>
 	<!-- Fine Countdown -->
 
 	<?php
